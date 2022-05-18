@@ -51,7 +51,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             "https://doltinuku.id/storage/assets/img/shop/logo/default.jpg"),
                         coverImage: NetworkImage(state.shop.images),
                         title: state.shop.name,
-                        status: state.shop.status,
                         actions: <Widget>[
                           MaterialButton(
                             color: Colors.white,
@@ -103,14 +102,14 @@ class FeaturedRow extends StatelessWidget {
               endColor: "#004e92".toColor(),
               icon: MdiIcons.shopping,
               title: "Total Produk",
-              count: shop.totalProducts,
+              // count: shop.totalProducts,
             ),
             CustomCard(
               startColor: "#42275a".toColor(),
               endColor: "#734b6d".toColor(),
               icon: MdiIcons.cart,
               title: "Produk Terjual",
-              count: shop.sold,
+              // count: shop.sold,
             ),
             CustomCard(
               isPrice: true,
@@ -118,7 +117,7 @@ class FeaturedRow extends StatelessWidget {
               endColor: "#dd2476".toColor(),
               icon: MdiIcons.cashMultiple,
               title: "Pendapatan",
-              count: shop.income,
+              // count: shop.income,
             ),
           ],
         ),

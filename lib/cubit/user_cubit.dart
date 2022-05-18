@@ -15,9 +15,9 @@ class UserCubit extends Cubit<UserState> {
     emit(UserInitial());
   }
 
-  Future<void> signIn(String email, String password, bool hasToken) async {
+  Future<void> signIn(String email, String password) async {
     ApiReturnValueShop<User, Shop> result =
-        await UserServices.signIn(email, password, hasToken);
+        await UserServices.signIn(email, password);
 
     if (result.value != null && result.shop != null) {
       emit(UserLoadedWithShop(result.value, result.shop));
@@ -106,15 +106,15 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<void> addNib(User user, Shop shop, {File pictureFile}) async {
-    ApiReturnValueShop<User, Shop> result =
-        await UserServices.addNib(user, shop, pictureFile: pictureFile);
-    if (result.value != null && result.shop != null) {
-      emit(UserLoadedWithShop(result.value, result.shop));
-    } else {
-      emit(UserLoadingFailed(result.message, result.error));
-    }
-  }
+  // Future<void> addNib(User user, Shop shop, {File pictureFile}) async {
+  //   ApiReturnValueShop<User, Shop> result =
+  //       await UserServices.addNib(user, shop, pictureFile: pictureFile);
+  //   if (result.value != null && result.shop != null) {
+  //     emit(UserLoadedWithShop(result.value, result.shop));
+  //   } else {
+  //     emit(UserLoadingFailed(result.message, result.error));
+  //   }
+  // }
 
   Future<void> update(User user, Shop shop, {File pictureFile}) async {
     ApiReturnValueShop<User, Shop> result =

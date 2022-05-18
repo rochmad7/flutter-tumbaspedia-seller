@@ -24,7 +24,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 part 'general_page.dart';
 part 'add_shop_page.dart';
 part 'add_product_page.dart';
-part 'add_nib_page.dart';
+// part 'add_nib_page.dart';
 part 'sign_in_page.dart';
 part 'sign_up_page.dart';
 part 'main_page.dart';

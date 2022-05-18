@@ -3,19 +3,16 @@ part of 'services.dart';
 class UserServices {
   //////// With Shop /////////
   static Future<ApiReturnValueShop<User, Shop>> signIn(
-      String email, String password, bool hasToken,
+      String email, String password,
       {http.Client client}) async {
     try {
       client ??= http.Client();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'shoplogin3';
+      String url = baseURLAPI + '/auth/shop/login';
 
       var response = await client.post(url,
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Token": tokenAPI,
-            "HasToken": hasToken ? prefs.getString('tokenshop') : ''
           },
           body: jsonEncode(
               <String, String>{'email': email, 'password': password}));
@@ -24,20 +21,17 @@ class UserServices {
       if (response.statusCode != 200) {
         removeUserData();
         return ApiReturnValueShop(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
       User.token = data['data']['access_token'];
       Shop shop = Shop.fromJson(data['data']['shop']);
-      User value = User.fromJson(data['data']['user']);
+      User value = User.fromJson(data['data']['shop']['user']);
       saveUserData(
           email: email,
-          password: password,
           token: User.token,
-          isReject: shop.isReject,
-          isValid: shop.isValid,
-          nib: shop.nib);
+          isValid: shop.isValid);
 
       return ApiReturnValueShop(value: value, shop: shop);
     } on SocketException {
@@ -69,12 +63,12 @@ class UserServices {
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
       return ApiReturnValue(
-          message: data['data']['message'].toString(), error: null);
+          message: data['message'].toString(), error: null);
     } on SocketException {
       return ApiReturnValue(message: socketException, isException: true);
     } on HttpException {
@@ -111,11 +105,11 @@ class UserServices {
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValueShop(
-            message: data['data']['message'], error: data['data']['error']);
+            message: data['message'], error: data['error']);
       }
 
-      User user = User.fromJson(data['data']['user']);
-      saveUserData(email: user.email, password: newPassword, token: User.token);
+      User user = User.fromJson(data['user']);
+      saveUserData(email: user.email, token: User.token);
       return ApiReturnValueShop(value: user, shop: shop);
     } on SocketException {
       return ApiReturnValueShop(message: socketException, isException: true);
@@ -152,8 +146,8 @@ class UserServices {
 
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
       return ApiReturnValue(value: user);
@@ -220,38 +214,34 @@ class UserServices {
       if (response.statusCode != 200) {
         removeUserData();
         return ApiReturnValueShop(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
-      User.token = data['data']['access_token'];
-      User value = User.fromJson(data['data']['user']);
-      Shop shopReturn = Shop.fromJson(data['data']['shop']);
+      User.token = data['access_token'];
+      User value = User.fromJson(data['user']);
+      Shop shopReturn = Shop.fromJson(data['shop']);
 
       if (pictureFile != null) {
         ApiReturnValue<String> result = await uploadShopPicture(
-            data['data']['access_token'], pictureFile, 'shop/photo');
+            data['access_token'], pictureFile, 'shop/photo');
         if (result.value != null) {
           value =
               value.copyWith(picturePath: "assets/img/shop/" + result.value);
         }
       }
 
-      if (nibFile != null) {
-        ApiReturnValue<String> result = await uploadShopPicture(
-            data['data']['access_token'], nibFile, 'shop/nib');
-        if (result.value != null) {
-          shopReturn =
-              shopReturn.copyWith(nib: "assets/img/shop/nib/" + result.value);
-        }
-      }
+      // if (nibFile != null) {
+      //   ApiReturnValue<String> result = await uploadShopPicture(
+      //       data['access_token'], nibFile, 'shop/nib');
+      //   if (result.value != null) {
+      //     shopReturn =
+      //         shopReturn.copyWith(nib: "assets/img/shop/nib/" + result.value);
+      //   }
+      // }
       saveUserData(
           email: user.email,
-          password: password,
-          token: User.token,
-          isReject: shopReturn.isReject,
-          isValid: shopReturn.isValid,
-          nib: shopReturn.nib);
+          token: User.token,);
 
       return ApiReturnValueShop(value: value, shop: shopReturn);
     } on SocketException {
@@ -294,7 +284,7 @@ class UserServices {
         String responseBody = await response.stream.bytesToString();
         var data = jsonDecode(responseBody);
 
-        String imagePath = data['data'][0];
+        String imagePath = data[0];
 
         return ApiReturnValue(value: imagePath);
       }
@@ -358,12 +348,12 @@ class UserServices {
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValueShop(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
-      User value = User.fromJson(data['data']['user']);
-      Shop shopReturn = Shop.fromJson(data['data']['shop']);
+      User value = User.fromJson(data['user']);
+      Shop shopReturn = Shop.fromJson(data['shop']);
 
       if (pictureFile != null) {
         ApiReturnValue<String> result =
@@ -385,39 +375,37 @@ class UserServices {
     }
   }
 
-  static Future<ApiReturnValueShop<User, Shop>> addNib(User user, Shop shop,
-      {File pictureFile, http.Client client}) async {
-    try {
-      if (pictureFile == null) {
-        return ApiReturnValueShop(message: 'Silahkan upload file NIB Anda');
-      }
-      client ??= http.Client();
-      User value = user;
-      Shop shopReturn = shop;
-      if (pictureFile != null) {
-        ApiReturnValue<String> result =
-            await uploadShopPicture(User.token, pictureFile, 'shop/nib');
-        if (result.value != null) {
-          shopReturn =
-              shopReturn.copyWith(nib: "assets/img/shop/nib/" + result.value);
-        } else {
-          return ApiReturnValueShop(message: 'Uploading NIB picture failed');
-        }
-      }
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('nib', shopReturn.nib);
-
-      return ApiReturnValueShop(value: value, shop: shopReturn);
-    } on SocketException {
-      return ApiReturnValueShop(message: socketException, isException: true);
-    } on HttpException {
-      return ApiReturnValueShop(message: httpException, isException: true);
-    } on FormatException {
-      return ApiReturnValueShop(message: formatException, isException: true);
-    } catch (e) {
-      return ApiReturnValueShop(message: e.toString(), isException: true);
-    }
-  }
+  // static Future<ApiReturnValueShop<User, Shop>> addNib(User user, Shop shop,
+  //     {File pictureFile, http.Client client}) async {
+  //   try {
+  //     if (pictureFile == null) {
+  //       return ApiReturnValueShop(message: 'Silahkan upload file NIB Anda');
+  //     }
+  //     client ??= http.Client();
+  //     User value = user;
+  //     Shop shopReturn = shop;
+  //     if (pictureFile != null) {
+  //       ApiReturnValue<String> result =
+  //           await uploadShopPicture(User.token, pictureFile, 'shop/nib');
+  //       if (result.value != null) {
+  //         shopReturn =
+  //             shopReturn.copyWith(nib: "assets/img/shop/nib/" + result.value);
+  //       } else {
+  //         return ApiReturnValueShop(message: 'Uploading NIB picture failed');
+  //       }
+  //     }
+  //
+  //     return ApiReturnValueShop(value: value, shop: shopReturn);
+  //   } on SocketException {
+  //     return ApiReturnValueShop(message: socketException, isException: true);
+  //   } on HttpException {
+  //     return ApiReturnValueShop(message: httpException, isException: true);
+  //   } on FormatException {
+  //     return ApiReturnValueShop(message: formatException, isException: true);
+  //   } catch (e) {
+  //     return ApiReturnValueShop(message: e.toString(), isException: true);
+  //   }
+  // }
 
   static Future<ApiReturnValue<String>> updateShopPicture(
       Shop shop, File pictureFile,
@@ -445,7 +433,7 @@ class UserServices {
         String responseBody = await response.stream.bytesToString();
         var data = jsonDecode(responseBody);
 
-        String imagePath = data['data'][0];
+        String imagePath = data[0];
 
         return ApiReturnValue(value: imagePath);
       }
@@ -484,12 +472,12 @@ class UserServices {
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValueShop(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
-      Shop shopReturn = Shop.fromJson(data['data']['shop']);
-      User value = User.fromJson(data['data']['user']);
+      Shop shopReturn = Shop.fromJson(data['shop']);
+      User value = User.fromJson(data['user']);
 
       return ApiReturnValueShop(value: value, shop: shopReturn);
     } on SocketException {
@@ -525,12 +513,12 @@ class UserServices {
 
       if (response.statusCode != 200) {
         return ApiReturnValueShop(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
-      Shop shopReturn = Shop.fromJson(data['data']['shop']);
-      User value = User.fromJson(data['data']['user']);
+      Shop shopReturn = Shop.fromJson(data['shop']);
+      User value = User.fromJson(data['user']);
 
       return ApiReturnValueShop(value: value, shop: shopReturn);
     } on SocketException {
@@ -560,8 +548,8 @@ class UserServices {
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValueShop(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
       removeUserData();
 

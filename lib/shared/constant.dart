@@ -2,18 +2,11 @@ part of 'shared.dart';
 
 void saveUserData(
     {String email,
-    String password,
-    String token,
-    String nib,
-    bool isReject,
-    bool isValid}) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString('emailshop', email);
-  prefs.setString('passwordshop', password);
-  prefs.setString('tokenshop', token);
-  prefs.setBool('isReject', isReject);
-  prefs.setBool('isValid', isValid);
-  prefs.setString('nib', nib);
+    String token, bool isValid}) async {
+  final _storage = const FlutterSecureStorage();
+  _storage.write(key: 'email', value: email);
+  _storage.write(key: 'token', value: token);
+  _storage.write(key: 'isValid', value: isValid.toString());
 }
 
 void removeUserData() async {
@@ -31,7 +24,7 @@ String tokenAPI = "VUJDZFIYZD6TJ4DFDGULFGXZDPOVI94R";
 // String baseURL = 'http://192.168.81.14:8000/';
 String baseURL = 'https://betav2.doltinuku.id/';
 String baseURLStorage = baseURL + 'storage/';
-String baseURLAPI = baseURL + 'api/';
+String baseURLAPI = 'http://10.0.2.2:3000/api';
 
 Color mainColor = "032339".toColor();
 Color greyColor = "8D92A3".toColor();

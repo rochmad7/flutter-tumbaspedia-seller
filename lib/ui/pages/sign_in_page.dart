@@ -102,7 +102,7 @@ class _SignInPageState extends State<SignInPage> {
                 });
 
                 await context.read<UserCubit>().signIn(
-                    emailController.text, passwordController.text, false);
+                    emailController.text, passwordController.text);
                 UserState state = context.read<UserCubit>().state;
 
                 if (state is UserLoadedWithShop) {
@@ -119,20 +119,14 @@ class _SignInPageState extends State<SignInPage> {
                   Shop shop =
                       (context.read<UserCubit>().state as UserLoadedWithShop)
                           .shop;
-                  (!shop.isReject)
-                      ? (shop.nib != null)
-                          ? (shop.isValid)
-                              ? Get.offAll(() => MainPage(initialPage: 0))
-                              : Get.offAll(() => WaitingShopPage(
-                                  shopInitial: shop,
-                                  userInitial: user,
-                                  isReject: false))
-                          : Get.offAll(() => SuccessSignInPage(
-                              userInitial: user, shopInitial: shop))
+                  (shop.isValid)
+                      ? Get.offAll(() => MainPage(initialPage: 0))
                       : Get.offAll(() => WaitingShopPage(
                           shopInitial: shop,
                           userInitial: user,
-                          isReject: true));
+                          isReject: false));
+                  // : Get.offAll(() => SuccessSignInPage(
+                  //     userInitial: user, shopInitial: shop))
                 } else {
                   snackBar("Maaf login gagal",
                       (state as UserLoadingFailed).message, 'error');

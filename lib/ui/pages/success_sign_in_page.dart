@@ -32,8 +32,8 @@ class SuccessSignInPage extends StatelessWidget {
                 subtitle:
                     "Yuk lengkapi tokomu\ndengan mengupload NIB\n(Nomor Induk Berusaha)",
                 picturePath: completeProfile,
-                buttonTap1: () =>
-                    Get.to(() => AddNibPage(user: user, shop: shop)),
+                // buttonTap1: () =>
+                    // Get.to(() => AddNibPage(user: user, shop: shop)),
                 buttonTitle1: 'Lengkapi Data Toko',
               ));
         } else
