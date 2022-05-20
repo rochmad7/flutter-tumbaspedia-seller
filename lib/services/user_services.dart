@@ -460,7 +460,7 @@ class UserServices {
       shop ??= Shop();
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'shop/profile/' + shop.id.toString();
+      String url = baseURLAPI + '/shops/' + shop.id.toString();
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",

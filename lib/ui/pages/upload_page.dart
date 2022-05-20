@@ -82,9 +82,9 @@ class _UploadPageState extends State<UploadPage> {
                   PhotoState state = context.read<PhotoCubit>().state;
 
                   if (state is PhotoAdded) {
-                    context
-                        .read<ProductCubit>()
-                        .getMyProducts(null, null, null, null);
+                    // context
+                    //     .read<ProductCubit>()
+                    //     .getMyProducts(null, null, null, null);
                     setState(() {
                       isLoading = false;
                     });
@@ -92,9 +92,9 @@ class _UploadPageState extends State<UploadPage> {
                     snackBar("Berhasil", "Foto produk berhasil ditambahkan",
                         'success');
                   } else {
-                    context
-                        .read<ProductCubit>()
-                        .getMyProducts(null, null, null, null);
+                    // context
+                    //     .read<ProductCubit>()
+                    //     .getMyProducts(null, null, null, null);
                     snackBar("Foto produk gagal ditambahkan",
                         (state as PhotoAddedFailed).message, 'error');
 

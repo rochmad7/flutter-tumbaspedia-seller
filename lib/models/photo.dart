@@ -11,7 +11,7 @@ class Photo extends Equatable {
     if (data != null) {
       return Photo(
         id: data["id"],
-        images: data["picturePath"],
+        images: data["picture_url"],
       );
     }
     return null;

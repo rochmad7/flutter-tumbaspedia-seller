@@ -38,10 +38,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           height: 110,
                           margin: EdgeInsets.only(bottom: 16),
                           padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/user/photo_border.png'))),
+                          // decoration: BoxDecoration(
+                          //     image: DecorationImage(
+                          //         image: AssetImage(
+                          //             'assets/images/user/photo_border.png'))),
                           child: CachedNetworkImage(
                             imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(
@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             imageUrl:
-                                "https://ui-avatars.com/api/?name=" + user.name,
+                                "https://ui-avatars.com/api/?name=" + shop.name,
                             fit: BoxFit.cover,
                             // placeholder: (context, url) =>
                             //     CircularProgressIndicator(),

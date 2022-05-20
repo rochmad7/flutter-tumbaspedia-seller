@@ -204,9 +204,9 @@ class _AddProductPageState extends State<AddProductPage> {
                   ProductState state = context.read<ProductCubit>().state;
 
                   if (state is ProductAdded) {
-                    context
-                        .read<ProductCubit>()
-                        .getMyProducts(null, null, null, null);
+                    // context
+                    //     .read<ProductCubit>()
+                    //     .getMyProducts(null, null, null, null);
                     setState(() {
                       isLoading = false;
                     });
@@ -216,9 +216,9 @@ class _AddProductPageState extends State<AddProductPage> {
                     snackBar(
                         "Berhasil", "Produk berhasil ditambahkan", 'success');
                   } else {
-                    context
-                        .read<ProductCubit>()
-                        .getMyProducts(null, null, null, null);
+                    // context
+                    //     .read<ProductCubit>()
+                    //     .getMyProducts(null, null, null, null);
                     snackBar("Produk gagal ditambahkan",
                         (state as ProductAddedFailed).message, 'error');
 

@@ -8,6 +8,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   AnimationController animationController;
   int count = 9;
+
   @override
   void initState() {
     animationController = AnimationController(
@@ -38,8 +39,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           .shop);
                   await context
                       .read<ProductCubit>()
-                      .getMyProducts(null, null, null, null);
-                  await context.read<TransactionCubit>().getTransactions(null);
+                      .getMyProducts(null, null, null, null, null);
+                  await context.read<TransactionCubit>().getTransactions(null, null);
                 },
                 child: SingleChildScrollView(
                   child: Column(
@@ -86,6 +87,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
 class FeaturedRow extends StatelessWidget {
   final Shop shop;
+
   FeaturedRow({this.shop});
 
   @override
@@ -97,28 +99,28 @@ class FeaturedRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            CustomCard(
-              startColor: "#000428".toColor(),
-              endColor: "#004e92".toColor(),
-              icon: MdiIcons.shopping,
-              title: "Total Produk",
-              // count: shop.totalProducts,
-            ),
-            CustomCard(
-              startColor: "#42275a".toColor(),
-              endColor: "#734b6d".toColor(),
-              icon: MdiIcons.cart,
-              title: "Produk Terjual",
-              // count: shop.sold,
-            ),
-            CustomCard(
-              isPrice: true,
-              startColor: "#ff512f".toColor(),
-              endColor: "#dd2476".toColor(),
-              icon: MdiIcons.cashMultiple,
-              title: "Pendapatan",
-              // count: shop.income,
-            ),
+            // CustomCard(
+            //   startColor: "#000428".toColor(),
+            //   endColor: "#004e92".toColor(),
+            //   icon: MdiIcons.shopping,
+            //   title: "Total Produk",
+            //   // count: shop.totalProducts,
+            // ),
+            // CustomCard(
+            //   startColor: "#42275a".toColor(),
+            //   endColor: "#734b6d".toColor(),
+            //   icon: MdiIcons.cart,
+            //   title: "Produk Terjual",
+            //   // count: shop.sold,
+            // ),
+            // CustomCard(
+            //   isPrice: true,
+            //   startColor: "#ff512f".toColor(),
+            //   endColor: "#dd2476".toColor(),
+            //   icon: MdiIcons.cashMultiple,
+            //   title: "Pendapatan",
+            //   // count: shop.income,
+            // ),
           ],
         ),
       ),
@@ -133,6 +135,7 @@ class CustomCard extends StatelessWidget {
   final Color startColor;
   final Color endColor;
   final int count;
+
   CustomCard(
       {this.icon,
       this.isPrice = false,

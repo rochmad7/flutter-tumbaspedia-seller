@@ -27,7 +27,7 @@ class ProfileHeader extends StatefulWidget {
 class _ProfileHeaderState extends State<ProfileHeader> {
   @override
   Widget build(BuildContext context) {
-    bool isSwitched = widget.status;
+    bool isSwitched = widget.status ?? false;
     return Stack(
       children: <Widget>[
         Ink(

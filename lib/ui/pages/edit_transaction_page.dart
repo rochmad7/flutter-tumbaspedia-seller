@@ -96,7 +96,7 @@ class _EditTransactionPageState extends State<EditTransactionPage> {
 
                     if (state is TransactionUpdated) {
                       Navigator.of(context).pop();
-                      context.read<TransactionCubit>().getTransactions(null);
+                      // context.read<TransactionCubit>().getTransactions(null);
                       Get.to(() => MainPage(
                             initialPage: 3,
                           ));
@@ -108,7 +108,7 @@ class _EditTransactionPageState extends State<EditTransactionPage> {
                       });
                     } else {
                       Navigator.of(context).pop();
-                      context.read<TransactionCubit>().getTransactions(null);
+                      // context.read<TransactionCubit>().getTransactions(null);
                       context.read<UserCubit>().getMyProfile((context
                               .read<UserCubit>()
                               .state as UserLoadedWithShop)
@@ -143,7 +143,7 @@ class _EditTransactionPageState extends State<EditTransactionPage> {
           SweetAlert.show(context,
               subtitle: "Foto produk berhasil dihapus!",
               style: SweetAlertStyle.success);
-          context.read<ProductCubit>().getMyProducts(null, null, null, null);
+          // context.read<ProductCubit>().getMyProducts(null, null, null, null);
           new Future.delayed(new Duration(seconds: 1), () {
             Get.off(MainPage(initialPage: 1));
           });

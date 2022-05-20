@@ -38,11 +38,11 @@ class _ProductPageState extends State<ProductPage> {
     try {
       ApiReturnValue<List<Product>> newItems;
       if (selectedIndex == 0) {
-        newItems = await ProductServices.getMyProducts(
-            query, pageKey, _pageSize, null, _selectedSortMethod);
+        // newItems = await ProductServices.getMyProducts(
+        //     query, pageKey, _pageSize, null, null, _selectedSortMethod);
       } else {
-        newItems = await ProductServices.getMyProducts(
-            query, pageKey, _pageSize, selectedIndex, _selectedSortMethod);
+        // newItems = await ProductServices.getMyProducts(
+        //     query, pageKey, _pageSize, null, selectedIndex, _selectedSortMethod);
       }
 
       final isLastPage = newItems.value.length < _pageSize;
@@ -74,9 +74,6 @@ class _ProductPageState extends State<ProductPage> {
                 .toList();
             category.clear();
             category.addAll(categories);
-            if (!category.contains(mockCategories[0])) {
-              category.insert(0, mockCategories[0]);
-            }
             categoriesname.addAll(category);
             isLoading = false;
           });

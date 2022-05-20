@@ -130,9 +130,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
                         onTap: () async {
-                          await context
-                              .read<ProductCubit>()
-                              .getMyProducts(null, null, null, null);
+                          // await context
+                          //     .read<ProductCubit>()
+                          //     .getMyProducts(null, null, null, null);
                           Get.back();
                         },
                         child: Container(
@@ -365,17 +365,17 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   ProductState state =
                                       context.read<ProductCubit>().state;
                                   if (state is ProductDeleted) {
-                                    context
-                                        .read<ProductCubit>()
-                                        .getMyProducts(null, null, null, null);
+                                    // context
+                                    //     .read<ProductCubit>()
+                                    //     .getMyProducts(null, null, null, null);
 
                                     Get.to(() => MainPage(initialPage: 1));
                                     snackBar("Berhasil",
                                         "Produk berhasil dihapus", 'success');
                                   } else {
-                                    context
-                                        .read<ProductCubit>()
-                                        .getMyProducts(null, null, null, null);
+                                    // context
+                                    //     .read<ProductCubit>()
+                                    //     .getMyProducts(null, null, null, null);
                                     snackBar(
                                         "Gagal menghapus!",
                                         (state as ProductDeletedFailed).message,
@@ -430,7 +430,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           SweetAlert.show(context,
               subtitle: "Foto produk berhasil dihapus!",
               style: SweetAlertStyle.success);
-          context.read<ProductCubit>().getMyProducts(null, null, null, null);
+          // context.read<ProductCubit>().getMyProducts(null, null, null, null);
           new Future.delayed(new Duration(seconds: 1), () {
             Get.off(MainPage(initialPage: 1));
           });

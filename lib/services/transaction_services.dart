@@ -1,29 +1,27 @@
 part of 'services.dart';
 
 class TransactionServices {
-  static Future<ApiReturnValue<List<Transaction>>> getTransactions(int limit,
+  static Future<ApiReturnValue<List<Transaction>>> getTransactions(
+      int limit, int shopId,
       {http.Client client}) async {
     try {
       client ??= http.Client();
       limit ??= 1000;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'shop/transaction/?limit=' + limit.toString();
+      String url = baseURLAPI + '/shops/' + shopId.toString() + '/transactions';
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Token": tokenAPI,
-        "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+        // "Authorization": "Bearer ${prefs.getString('tokenshop')}"
       });
 
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
-      List<Transaction> transactions = (data['data']['data'] as Iterable)
+      List<Transaction> transactions = (data['data'] as Iterable)
           .map((e) => Transaction.fromJson(e))
           .toList();
 

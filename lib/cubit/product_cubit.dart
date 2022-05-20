@@ -13,9 +13,9 @@ class ProductCubit extends Cubit<ProductState> {
   ProductCubit() : super(ProductInitial());
 
   Future<void> getMyProducts(
-      String query, int start, int limit, int categoryId) async {
+      String query, int start, int limit, int shopId, int categoryId) async {
     ApiReturnValue<List<Product>> result = await ProductServices.getMyProducts(
-        query, start, limit, categoryId, null);
+        query, start, limit, shopId, categoryId, null);
 
     if (result.value != null) {
       emit(ProductLoaded(result.value));

@@ -11,6 +11,7 @@ class Shop extends Equatable {
   final int rating;
   final String openingHours;
   final String closedHours;
+  final bool status;
 
   Shop(
       {this.id,
@@ -22,6 +23,7 @@ class Shop extends Equatable {
       // this.totalProducts,
       this.openingHours,
       this.closedHours,
+      this.status = true,
       this.isValid});
 
   factory Shop.fromJson(Map<String, dynamic> data) => Shop(
@@ -34,7 +36,7 @@ class Shop extends Equatable {
         // totalProducts: data["total_products"] != null
         //     ? int.parse(data["total_products"].toString())
         //     : 0,
-        isValid: (data["is_valid"] == 0) ? false : true,
+        isValid: data["is_verified"],
         description: data["description"],
       );
 
@@ -47,6 +49,7 @@ class Shop extends Equatable {
           String openingHours,
           String closedHours,
           bool isValid,
+          bool status,
           String description,
           double rating}) =>
       Shop(
@@ -58,6 +61,7 @@ class Shop extends Equatable {
           openingHours: openingHours ?? this.openingHours,
           closedHours: closedHours ?? this.closedHours,
           isValid: isValid ?? this.isValid,
+          status: status ?? this.status,
           description: description ?? this.description,
           rating: rating ?? this.rating);
 
@@ -72,6 +76,7 @@ class Shop extends Equatable {
         rating,
         address,
         images,
+        status,
         description,
       ];
 }

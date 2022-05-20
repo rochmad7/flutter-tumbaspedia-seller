@@ -3,6 +3,7 @@ import 'package:shop_tumbaspedia/cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'ui/pages/pages.dart';
 // import 'package:get/get.dart';
@@ -52,17 +53,16 @@ class MyApp extends StatelessWidget {
       providers: [
         email == '' && password == '' && token == ''
             ? BlocProvider(create: (_) => UserCubit()..userInitial())
-            : BlocProvider(
-                create: (_) => UserCubit()..signIn(email, password)),
+            : BlocProvider(create: (_) => UserCubit()..signIn(email, password)),
         BlocProvider(create: (_) => ProductCubit()),
-        BlocProvider(create: (_) => CategoryCubit()),
+        // BlocProvider(create: (_) => CategoryCubit()),
         BlocProvider(create: (_) => ShopCubit()),
         email == '' && password == '' && token == ''
             ? BlocProvider(create: (_) => TransactionCubit())
             : BlocProvider(
-                create: (_) => TransactionCubit()..getTransactions(null)),
-        BlocProvider(create: (_) => PhotoCubit()),
-        BlocProvider(create: (_) => RatingCubit()),
+                create: (_) => TransactionCubit()..getTransactions(null, null)),
+        // BlocProvider(create: (_) => PhotoCubit()),
+        // BlocProvider(create: (_) => RatingCubit()),
       ],
       child: GetMaterialApp(
           debugShowCheckedModeBanner: false,

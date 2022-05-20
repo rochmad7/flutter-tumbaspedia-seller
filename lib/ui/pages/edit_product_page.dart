@@ -74,9 +74,9 @@ class _EditProductPageState extends State<EditProductPage> {
         title: 'Edit Produk',
         subtitle: "Pastikan data yang diisi valid",
         onBackButtonPressed: () async {
-          await context
-              .read<ProductCubit>()
-              .getMyProducts(null, null, null, null);
+          // await context
+          //     .read<ProductCubit>()
+          //     .getMyProducts(null, null, null, null);
           Get.back();
         },
         child: Container(
@@ -197,9 +197,9 @@ class _EditProductPageState extends State<EditProductPage> {
                   ProductState state = context.read<ProductCubit>().state;
 
                   if (state is ProductEdited) {
-                    context
-                        .read<ProductCubit>()
-                        .getMyProducts(null, null, null, null);
+                    // context
+                    //     .read<ProductCubit>()
+                    //     .getMyProducts(null, null, null, null);
 
                     setState(() {
                       isLoading = false;
@@ -209,9 +209,9 @@ class _EditProductPageState extends State<EditProductPage> {
                         ));
                     snackBar("Berhasil", "Produk berhasil diupdate", 'success');
                   } else {
-                    context
-                        .read<ProductCubit>()
-                        .getMyProducts(null, null, null, null);
+                    // context
+                    //     .read<ProductCubit>()
+                    //     .getMyProducts(null, null, null, null);
                     snackBar("Produk gagal diupdate",
                         (state as ProductEditedFailed).message, 'error');
                     setState(() {

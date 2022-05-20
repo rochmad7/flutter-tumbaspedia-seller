@@ -9,6 +9,7 @@ class Transaction extends Equatable {
   final int quantity;
   final int total;
   final DateTime dateTime;
+  final DateTime updateTime;
   final DateTime confirmedAt;
   final DateTime deliveredAt;
   final TransactionStatus status;
@@ -17,50 +18,55 @@ class Transaction extends Equatable {
   Transaction({
     this.id,
     this.product,
+    this.user,
     this.shop,
     this.quantity,
     this.total,
     this.dateTime,
+    this.updateTime,
     this.confirmedAt,
     this.deliveredAt,
     this.status,
-    this.user,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> data) => Transaction(
-        id: data["id"],
-        // shop: Shop.fromJson(data["shop"]),
-        product: Product.fromJson(data["product"]),
-        user: User.fromJson(data["user"]),
-        quantity: int.parse(data["quantity"].toString()),
-        total: int.parse(data["total"].toString()),
-        dateTime: DateTime.fromMillisecondsSinceEpoch(data["created_at"]),
-        confirmedAt: data["confirmed_at"] != null
-            ? DateTime.fromMillisecondsSinceEpoch(data["created_at"])
-            : null,
-        deliveredAt: data["delivered_at"] != null
-            ? DateTime.fromMillisecondsSinceEpoch(data["updated_at"])
-            : null,
-        status: (data["status"] == 'PENDING')
-            ? TransactionStatus.pending
-            : (data['status'] == 'DELIVERED')
-                ? TransactionStatus.delivered
-                : (data['status'] == 'CANCELLED')
-                    ? TransactionStatus.cancelled
-                    : TransactionStatus.on_delivery,
-      );
+    id: data["id"],
+    product:
+    data["product"] != null ? Product.fromJson(data["product"]) : null,
+    user: data["user"] != null ? User.fromJson(data["user"]) : null,
+    shop: data["shop"] != null ? Shop.fromJson(data["shop"]) : null,
+    quantity: data["quantity"],
+    total: data["total"],
+    dateTime: DateTime.parse(data["created_at"]),
+    updateTime: DateTime.parse(data["updated_at"]),
+    confirmedAt: data["confirmed_at"] != null
+        ? DateTime.parse(data["created_at"])
+        : null,
+    deliveredAt: data["delivered_at"] != null
+        ? DateTime.parse(data["updated_at"])
+        : null,
+    status: (data["status"] == 'pending')
+        ? TransactionStatus.pending
+        : (data['status'] == 'delivered')
+        ? TransactionStatus.delivered
+        : (data['status'] == 'canceled')
+        ? TransactionStatus.cancelled
+        : TransactionStatus.on_delivery,
+  );
 
-  Transaction copyWith(
-      {int id,
-      Shop shop,
-      Product product,
-      int quantity,
-      int total,
-      DateTime dateTime,
-      DateTime confirmedAt,
-      DateTime deliveredAt,
-      TransactionStatus status,
-      User user}) {
+  Transaction copyWith({
+    int id,
+    Shop shop,
+    Product product,
+    User user,
+    int quantity,
+    int total,
+    DateTime dateTime,
+    DateTime updateTime,
+    DateTime confirmedAt,
+    DateTime deliveredAt,
+    TransactionStatus status,
+  }) {
     return Transaction(
         id: id ?? this.id,
         shop: shop ?? this.shop,
@@ -68,6 +74,7 @@ class Transaction extends Equatable {
         quantity: quantity ?? this.quantity,
         total: total ?? this.total,
         dateTime: dateTime ?? this.dateTime,
+        updateTime: updateTime ?? this.updateTime,
         confirmedAt: confirmedAt ?? this.confirmedAt,
         deliveredAt: deliveredAt ?? this.deliveredAt,
         status: status ?? this.status,
@@ -76,15 +83,16 @@ class Transaction extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        shop,
-        product,
-        quantity,
-        confirmedAt,
-        deliveredAt,
-        total,
-        dateTime,
-        status,
-        user
-      ];
+    id,
+    product,
+    user,
+    shop,
+    quantity,
+    total,
+    dateTime,
+    updateTime,
+    confirmedAt,
+    deliveredAt,
+    status
+  ];
 }

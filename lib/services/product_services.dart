@@ -1,8 +1,8 @@
 part of 'services.dart';
 
 class ProductServices {
-  static Future<ApiReturnValue<List<Product>>> getMyProducts(
-      String query, int start, int limit, int categoryId, SortMethod sort,
+  static Future<ApiReturnValue<List<Product>>> getMyProducts(String query,
+      int start, int limit, int shopId, int categoryId, SortMethod sort,
       {http.Client client}) async {
     try {
       client ??= http.Client();
@@ -11,7 +11,9 @@ class ProductServices {
       query ??= '';
       start ??= 0;
       url = baseURLAPI +
-          'shop/myproduct?start=' +
+          '/shops/' +
+          shopId.toString() +
+          '/products?start=' +
           start.toString() +
           '&search=' +
           query;
@@ -39,13 +41,11 @@ class ProductServices {
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
-      List<Product> products = (data['data']['data'] as Iterable)
-          .map((e) => Product.fromJson(e))
-          .toList();
+      List<Product> products =
+          (data['data'] as Iterable).map((e) => Product.fromJson(e)).toList();
 
       return ApiReturnValue(value: products);
     } on SocketException {

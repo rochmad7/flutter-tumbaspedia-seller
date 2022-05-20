@@ -149,9 +149,9 @@ class _AddShopPageState extends State<AddShopPage> {
                 UserState state = context.read<UserCubit>().state;
 
                 if (state is UserLoadedWithShop) {
-                  context
-                      .read<ProductCubit>()
-                      .getMyProducts(null, null, null, null);
+                  // context
+                  //     .read<ProductCubit>()
+                  //     .getMyProducts(null, null, null, null);
                   User user =
                       (context.read<UserCubit>().state as UserLoadedWithShop)
                           .user;
