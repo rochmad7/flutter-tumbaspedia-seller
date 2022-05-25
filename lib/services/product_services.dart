@@ -6,19 +6,20 @@ class ProductServices {
       {http.Client client}) async {
     try {
       client ??= http.Client();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       String url;
       query ??= '';
       start ??= 0;
       url = baseURLAPI +
-          '/shops/' +
-          shopId.toString() +
-          '/products?start=' +
+          '/products?' +
+          'start=' +
           start.toString() +
           '&search=' +
           query;
       if (categoryId != null) {
-        url += '&category_id=' + categoryId.toString();
+        url += '&category=' + categoryId.toString();
+      }
+      if (shopId != null) {
+        url += '&shop=' + shopId.toString();
       }
       if (limit != null) {
         url += '&limit=' + limit.toString();
@@ -34,8 +35,8 @@ class ProductServices {
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Token": tokenAPI,
-        "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+        // "Token": tokenAPI,
+        // "Authorization": "Bearer ${prefs.getString('tokenshop')}"
       });
 
       var data = jsonDecode(response.body);

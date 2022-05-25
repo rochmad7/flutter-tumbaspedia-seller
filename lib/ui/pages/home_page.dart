@@ -34,13 +34,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               extendBody: true,
               body: RefreshIndicator(
                 onRefresh: () async {
-                  await context.read<UserCubit>().getMyProfile(
-                      (context.read<UserCubit>().state as UserLoadedWithShop)
-                          .shop);
+                  // await context.read<UserCubit>().getMyProfile(
+                  //     (context.read<UserCubit>().state as UserLoadedWithShop)
+                  //         .shop);
                   await context
                       .read<ProductCubit>()
-                      .getMyProducts(null, null, null, null, null);
-                  await context.read<TransactionCubit>().getTransactions(null, null);
+                      .getMyProducts(null, null, null, state.shop.id, null);
+                  await context.read<TransactionCubit>().getTransactions(null, state.shop.id);
                 },
                 child: SingleChildScrollView(
                   child: Column(

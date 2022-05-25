@@ -477,7 +477,7 @@ class UserServices {
       }
 
       Shop shopReturn = Shop.fromJson(data['shop']);
-      User value = User.fromJson(data['user']);
+      User value = User.fromJson(data['shop']['user']);
 
       return ApiReturnValueShop(value: value, shop: shopReturn);
     } on SocketException {

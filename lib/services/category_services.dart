@@ -8,7 +8,7 @@ class CategoryServices {
       if (limit == null) {
         limit = 1000;
       }
-      String url = baseURLAPI + 'category/?limit=' + limit.toString();
+      String url = baseURLAPI + '/categories/?limit=' + limit.toString();
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
@@ -20,11 +20,11 @@ class CategoryServices {
 
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
-      List<Category> categories = (data['data']['data'] as Iterable)
+      List<Category> categories = (data['data'] as Iterable)
           .map((e) => Category.fromJson(e))
           .toList();
 

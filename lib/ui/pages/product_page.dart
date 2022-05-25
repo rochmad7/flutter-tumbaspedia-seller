@@ -38,11 +38,11 @@ class _ProductPageState extends State<ProductPage> {
     try {
       ApiReturnValue<List<Product>> newItems;
       if (selectedIndex == 0) {
-        // newItems = await ProductServices.getMyProducts(
-        //     query, pageKey, _pageSize, null, null, _selectedSortMethod);
+        newItems = await ProductServices.getMyProducts(
+            query, pageKey, _pageSize, null, null, _selectedSortMethod);
       } else {
-        // newItems = await ProductServices.getMyProducts(
-        //     query, pageKey, _pageSize, null, selectedIndex, _selectedSortMethod);
+        newItems = await ProductServices.getMyProducts(
+            query, pageKey, _pageSize, null, selectedIndex, _selectedSortMethod);
       }
 
       final isLastPage = newItems.value.length < _pageSize;
@@ -60,7 +60,7 @@ class _ProductPageState extends State<ProductPage> {
   void fetchCategories() async {
     isLoading = true;
     try {
-      final response = await http.get(baseURLAPI + 'category', headers: {
+      final response = await http.get(baseURLAPI + '/categories', headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
         "Token": tokenAPI
@@ -69,7 +69,7 @@ class _ProductPageState extends State<ProductPage> {
         if (mounted) {
           setState(() {
             var data = jsonDecode(response.body);
-            categories = (data['data']['data'] as Iterable)
+            categories = (data['data'] as Iterable)
                 .map((e) => Category.fromJson(e))
                 .toList();
             category.clear();
