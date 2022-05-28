@@ -1,5 +1,4 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_tumbaspedia/cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,10 +23,7 @@ Future<void> main() async {
   String email = await _storage.read(key: 'email');
   String password = await _storage.read(key: 'password');
 
-  runApp(MyApp(
-      email: email,
-      password: password,
-      token: token));
+  runApp(MyApp(email: email, password: password, token: token));
 }
 
 // void main() {
@@ -54,36 +50,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        email == '' && password == '' && token == ''
-            ? BlocProvider(create: (_) => UserCubit()..userInitial())
-            : BlocProvider(create: (_) => UserCubit()..signIn(email, password)),
-        BlocProvider(create: (_) => ProductCubit()),
-        BlocProvider(create: (_) => CategoryCubit()),
-        BlocProvider(create: (_) => ShopCubit()),
-        email == '' && password == '' && token == ''
-            ? BlocProvider(create: (_) => TransactionCubit())
-            : BlocProvider(
-                create: (_) => TransactionCubit()..getTransactions(null, token)),
-        // BlocProvider(create: (_) => PhotoCubit()),
-        // BlocProvider(create: (_) => RatingCubit()),
-      ],
-      child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "Shop Tumbaspedia",
-          home: email == '' && password == '' && token == ''
-              ? SignInPage()
-              : (!isReject)
-                  ? (nib != '')
-                      ? (isValid)
-                          ? MainPage(initialPage: 0)
-                          : WaitingShopPage(
-                              shopInitial: null,
-                              userInitial: null,
-                              isReject: false)
-                      : SuccessSignInPage(userInitial: null, shopInitial: null)
-                  : WaitingShopPage(
-                      shopInitial: null, userInitial: null, isReject: true)),
-    );
+        providers: [
+          email == '' && password == '' && token == ''
+              ? BlocProvider(create: (_) => UserCubit()..userInitial())
+              : BlocProvider(
+                  create: (_) => UserCubit()..signIn(email, password)),
+          BlocProvider(create: (_) => ProductCubit()),
+          BlocProvider(create: (_) => CategoryCubit()),
+          BlocProvider(create: (_) => ShopCubit()),
+          email == '' && password == '' && token == ''
+              ? BlocProvider(create: (_) => TransactionCubit())
+              : BlocProvider(
+                  create: (_) =>
+                      TransactionCubit()..getTransactions(null, token)),
+          // BlocProvider(create: (_) => PhotoCubit()),
+          // BlocProvider(create: (_) => RatingCubit()),
+        ],
+        child: GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: "Shop Tumbaspedia",
+            home: email == '' && password == '' && token == ''
+                ? SignInPage()
+                : MainPage(initialPage: 0))
+        // : WaitingShopPage(
+        //     shopInitial: null, userInitial: null, isReject: false)),
+        );
   }
 }
