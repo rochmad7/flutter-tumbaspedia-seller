@@ -105,11 +105,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   isLoading = true;
                 });
 
-                await context.read<UserCubit>().changePassword(
-                    oldPasswordController.text,
-                    newPasswordController.text,
-                    confPasswordController.text,
-                    widget.shop);
+                // await context.read<UserCubit>().changePassword(
+                //     oldPasswordController.text,
+                //     newPasswordController.text,
+                //     confPasswordController.text,
+                //     widget.shop);
                 UserState state = context.read<UserCubit>().state;
 
                 if (state is UserLoadedWithShop) {
@@ -120,8 +120,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   snackBar(
                       "Berhasil", "Password Anda berhasil diubah", 'success');
                 } else {
-                  context.read<UserCubit>().getMyProfile(
-                      widget.shop);
+                  // context.read<UserCubit>().getMyProfile(
+                  //     widget.shop);
                   snackBar(
                       "Gagal", (state as UserLoadingFailed).message, 'error');
                   setState(() {

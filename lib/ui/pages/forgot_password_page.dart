@@ -20,7 +20,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return GeneralPage(
       onBackButtonPressed: () async {
-        await context.read<UserCubit>().getMyProfile(null);
+        // await context.read<UserCubit>().getMyProfile(null);
         Get.back();
       },
       title: 'Lupa Password',
@@ -79,9 +79,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             isLoading = true;
                           });
 
-                          await context
-                              .read<UserCubit>()
-                              .forgotPassword(emailController.text);
+                          // await context
+                          //     .read<UserCubit>()
+                          //     .forgotPassword(emailController.text);
                           UserState state = context.read<UserCubit>().state;
 
                           if (state is UserForgotPassword) {
@@ -95,7 +95,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 "Link reset password berhasil dikirim",
                                 'success');
                           } else {
-                            await context.read<UserCubit>().getMyProfile(null);
+                            // await context.read<UserCubit>().getMyProfile(null);
                             snackBar(
                                 "Gagal",
                                 (state as UserForgotPasswordFailed).message,

@@ -132,7 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         GestureDetector(
                           onTap: () async {
-                            await context.read<UserCubit>().logOut();
+                            // await context.read<UserCubit>().logOut();
 
                             Get.offAll(() => SignInPage());
                             snackBar("Berhasil", "Anda telah berhasil logout",

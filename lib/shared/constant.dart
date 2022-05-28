@@ -1,10 +1,10 @@
 part of 'shared.dart';
 
 void saveUserData(
-    {String email,
-    String token, bool isValid}) async {
+    {String email, String password, String token, bool isValid}) async {
   final _storage = const FlutterSecureStorage();
   _storage.write(key: 'email', value: email);
+  _storage.write(key: 'password', value: password);
   _storage.write(key: 'token', value: token);
   _storage.write(key: 'isValid', value: isValid.toString());
 }

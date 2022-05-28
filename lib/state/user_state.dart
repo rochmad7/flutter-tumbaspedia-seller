@@ -20,8 +20,9 @@ class UserInitial extends UserState {}
 
 class UserLoaded extends UserState {
   final User user;
+  final String token;
 
-  UserLoaded(this.user);
+  UserLoaded(this.user, this.token);
 
   @override
   List<Object> get props => [user];
@@ -30,8 +31,9 @@ class UserLoaded extends UserState {
 class UserLoadedWithShop extends UserState {
   final User user;
   final Shop shop;
+  final String token;
 
-  UserLoadedWithShop(this.user, this.shop);
+  UserLoadedWithShop(this.user, this.shop, this.token);
 
   @override
   List<Object> get props => [user, shop];

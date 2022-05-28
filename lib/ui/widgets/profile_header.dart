@@ -86,7 +86,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                         // ignore: missing_return
                         showCancelButton: true, onPress: (bool isConfirm) {
                       if (isConfirm) {
-                        context.read<UserCubit>().changeStatus(value);
+                        // context.read<UserCubit>().changeStatus(value);
                         SweetAlert.show(context,
                             style: SweetAlertStyle.success, title: "Berhasil");
                         setState(() {

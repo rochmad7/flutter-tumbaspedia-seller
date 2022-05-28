@@ -61,7 +61,7 @@ class _EditShopPageState extends State<EditShopPage> {
       title: 'Edit Data Toko',
       subtitle: "Pastikan data yang diisi valid",
       onBackButtonPressed: () async {
-        await context.read<UserCubit>().getMyProfile(widget.shop);
+        // await context.read<UserCubit>().getMyProfile(widget.shop);
         Get.back();
       },
       child: Container(
@@ -221,14 +221,14 @@ class _EditShopPageState extends State<EditShopPage> {
                   isLoading = true;
                 });
 
-                await context
-                    .read<UserCubit>()
-                    .update(user, shop, pictureFile: pictureFile);
+                // await context
+                //     .read<UserCubit>()
+                //     .update(user, shop, pictureFile: pictureFile);
 
                 UserState state = context.read<UserCubit>().state;
 
                 if (state is UserLoadedWithShop) {
-                  context.read<UserCubit>().getMyProfile(shop);
+                  // context.read<UserCubit>().getMyProfile(shop);
                   Get.to(() => MainPage(
                         initialPage: 0,
                       ));
@@ -239,7 +239,7 @@ class _EditShopPageState extends State<EditShopPage> {
                     isLoading = false;
                   });
                 } else {
-                  context.read<UserCubit>().getMyProfile(shop);
+                  // context.read<UserCubit>().getMyProfile(shop);
                   snackBar("Data toko gagal diupdate",
                       (state as UserLoadingFailed).message, 'error');
 

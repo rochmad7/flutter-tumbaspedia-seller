@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   await context
                       .read<ProductCubit>()
                       .getMyProducts(null, null, null, state.shop.id, null);
-                  await context.read<TransactionCubit>().getTransactions(null, state.shop.id);
+                  await context.read<TransactionCubit>().getTransactions(null, state.token);
                 },
                 child: SingleChildScrollView(
                   child: Column(

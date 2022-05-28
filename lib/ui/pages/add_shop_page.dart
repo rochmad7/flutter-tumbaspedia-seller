@@ -143,9 +143,9 @@ class _AddShopPageState extends State<AddShopPage> {
                 setState(() {
                   isLoading = true;
                 });
-                await context.read<UserCubit>().signUp(
-                    user, widget.password, shop,
-                    pictureFile: pictureFile, nibFile: nibFile);
+                // await context.read<UserCubit>().signUp(
+                //     user, widget.password, shop,
+                //     pictureFile: pictureFile, nibFile: nibFile);
                 UserState state = context.read<UserCubit>().state;
 
                 if (state is UserLoadedWithShop) {

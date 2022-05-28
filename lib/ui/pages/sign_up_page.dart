@@ -125,9 +125,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     isLoading = true;
                   });
 
-                  await context
-                      .read<UserCubit>()
-                      .checkUser(user, passwordController.text);
+                  // await context
+                  //     .read<UserCubit>()
+                  //     .checkUser(user, passwordController.text);
 
                   UserState state = context.read<UserCubit>().state;
 

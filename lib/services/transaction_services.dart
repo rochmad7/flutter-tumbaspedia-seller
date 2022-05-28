@@ -2,17 +2,20 @@ part of 'services.dart';
 
 class TransactionServices {
   static Future<ApiReturnValue<List<Transaction>>> getTransactions(
-      int limit, int shopId,
+      int limit, String token,
       {http.Client client}) async {
     try {
       client ??= http.Client();
       limit ??= 1000;
-      String url = baseURLAPI + '/shops/' + shopId.toString() + '/transactions';
+      final _storage = const FlutterSecureStorage();
+      final _token = await _storage.read(key: 'token');
+
+      String url = baseURLAPI + '/shops/transactions';
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        // "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+        "Authorization": "Bearer $_token"
       });
 
       var data = jsonDecode(response.body);

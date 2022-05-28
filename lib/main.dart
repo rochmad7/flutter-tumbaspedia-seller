@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_tumbaspedia/cubit/cubit.dart';
 import 'package:flutter/material.dart';
@@ -10,20 +11,23 @@ import 'ui/pages/pages.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String password = prefs.getString('passwordshop') ?? '';
-  String email = prefs.getString('emailshop') ?? '';
-  String token = prefs.getString('tokenshop') ?? '';
-  String nib = prefs.getString('nib') ?? '';
-  bool isReject = prefs.getBool('isReject') ?? false;
-  bool isValid = prefs.getBool('isValid') ?? false;
+  // SharedPreferences prefs = await SharedPreferences.getInstance();
+  // String password = prefs.getString('passwordshop') ?? '';
+  // String email = prefs.getString('emailshop') ?? '';
+  // String token = prefs.getString('tokenshop') ?? '';
+  // String nib = prefs.getString('nib') ?? '';
+  // bool isReject = prefs.getBool('isReject') ?? false;
+  // bool isValid = prefs.getBool('isValid') ?? false;
+
+  final _storage = const FlutterSecureStorage();
+  String token = await _storage.read(key: 'token');
+  String email = await _storage.read(key: 'email');
+  String password = await _storage.read(key: 'password');
+
   runApp(MyApp(
       email: email,
       password: password,
-      token: token,
-      isValid: isValid,
-      isReject: isReject,
-      nib: nib));
+      token: token));
 }
 
 // void main() {
@@ -55,12 +59,12 @@ class MyApp extends StatelessWidget {
             ? BlocProvider(create: (_) => UserCubit()..userInitial())
             : BlocProvider(create: (_) => UserCubit()..signIn(email, password)),
         BlocProvider(create: (_) => ProductCubit()),
-        // BlocProvider(create: (_) => CategoryCubit()),
+        BlocProvider(create: (_) => CategoryCubit()),
         BlocProvider(create: (_) => ShopCubit()),
         email == '' && password == '' && token == ''
             ? BlocProvider(create: (_) => TransactionCubit())
             : BlocProvider(
-                create: (_) => TransactionCubit()..getTransactions(null, null)),
+                create: (_) => TransactionCubit()..getTransactions(null, token)),
         // BlocProvider(create: (_) => PhotoCubit()),
         // BlocProvider(create: (_) => RatingCubit()),
       ],

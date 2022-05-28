@@ -21,19 +21,19 @@ class UserServices {
       if (response.statusCode != 200) {
         removeUserData();
         return ApiReturnValueShop(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
-      User.token = data['data']['access_token'];
+      String token = data['data']['access_token'];
       Shop shop = Shop.fromJson(data['data']['shop']);
       User value = User.fromJson(data['data']['shop']['user']);
       saveUserData(
           email: email,
-          token: User.token,
+          password: password,
+          token: token,
           isValid: shop.isValid);
 
-      return ApiReturnValueShop(value: value, shop: shop);
+      return ApiReturnValueShop(value: value, shop: shop, token: token);
     } on SocketException {
       return ApiReturnValueShop(message: socketException, isException: true);
     } on HttpException {
@@ -63,12 +63,10 @@ class UserServices {
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
-      return ApiReturnValue(
-          message: data['message'].toString(), error: null);
+      return ApiReturnValue(message: data['message'].toString(), error: null);
     } on SocketException {
       return ApiReturnValue(message: socketException, isException: true);
     } on HttpException {
@@ -146,8 +144,7 @@ class UserServices {
 
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
       return ApiReturnValue(value: user);
@@ -214,8 +211,7 @@ class UserServices {
       if (response.statusCode != 200) {
         removeUserData();
         return ApiReturnValueShop(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
       User.token = data['access_token'];
@@ -240,8 +236,9 @@ class UserServices {
       //   }
       // }
       saveUserData(
-          email: user.email,
-          token: User.token,);
+        email: user.email,
+        token: User.token,
+      );
 
       return ApiReturnValueShop(value: value, shop: shopReturn);
     } on SocketException {
@@ -348,8 +345,7 @@ class UserServices {
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValueShop(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
       User value = User.fromJson(data['user']);
@@ -465,15 +461,13 @@ class UserServices {
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Token": tokenAPI,
-        "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+        // "Authorization": "Bearer ${prefs.getString('tokenshop')}"
       });
 
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValueShop(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
       Shop shopReturn = Shop.fromJson(data['shop']);
@@ -513,8 +507,7 @@ class UserServices {
 
       if (response.statusCode != 200) {
         return ApiReturnValueShop(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
       Shop shopReturn = Shop.fromJson(data['shop']);
@@ -548,8 +541,7 @@ class UserServices {
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValueShop(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
       removeUserData();
 
