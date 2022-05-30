@@ -2,41 +2,45 @@ part of 'services.dart';
 
 class ProductServices {
   static Future<ApiReturnValue<List<Product>>> getMyProducts(String query,
-      int start, int limit, int shopId, int categoryId, SortMethod sort,
+      int start, int limit, int categoryId, SortMethod sort,
       {http.Client client}) async {
     try {
       client ??= http.Client();
+      final _storage = const FlutterSecureStorage();
+      final _token = await _storage.read(key: 'token');
+
       String url;
       query ??= '';
       start ??= 0;
+
       url = baseURLAPI +
-          '/products?' +
+          '/shops/my-products?' +
           'start=' +
           start.toString() +
           '&search=' +
           query;
-      if (categoryId != null) {
-        url += '&category=' + categoryId.toString();
-      }
-      if (shopId != null) {
-        url += '&shop=' + shopId.toString();
-      }
-      if (limit != null) {
-        url += '&limit=' + limit.toString();
-      }
-      if (sort == SortMethod.terbaru) {
-        url += '&sort_by=datedesc';
-      } else if (sort == SortMethod.terlaris) {
-        url += '&sort_by=solddesc';
-      } else if (sort == SortMethod.termurah) {
-        url += '&sort_by=priceasc';
-      }
+      // if (categoryId != null) {
+      //   url += '&category=' + categoryId.toString();
+      // }
+      // if (shopId != null) {
+      //   url += '&shop=' + shopId.toString();
+      // }
+      // if (limit != null) {
+      //   url += '&limit=' + limit.toString();
+      // }
+      // if (sort == SortMethod.terbaru) {
+      //   url += '&sort_by=datedesc';
+      // } else if (sort == SortMethod.terlaris) {
+      //   url += '&sort_by=solddesc';
+      // } else if (sort == SortMethod.termurah) {
+      //   url += '&sort_by=priceasc';
+      // }
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
         // "Token": tokenAPI,
-        // "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+        "Authorization": "Bearer $_token"
       });
 
       var data = jsonDecode(response.body);

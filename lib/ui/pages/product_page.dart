@@ -39,10 +39,10 @@ class _ProductPageState extends State<ProductPage> {
       ApiReturnValue<List<Product>> newItems;
       if (selectedIndex == 0) {
         newItems = await ProductServices.getMyProducts(
-            query, pageKey, _pageSize, null, null, _selectedSortMethod);
+            query, pageKey, _pageSize, null, _selectedSortMethod);
       } else {
         newItems = await ProductServices.getMyProducts(
-            query, pageKey, _pageSize, null, selectedIndex, _selectedSortMethod);
+            query, pageKey, _pageSize, selectedIndex, _selectedSortMethod);
       }
 
       final isLastPage = newItems.value.length < _pageSize;

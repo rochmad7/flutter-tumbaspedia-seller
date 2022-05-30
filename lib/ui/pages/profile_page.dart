@@ -86,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ? Column(
                       children: [
                         CustomTabBar(
-                          titles: ["Toko", "Shop Doltinuku"],
+                          titles: ["Toko", "Shop Tumbaspedia"],
                           selectedIndex: selectedIndex,
                           onTap: (index) {
                             setState(() {
