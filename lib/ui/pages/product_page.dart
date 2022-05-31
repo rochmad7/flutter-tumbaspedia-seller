@@ -101,7 +101,8 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     bool isLogin = (context.watch<UserCubit>().state is UserLoadedWithShop);
-    categoryname = selectedIndex == 0 ? '' : categoriesname[selectedIndex].name;
+    categoryname =
+        selectedIndex == 0 ? '' : categoriesname[selectedIndex - 1].name;
     if (context.watch<UserCubit>().state is UserLoadingFailed)
       return IllustrationPage(
         title: 'Gagal memuat!',
@@ -366,6 +367,7 @@ class ContestTabHeader extends SliverPersistentHeaderDelegate {
   ContestTabHeader(
     this.searchUI,
   );
+
   final Widget searchUI;
 
   @override
@@ -431,6 +433,7 @@ class ProductTabHeader extends SliverPersistentHeaderDelegate {
   ProductTabHeader(
     this.getGeneralBarUI,
   );
+
   final Widget getGeneralBarUI;
 
   @override

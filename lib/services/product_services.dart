@@ -19,22 +19,19 @@ class ProductServices {
           start.toString() +
           '&search=' +
           query;
-      // if (categoryId != null) {
-      //   url += '&category=' + categoryId.toString();
-      // }
-      // if (shopId != null) {
-      //   url += '&shop=' + shopId.toString();
-      // }
-      // if (limit != null) {
-      //   url += '&limit=' + limit.toString();
-      // }
-      // if (sort == SortMethod.terbaru) {
-      //   url += '&sort_by=datedesc';
-      // } else if (sort == SortMethod.terlaris) {
-      //   url += '&sort_by=solddesc';
-      // } else if (sort == SortMethod.termurah) {
-      //   url += '&sort_by=priceasc';
-      // }
+      if (categoryId != null) {
+        url += '&category=' + categoryId.toString();
+      }
+      if (limit != null) {
+        url += '&limit=' + limit.toString();
+      }
+      if (sort == SortMethod.terbaru) {
+        url += '&sortBy=date&sortType=desc';
+      } else if (sort == SortMethod.terlaris) {
+        url += '&sortBy=sold&sortType=desc';
+      } else if (sort == SortMethod.termurah) {
+        url += '&sortBy=price&sortType=asc';
+      }
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
