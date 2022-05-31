@@ -27,13 +27,13 @@ class ProductCubit extends Cubit<ProductState> {
   /////////// CRUD ////////////
   Future<void> store(Product product, Shop shop, {File pictureFile}) async {
     // await ProductServices.store(product, shop);
-    ApiReturnValue<Product> result =
+    ApiReturnValue<String> result =
         await ProductServices.store(product, shop, pictureFile: pictureFile);
 
-    if (result.value != null) {
-      emit(ProductAdded(result.value));
-    } else {
+    if (result.error != null) {
       emit(ProductAddedFailed(result.message, result.error));
+    } else {
+      emit(ProductAdded(result.message));
     }
   }
 
@@ -57,16 +57,16 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-  Future<void> uploadProductPicture(Product product, File pictureFile) async {
-    ApiReturnValue<String> result =
-        await ProductServices.uploadProductPicture(product, pictureFile);
-
-    if (result.value != null) {
-      emit(ProductAdded((state as ProductAdded)
-          .product
-          .copyWith(images: baseURL + "storage/" + result.value)));
-    }
-  }
+  // Future<void> uploadProductPicture(Product product, File pictureFile) async {
+  //   ApiReturnValue<String> result =
+  //       await ProductServices.uploadProductPicture(product, pictureFile);
+  //
+  //   if (result.value != null) {
+  //     emit(ProductAdded((state as ProductAdded)
+  //         .product
+  //         .copyWith(images: baseURL + "storage/" + result.value)));
+  //   }
+  // }
 
   Future<void> updateProductPicture(Product product, File pictureFile) async {
     ApiReturnValue<String> result =

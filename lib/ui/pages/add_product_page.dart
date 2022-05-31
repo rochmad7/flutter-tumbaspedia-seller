@@ -31,13 +31,13 @@ class _AddProductPageState extends State<AddProductPage> {
 
   void fetchData() async {
     try {
-      final response = await http.get(baseURLAPI + 'category',
+      final response = await http.get(baseURLAPI + '/categories',
           headers: {"Accept": "application/json", "Token": tokenAPI});
       if (response.statusCode == 200) if (mounted)
         setState(() {
           var data = jsonDecode(response.body);
 
-          categories = (data['data']['data'] as Iterable)
+          categories = (data['data'] as Iterable)
               .map((e) => Category.fromJson(e))
               .toList();
           selectedCategory = categories[0];
@@ -204,9 +204,9 @@ class _AddProductPageState extends State<AddProductPage> {
                   ProductState state = context.read<ProductCubit>().state;
 
                   if (state is ProductAdded) {
-                    // context
-                    //     .read<ProductCubit>()
-                    //     .getMyProducts(null, null, null, null);
+                    context
+                        .read<ProductCubit>()
+                        .getMyProducts(null, null, null, null);
                     setState(() {
                       isLoading = false;
                     });
@@ -216,9 +216,9 @@ class _AddProductPageState extends State<AddProductPage> {
                     snackBar(
                         "Berhasil", "Produk berhasil ditambahkan", 'success');
                   } else {
-                    // context
-                    //     .read<ProductCubit>()
-                    //     .getMyProducts(null, null, null, null);
+                    context
+                        .read<ProductCubit>()
+                        .getMyProducts(null, null, null, null);
                     snackBar("Produk gagal ditambahkan",
                         (state as ProductAddedFailed).message, 'error');
 

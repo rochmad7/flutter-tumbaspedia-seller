@@ -40,7 +40,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   await context
                       .read<ProductCubit>()
                       .getMyProducts(null, null, null, null);
-                  await context.read<TransactionCubit>().getTransactions(null, state.token);
+                  await context
+                      .read<TransactionCubit>()
+                      .getTransactions(null, state.token);
                 },
                 child: SingleChildScrollView(
                   child: Column(
@@ -48,8 +50,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       ProfileHeader(
                         shopOpenHours: state.shop.openingHours,
                         shopClosedHours: state.shop.closedHours,
-                        avatar: NetworkImage(
-                            "https://doltinuku.id/storage/assets/img/shop/logo/default.jpg"),
+                        avatar: NetworkImage(state.shop.images),
                         coverImage: NetworkImage(state.shop.images),
                         title: state.shop.name,
                         actions: <Widget>[

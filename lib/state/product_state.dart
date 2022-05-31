@@ -29,12 +29,12 @@ class ProductLoadingFailed extends ProductState {
 }
 
 class ProductAdded extends ProductState {
-  final Product product;
+  final String message;
 
-  ProductAdded(this.product);
+  ProductAdded(this.message);
 
   @override
-  List<Object> get props => [product];
+  List<Object> get props => [message];
 }
 
 class ProductAddedFailed extends ProductState {

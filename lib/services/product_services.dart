@@ -1,8 +1,8 @@
 part of 'services.dart';
 
 class ProductServices {
-  static Future<ApiReturnValue<List<Product>>> getMyProducts(String query,
-      int start, int limit, int categoryId, SortMethod sort,
+  static Future<ApiReturnValue<List<Product>>> getMyProducts(
+      String query, int start, int limit, int categoryId, SortMethod sort,
       {http.Client client}) async {
     try {
       client ??= http.Client();
@@ -65,8 +65,10 @@ class ProductServices {
   }
 
   /////////// CRUD ////////////
-  static Future<ApiReturnValue<Product>> store(Product product, Shop shop,
-      {File pictureFile, http.Client client}) async {
+  static Future<ApiReturnValue<String>> store(Product product, Shop shop,
+      {File pictureFile,
+      http.Client client,
+      http.MultipartRequest request}) async {
     try {
       if (pictureFile != null) {
         final bytes1 = pictureFile.readAsBytesSync().lengthInBytes;
@@ -78,43 +80,63 @@ class ProductServices {
       }
 
       client ??= http.Client();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'shop/product/store';
+      final _storage = const FlutterSecureStorage();
+      final _token = await _storage.read(key: 'token');
+      String url = baseURLAPI + '/products';
 
-      var response = await client.post(url,
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Token": tokenAPI,
-            "Authorization": "Bearer ${prefs.getString('tokenshop')}"
-          },
-          body: jsonEncode(<String, dynamic>{
-            'shop_id': shop.id.toInt(),
-            'category_id': product.category.id,
-            'name': product.name,
-            'price': product.price,
-            'stock': product.stock,
-            'description': product.description,
-          }));
+      // var response = await client.post(url,
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       "Accept": "application/json",
+      //       "Authorization": "Bearer $_token"
+      //     },
+      //     body: jsonEncode(<String, dynamic>{
+      //       'shop_id': shop.id.toInt(),
+      //       'category_id': product.category.id,
+      //       'name': product.name,
+      //       'price': product.price,
+      //       'stock': product.stock,
+      //       'description': product.description,
+      //     }));
 
-      var data = jsonDecode(response.body);
+      if (request == null) {
+        request = http.MultipartRequest("POST", Uri.parse(url))
+          ..headers["Accept"] = "application/json"
+          ..headers["Content-Type"] = "application/json"
+          ..headers["Token"] = tokenAPI
+          ..headers["Authorization"] = "Bearer $_token"
+          ..fields['shop_id'] = shop.id.toString()
+          ..fields['category_id'] = product.category.id.toString()
+          ..fields['name'] = product.name
+          ..fields['price'] = product.price.toString()
+          ..fields['stock'] = product.stock.toString()
+          ..fields['description'] = product.description;
+      }
+
+      var multipartFile =
+      await http.MultipartFile.fromPath('product_picture', pictureFile.path);
+      request.files.add(multipartFile);
+
+      var response = await request.send();
+
+      var data = jsonDecode(await response.stream.bytesToString());
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
-      Product value = Product.fromJson(data['data']['product']);
+      // Product value = Product.fromJson(data['message']);
 
-      if (pictureFile != null) {
-        ApiReturnValue<String> result =
-            await uploadProductPicture(value, pictureFile);
-        if (result.value != null) {
-          value = value.copyWith(images: "assets/img/product/" + result.value);
-        }
-      }
+      // if (pictureFile != null) {
+      //   ApiReturnValue<String> result =
+      //       await uploadProductPicture(value, pictureFile);
+      //   if (result.value != null) {
+      //     value = value.copyWith(images: "assets/img/product/" + result.value);
+      //   }
+      // }
 
-      return ApiReturnValue(value: value);
+      return ApiReturnValue(message: data['message']);
     } on SocketException {
       return ApiReturnValue(message: socketException, isException: true);
     } on HttpException {
