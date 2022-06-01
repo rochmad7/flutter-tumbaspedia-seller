@@ -20,7 +20,7 @@ class _ProductPageState extends State<ProductPage> {
   var category = <Category>[];
   AnimationController animationController;
 
-  static const _pageSize = 8;
+  static const _pageSize = 1;
 
   final PagingController<int, Product> _pagingController =
       PagingController(firstPageKey: 0);

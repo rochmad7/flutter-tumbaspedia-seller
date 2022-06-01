@@ -2,7 +2,7 @@ part of 'services.dart';
 
 class ProductServices {
   static Future<ApiReturnValue<List<Product>>> getMyProducts(
-      String query, int start, int limit, int categoryId, SortMethod sort,
+      String query, int page, int limit, int categoryId, SortMethod sort,
       {http.Client client}) async {
     try {
       client ??= http.Client();
@@ -11,12 +11,12 @@ class ProductServices {
 
       String url;
       query ??= '';
-      start ??= 0;
+      page ??= 0;
 
       url = baseURLAPI +
           '/shops/my-products?' +
-          'start=' +
-          start.toString() +
+          'page=' +
+          (page + 1).toString() +
           '&search=' +
           query;
       if (categoryId != null) {
@@ -151,8 +151,7 @@ class ProductServices {
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
       if (pictureFile != null) {
@@ -162,6 +161,7 @@ class ProductServices {
           return ApiReturnValue(message: result.message, error: result.error);
         }
       }
+
       return ApiReturnValue(message: data['message']);
     } on SocketException {
       return ApiReturnValue(message: socketException, isException: true);
@@ -180,8 +180,7 @@ class ProductServices {
     try {
       final _storage = const FlutterSecureStorage();
       final _token = await _storage.read(key: 'token');
-      String url =
-          baseURLAPI + '/products/' + productId.toString();
+      String url = baseURLAPI + '/products/' + productId.toString();
       var uri = Uri.parse(url);
       if (request == null) {
         request = http.MultipartRequest("PATCH", uri)
@@ -190,8 +189,8 @@ class ProductServices {
           ..headers["Authorization"] = "Bearer $_token";
       }
 
-      var multipartFile =
-          await http.MultipartFile.fromPath('product_picture', pictureFile.path);
+      var multipartFile = await http.MultipartFile.fromPath(
+          'product_picture', pictureFile.path);
       request.files.add(multipartFile);
 
       var response = await request.send();
