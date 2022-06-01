@@ -48,12 +48,13 @@ class ProductCubit extends Cubit<ProductState> {
   // }
 
   Future<void> update(Product product, {File pictureFile}) async {
-    ApiReturnValue<Product> result =
+    ApiReturnValue<String> result =
         await ProductServices.update(product, pictureFile: pictureFile);
-    if (result.value != null) {
-      emit(ProductEdited(result.value));
-    } else {
+
+    if (result.error != null) {
       emit(ProductEditedFailed(result.message, result.error));
+    } else {
+      emit(ProductEdited(result.message));
     }
   }
 
@@ -68,16 +69,16 @@ class ProductCubit extends Cubit<ProductState> {
   //   }
   // }
 
-  Future<void> updateProductPicture(Product product, File pictureFile) async {
-    ApiReturnValue<String> result =
-        await ProductServices.updateProductPicture(product, pictureFile);
-
-    if (result.value != null) {
-      emit(ProductEdited((state as ProductEdited)
-          .product
-          .copyWith(images: baseURL + "storage/" + result.value)));
-    }
-  }
+  // Future<void> updateProductPicture(Product product, File pictureFile) async {
+  //   ApiReturnValue<String> result =
+  //       await ProductServices.updateProductPicture(product, pictureFile);
+  //
+  //   if (result.value != null) {
+  //     emit(ProductEdited((state as ProductEdited)
+  //         .product
+  //         .copyWith(images: baseURL + "storage/" + result.value)));
+  //   }
+  // }
 
   Future<void> destroy(Product product) async {
     ApiReturnValue<String> result = await ProductServices.destroy(product);

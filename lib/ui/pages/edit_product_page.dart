@@ -38,13 +38,13 @@ class _EditProductPageState extends State<EditProductPage> {
 
   void fetchData() async {
     try {
-      final response = await http.get(baseURLAPI + 'category',
+      final response = await http.get(baseURLAPI + '/categories',
           headers: {"Accept": "application/json", "Token": tokenAPI});
       if (response.statusCode == 200) {
         setState(() {
           var data = jsonDecode(response.body);
 
-          categories = (data['data']['data'] as Iterable)
+          categories = (data['data'] as Iterable)
               .map((e) => Category.fromJson(e))
               .toList();
         });
@@ -74,9 +74,9 @@ class _EditProductPageState extends State<EditProductPage> {
         title: 'Edit Produk',
         subtitle: "Pastikan data yang diisi valid",
         onBackButtonPressed: () async {
-          // await context
-          //     .read<ProductCubit>()
-          //     .getMyProducts(null, null, null, null);
+          await context
+              .read<ProductCubit>()
+              .getMyProducts(null, null, null, null);
           Get.back();
         },
         child: Container(
@@ -178,13 +178,12 @@ class _EditProductPageState extends State<EditProductPage> {
                 press: () async {
                   Product sproduct = new Product(
                       id: widget.product.id,
-                      name: nameController.text,
-                      description: descriptionController.text,
-                      stock: stockController.text.toInt() ??
-                          stockController.text.toInt(),
-                      price: priceController.text.toInt() ??
-                          priceController.text.toInt(),
-                      category: selectedCategory);
+                      name: nameController.text ?? widget.product.name,
+                      description: descriptionController.text ??
+                          widget.product.description,
+                      stock: stockController.text.toInt()  ?? widget.product.stock,
+                      price: priceController.text.toInt() ?? widget.product.price,
+                      category: selectedCategory ?? widget.product.category);
 
                   setState(() {
                     isLoading = true;
@@ -197,9 +196,9 @@ class _EditProductPageState extends State<EditProductPage> {
                   ProductState state = context.read<ProductCubit>().state;
 
                   if (state is ProductEdited) {
-                    // context
-                    //     .read<ProductCubit>()
-                    //     .getMyProducts(null, null, null, null);
+                    context
+                        .read<ProductCubit>()
+                        .getMyProducts(null, null, null, null);
 
                     setState(() {
                       isLoading = false;
@@ -209,9 +208,9 @@ class _EditProductPageState extends State<EditProductPage> {
                         ));
                     snackBar("Berhasil", "Produk berhasil diupdate", 'success');
                   } else {
-                    // context
-                    //     .read<ProductCubit>()
-                    //     .getMyProducts(null, null, null, null);
+                    context
+                        .read<ProductCubit>()
+                        .getMyProducts(null, null, null, null);
                     snackBar("Produk gagal diupdate",
                         (state as ProductEditedFailed).message, 'error');
                     setState(() {

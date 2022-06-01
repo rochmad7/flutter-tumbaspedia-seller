@@ -67,12 +67,12 @@ class ProductFetchFailed extends ProductState {
 }
 
 class ProductEdited extends ProductState {
-  final Product product;
+  final String message;
 
-  ProductEdited(this.product);
+  ProductEdited(this.message);
 
   @override
-  List<Object> get props => [product];
+  List<Object> get props => [message];
 }
 
 class ProductEditedFailed extends ProductState {

@@ -35,18 +35,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     isLoadingPhoto = true;
     final response = await http.get(
         baseURLAPI +
-            'product/photo?product_id=' +
+            '/product-pictures/' +
             widget.transaction.product.id.toString(),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Token": tokenAPI
+          // "Token": tokenAPI
         });
     if (response.statusCode == 200) {
       if (mounted) {
         setState(() {
           var data = jsonDecode(response.body);
-          photos = (data['data']['data'] as Iterable)
+          photos = (data['data'] as Iterable)
               .map((e) => Photo.fromJson(e))
               .toList();
           listPhotos.clear();
