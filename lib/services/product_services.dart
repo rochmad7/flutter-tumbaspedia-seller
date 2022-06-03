@@ -214,72 +214,73 @@ class ProductServices {
     }
   }
 
-  static Future<ApiReturnValue<String>> uploadProductPicture(
-      Product product, File pictureFile,
-      {http.MultipartRequest request}) async {
-    try {
-      product ??= Product();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'shop/product/photo/' + product.id.toString();
-      var uri = Uri.parse(url);
-      if (request == null) {
-        request = http.MultipartRequest("POST", uri)
-          ..headers["Accept"] = "application/json"
-          ..headers["Content-Type"] = "application/json"
-          ..headers["Token"] = tokenAPI
-          ..headers["Authorization"] = "Bearer ${prefs.getString('tokenshop')}";
-      }
-
-      var multipartFile =
-          await http.MultipartFile.fromPath('file', pictureFile.path);
-      request.files.add(multipartFile);
-
-      var response = await request.send();
-
-      if (response.statusCode == 200) {
-        String responseBody = await response.stream.bytesToString();
-        var data = jsonDecode(responseBody);
-
-        String imagePath = data['data'][0];
-
-        return ApiReturnValue(value: imagePath);
-      }
-      return null;
-    } on SocketException {
-      return ApiReturnValue(message: socketException, isException: true);
-    } on HttpException {
-      return ApiReturnValue(message: httpException, isException: true);
-    } on FormatException {
-      return ApiReturnValue(message: formatException, isException: true);
-    } catch (e) {
-      return ApiReturnValue(message: e.toString(), isException: true);
-    }
-  }
+  // static Future<ApiReturnValue<String>> uploadProductPicture(
+  //     Product product, File pictureFile,
+  //     {http.MultipartRequest request}) async {
+  //   try {
+  //     product ??= Product();
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     String url = baseURLAPI + 'shop/product/photo/' + product.id.toString();
+  //     var uri = Uri.parse(url);
+  //     if (request == null) {
+  //       request = http.MultipartRequest("POST", uri)
+  //         ..headers["Accept"] = "application/json"
+  //         ..headers["Content-Type"] = "application/json"
+  //         ..headers["Token"] = tokenAPI
+  //         ..headers["Authorization"] = "Bearer ${prefs.getString('tokenshop')}";
+  //     }
+  //
+  //     var multipartFile =
+  //         await http.MultipartFile.fromPath('file', pictureFile.path);
+  //     request.files.add(multipartFile);
+  //
+  //     var response = await request.send();
+  //
+  //     if (response.statusCode == 200) {
+  //       String responseBody = await response.stream.bytesToString();
+  //       var data = jsonDecode(responseBody);
+  //
+  //       String imagePath = data['data'][0];
+  //
+  //       return ApiReturnValue(value: imagePath);
+  //     }
+  //     return null;
+  //   } on SocketException {
+  //     return ApiReturnValue(message: socketException, isException: true);
+  //   } on HttpException {
+  //     return ApiReturnValue(message: httpException, isException: true);
+  //   } on FormatException {
+  //     return ApiReturnValue(message: formatException, isException: true);
+  //   } catch (e) {
+  //     return ApiReturnValue(message: e.toString(), isException: true);
+  //   }
+  // }
 
   static Future<ApiReturnValue<String>> destroy(Product product,
       {http.Client client}) async {
     try {
       client ??= http.Client();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'shop/product/delete/' + product.id.toString();
+      final _storage = const FlutterSecureStorage();
+      final _token = await _storage.read(key: 'token');
+      String url = baseURLAPI + '/products/' + product.id.toString();
 
-      if (product != null) {
-        PhotoCubit().destroyMultiple(product, false);
-      }
+      // if (product != null) {
+      //   PhotoCubit().destroyMultiple(product, false);
+      // }
 
       var response = await client.delete(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Token": tokenAPI,
-        "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+        // "Token": tokenAPI,
+        "Authorization": "Bearer $_token"
       });
 
       var data = jsonDecode(response.body);
 
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
       int code = response.statusCode;
