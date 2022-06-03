@@ -99,9 +99,8 @@ class ProductServices {
       request.files.add(multipartFile);
 
       var response = await request.send();
-
       var data = jsonDecode(await response.stream.bytesToString());
-      if (response.statusCode != 200) {
+      if (response.statusCode != 201) {
         return ApiReturnValue(message: data['message'], error: data['error']);
       }
 
@@ -149,11 +148,12 @@ class ProductServices {
           }));
 
       var data = jsonDecode(response.body);
+
       if (response.statusCode != 200) {
         return ApiReturnValue(
             message: data['message'].toString(), error: data['error']);
       }
-
+      
       if (pictureFile != null) {
         ApiReturnValue<String> result =
             await updateProductPicture(product.id, pictureFile);
@@ -201,6 +201,7 @@ class ProductServices {
 
         return ApiReturnValue(value: data['message']);
       }
+
       return null;
     } on SocketException {
       return ApiReturnValue(message: socketException, isException: true);
