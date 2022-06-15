@@ -301,14 +301,14 @@ class UserServices {
     }
   }
 
-  static Future<ApiReturnValueShop<User, Shop>> update(User user, Shop shop,
+  static Future<ApiReturnValue<String>> update(Shop shop,
       {File pictureFile, http.Client client}) async {
     try {
       var format = DateFormat("HH:mm");
       if (format
           .parse(shop.openingHours)
           .isAfter(format.parse(shop.closedHours))) {
-        return ApiReturnValueShop(
+        return ApiReturnValue(
             message: 'Jam tutup toko tidak boleh kurang dari jam buka toko');
       }
 
@@ -316,7 +316,7 @@ class UserServices {
         final bytes1 = pictureFile.readAsBytesSync().lengthInBytes;
         final kb1 = bytes1 / 1024;
         if (kb1 > 2048) {
-          return ApiReturnValueShop(
+          return ApiReturnValue(
               message: 'File gambar toko tidak boleh lebih dari 2mb');
         }
       }
@@ -335,7 +335,7 @@ class UserServices {
           },
           body: jsonEncode(<String, dynamic>{
             // 'name': user.name,
-            'phone_number': user.phoneNumber,
+            // 'phone_number': user.phoneNumber,
             'name': shop.name,
             'address': shop.address,
             'description': shop.description,
@@ -345,32 +345,32 @@ class UserServices {
 
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
-        return ApiReturnValueShop(
+        return ApiReturnValue(
             message: data['message'].toString(), error: data['error']);
       }
 
-      User value = User.fromJson(data['data']['user']);
-      Shop shopReturn = Shop.fromJson(data['data']['shop']);
-      
-      print(data['data']);
+      // User value = User.fromJson(data['data']['user']);
+      // Shop shopReturn = Shop.fromJson(data['data']['shop']);
+      //
+      // print(data['data']);
 
       if (pictureFile != null) {
         ApiReturnValue<String> result =
-            await updateShopPicture(shopReturn, pictureFile);
+            await updateShopPicture(shop, pictureFile);
         // if (result.isException != null) {
         //   shopReturn =
         //       shopReturn.copyWith(images: baseURLStorage + result.value);
         // }
       }
-      return ApiReturnValueShop(value: value, shop: shopReturn, token: _token);
+      return ApiReturnValue(message: data['message']);
     } on SocketException {
-      return ApiReturnValueShop(message: socketException, isException: true);
+      return ApiReturnValue(message: socketException, isException: true);
     } on HttpException {
-      return ApiReturnValueShop(message: httpException, isException: true);
+      return ApiReturnValue(message: httpException, isException: true);
     } on FormatException {
-      return ApiReturnValueShop(message: formatException, isException: true);
+      return ApiReturnValue(message: formatException, isException: true);
     } catch (e) {
-      return ApiReturnValueShop(message: e.toString(), isException: true);
+      return ApiReturnValue(message: e.toString(), isException: true);
     }
   }
 
@@ -475,8 +475,8 @@ class UserServices {
             message: data['message'].toString(), error: data['error']);
       }
 
-      Shop shopReturn = Shop.fromJson(data['shop']);
-      User value = User.fromJson(data['shop']['user']);
+      Shop shopReturn = Shop.fromJson(data['data']);
+      User value = User.fromJson(data['data']['user']);
 
       return ApiReturnValueShop(value: value, shop: shopReturn, token: _token);
     } on SocketException {

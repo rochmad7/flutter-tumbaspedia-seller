@@ -117,14 +117,14 @@ Future<void> getMyProfile(Shop shop) async {
 //   }
 // }
 
-  Future<void> update(User user, Shop shop, {File pictureFile}) async {
-    ApiReturnValueShop<User, Shop> result =
-    await UserServices.update(user, shop, pictureFile: pictureFile);
+  Future<void> update(Shop shop, {File pictureFile}) async {
+    ApiReturnValue<String> result =
+    await UserServices.update(shop, pictureFile: pictureFile);
 
-    if (result.value != null && result.shop != null) {
-      emit(UserLoadedWithShop(result.value, result.shop, result.token));
+    if (result.isException != null || result.error != null) {
+      emit(UserEdited(result.message));
     } else {
-      emit(UserLoadingFailed(result.message, result.error));
+      emit(UserEditedFailed(result.message, result.error));
     }
   }
 

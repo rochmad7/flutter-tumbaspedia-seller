@@ -212,10 +212,10 @@ class _EditShopPageState extends State<EditShopPage> {
                     openingHours: shopOpenController.text,
                     closedHours: shopClosedController.text);
 
-                User user = User(
-                  name: nameController.text,
-                  phoneNumber: phoneController.text,
-                );
+                // User user = User(
+                //   name: nameController.text,
+                //   phoneNumber: phoneController.text,
+                // );
 
                 setState(() {
                   isLoading = true;
@@ -223,12 +223,12 @@ class _EditShopPageState extends State<EditShopPage> {
 
                 await context
                     .read<UserCubit>()
-                    .update(user, shop, pictureFile: pictureFile);
+                    .update(shop, pictureFile: pictureFile);
 
                 UserState state = context.read<UserCubit>().state;
 
-                if (state is UserLoadedWithShop) {
-                  // context.read<UserCubit>().getMyProfile(shop);
+                if (state is UserEdited) {
+                  context.read<UserCubit>().getMyProfile(shop);
                   Get.to(() => MainPage(
                         initialPage: 0,
                       ));
