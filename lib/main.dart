@@ -19,9 +19,9 @@ Future<void> main() async {
   // bool isValid = prefs.getBool('isValid') ?? false;
 
   final _storage = const FlutterSecureStorage();
-  String token = await _storage.read(key: 'token');
-  String email = await _storage.read(key: 'email');
-  String password = await _storage.read(key: 'password');
+  String token = await _storage.read(key: 'token') ?? '';
+  String email = await _storage.read(key: 'email') ?? '';
+  String password = await _storage.read(key: 'password') ?? '';
 
   runApp(MyApp(email: email, password: password, token: token));
 }

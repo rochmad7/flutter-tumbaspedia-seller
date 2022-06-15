@@ -322,24 +322,25 @@ class UserServices {
       }
 
       client ??= http.Client();
+      final _storage = const FlutterSecureStorage();
+      final _token = await _storage.read(key: 'token');
+
       shop ??= Shop();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'shop/profile/update/' + shop.id.toString();
-      var response = await client.post(url,
+      String url = baseURLAPI + '/shops/' + shop.id.toString();
+      var response = await client.patch(url,
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Token": tokenAPI,
-            "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+            "Authorization": "Bearer $_token"
           },
           body: jsonEncode(<String, dynamic>{
-            'name': user.name,
-            'phoneNumber': user.phoneNumber,
-            'shopname': shop.name,
-            'shopaddress': shop.address,
-            'shopdescription': shop.description,
-            'shopopenhours': shop.openingHours,
-            'shopclosedhours': shop.closedHours,
+            // 'name': user.name,
+            'phone_number': user.phoneNumber,
+            'name': shop.name,
+            'address': shop.address,
+            'description': shop.description,
+            'opened_at': shop.openingHours,
+            'closed_at': shop.closedHours,
           }));
 
       var data = jsonDecode(response.body);
@@ -348,18 +349,20 @@ class UserServices {
             message: data['message'].toString(), error: data['error']);
       }
 
-      User value = User.fromJson(data['user']);
-      Shop shopReturn = Shop.fromJson(data['shop']);
+      User value = User.fromJson(data['data']['user']);
+      Shop shopReturn = Shop.fromJson(data['data']['shop']);
+      
+      print(data['data']);
 
       if (pictureFile != null) {
         ApiReturnValue<String> result =
             await updateShopPicture(shopReturn, pictureFile);
-        if (result.value != null) {
-          shopReturn =
-              shopReturn.copyWith(images: baseURLStorage + result.value);
-        }
+        // if (result.isException != null) {
+        //   shopReturn =
+        //       shopReturn.copyWith(images: baseURLStorage + result.value);
+        // }
       }
-      return ApiReturnValueShop(value: value, shop: shopReturn);
+      return ApiReturnValueShop(value: value, shop: shopReturn, token: _token);
     } on SocketException {
       return ApiReturnValueShop(message: socketException, isException: true);
     } on HttpException {
@@ -408,19 +411,20 @@ class UserServices {
       {http.MultipartRequest request}) async {
     try {
       shop ??= Shop();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'shop/photo/update/' + shop.id.toString();
+      final _storage = const FlutterSecureStorage();
+      final _token = await _storage.read(key: 'token');
+
+      String url = baseURLAPI + '/shops/' + shop.id.toString();
       var uri = Uri.parse(url);
       if (request == null) {
-        request = http.MultipartRequest("POST", uri)
+        request = http.MultipartRequest("PATCH", uri)
           ..headers["Accept"] = "application/json"
           ..headers["Content-Type"] = "application/json"
-          ..headers["Token"] = tokenAPI
-          ..headers["Authorization"] = "Bearer ${prefs.getString('tokenshop')}";
+          ..headers["Authorization"] = "Bearer $_token";
       }
 
       var multipartFile =
-          await http.MultipartFile.fromPath('file', pictureFile.path);
+          await http.MultipartFile.fromPath('shop_picture', pictureFile.path);
       request.files.add(multipartFile);
 
       var response = await request.send();
@@ -454,14 +458,15 @@ class UserServices {
     try {
       client ??= http.Client();
       shop ??= Shop();
+      final _storage = const FlutterSecureStorage();
+      final _token = await _storage.read(key: 'token');
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       String url = baseURLAPI + '/shops/' + shop.id.toString();
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        // "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+        "Authorization": "Bearer $_token"
       });
 
       var data = jsonDecode(response.body);
@@ -473,7 +478,7 @@ class UserServices {
       Shop shopReturn = Shop.fromJson(data['shop']);
       User value = User.fromJson(data['shop']['user']);
 
-      return ApiReturnValueShop(value: value, shop: shopReturn);
+      return ApiReturnValueShop(value: value, shop: shopReturn, token: _token);
     } on SocketException {
       return ApiReturnValueShop(message: socketException, isException: true);
     } on HttpException {

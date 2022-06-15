@@ -85,7 +85,7 @@ class _EditShopPageState extends State<EditShopPage> {
                 icon: Icons.shop,
                 controller: shopNameController,
                 hintText: "Nama Toko"),
-            TextDanger(error: error, param: "shopname"),
+            TextDanger(error: error, param: "name"),
             SizedBox(height: 15),
             // LabelFormField(label: "Kategori Toko *"),
             // Container(
@@ -125,12 +125,12 @@ class _EditShopPageState extends State<EditShopPage> {
             // SizedBox(
             //   height: 15,
             // ),
-            LabelFormField(label: "Nama Pemilik"),
-            TextFieldDefault(
-                icon: Icons.person,
-                controller: nameController,
-                hintText: "Nama Pemilik"),
-            TextDanger(error: error, param: "name"),
+            // LabelFormField(label: "Nama Pemilik"),
+            // TextFieldDefault(
+            //     icon: Icons.person,
+            //     controller: nameController,
+            //     hintText: "Nama Pemilik"),
+            // TextDanger(error: error, param: "name"),
             SizedBox(height: 15),
             LabelFormField(
                 label: "No HP Pemilik", example: "Contoh: 0878785677"),
@@ -138,7 +138,7 @@ class _EditShopPageState extends State<EditShopPage> {
                 icon: MdiIcons.phone,
                 controller: phoneController,
                 hintText: "No HP Pemilik"),
-            TextDanger(error: error, param: "phoneNumber"),
+            TextDanger(error: error, param: "phone_number"),
             SizedBox(height: 15),
             LabelFormField(label: "Jam Buka Toko"),
             TextFieldDefault(
@@ -158,7 +158,7 @@ class _EditShopPageState extends State<EditShopPage> {
                   }
                 },
                 hintText: "Klik untuk mengatur"),
-            TextDanger(error: error, param: "openingHours"),
+            TextDanger(error: error, param: "opened_at"),
             SizedBox(height: 15),
             LabelFormField(label: "Jam Tutup Toko"),
             TextFieldDefault(
@@ -178,7 +178,7 @@ class _EditShopPageState extends State<EditShopPage> {
                   }
                 },
                 hintText: "Klik untuk mengatur"),
-            TextDanger(error: error, param: "closedHours"),
+            TextDanger(error: error, param: "closed_at"),
             SizedBox(height: 15),
             LabelFormField(label: "Alamat Toko"),
             TextFieldDefault(
@@ -187,7 +187,7 @@ class _EditShopPageState extends State<EditShopPage> {
                 maxLines: 3,
                 controller: shopAddressController,
                 hintText: "Alamat Toko"),
-            TextDanger(error: error, param: "shopaddress"),
+            TextDanger(error: error, param: "address"),
             SizedBox(height: 15),
             LabelFormField(label: "Deskripsi Toko"),
             TextFieldDefault(
@@ -196,7 +196,7 @@ class _EditShopPageState extends State<EditShopPage> {
                 maxLines: 5,
                 controller: shopDescController,
                 hintText: "Deskripsi Toko"),
-            TextDanger(error: error, param: "shopdescription"),
+            TextDanger(error: error, param: "description"),
             SizedBox(height: 15),
             ButtonDefault(
               isLoading: isLoading,
@@ -221,9 +221,9 @@ class _EditShopPageState extends State<EditShopPage> {
                   isLoading = true;
                 });
 
-                // await context
-                //     .read<UserCubit>()
-                //     .update(user, shop, pictureFile: pictureFile);
+                await context
+                    .read<UserCubit>()
+                    .update(user, shop, pictureFile: pictureFile);
 
                 UserState state = context.read<UserCubit>().state;
 
@@ -239,7 +239,7 @@ class _EditShopPageState extends State<EditShopPage> {
                     isLoading = false;
                   });
                 } else {
-                  // context.read<UserCubit>().getMyProfile(shop);
+                  context.read<UserCubit>().getMyProfile(shop);
                   snackBar("Data toko gagal diupdate",
                       (state as UserLoadingFailed).message, 'error');
 
