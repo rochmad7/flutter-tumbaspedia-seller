@@ -3,6 +3,7 @@ part of 'pages.dart';
 class ChangePasswordPage extends StatefulWidget {
   final User user;
   final Shop shop;
+
   ChangePasswordPage({this.user, this.shop});
 
   @override
@@ -68,7 +69,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 isObscureText: _obscureText1,
                 isSuffixIcon: true,
                 hintText: "Password Lama"),
-            TextDanger(error: error, param: "oldpassword"),
+            TextDanger(error: error, param: "old_password"),
             SizedBox(
               height: 26,
             ),
@@ -82,7 +83,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 isObscureText: _obscureText2,
                 isSuffixIcon: true,
                 hintText: "Password Baru"),
-            TextDanger(error: error, param: "newpassword"),
+            TextDanger(error: error, param: "new_password"),
             LabelFormField(
               label: "Konfirmasi Password Baru",
             ),
@@ -93,7 +94,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 isObscureText: _obscureText3,
                 isSuffixIcon: true,
                 hintText: "Konfirmasi Password"),
-            TextDanger(error: error, param: "confpassword"),
+            TextDanger(error: error, param: "confirm_password"),
             SizedBox(
               height: 15,
             ),
@@ -105,28 +106,28 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   isLoading = true;
                 });
 
-                // await context.read<UserCubit>().changePassword(
-                //     oldPasswordController.text,
-                //     newPasswordController.text,
-                //     confPasswordController.text,
-                //     widget.shop);
+                await context.read<UserCubit>().changePassword(
+                    oldPasswordController.text,
+                    newPasswordController.text,
+                    confPasswordController.text);
                 UserState state = context.read<UserCubit>().state;
 
-                if (state is UserLoadedWithShop) {
+                if (state is UserEdited) {
+                  context.read<UserCubit>().getMyProfile(widget.shop);
+                  Get.to(() => SignInPage());
                   setState(() {
                     error = null;
                     isLoading = false;
                   });
                   snackBar(
-                      "Berhasil", "Password Anda berhasil diubah", 'success');
+                      "Berhasil", "Password Anda berhasil diubah. Silakan login ulang!", 'success');
                 } else {
-                  // context.read<UserCubit>().getMyProfile(
-                  //     widget.shop);
+                  context.read<UserCubit>().getMyProfile(widget.shop);
                   snackBar(
-                      "Gagal", (state as UserLoadingFailed).message, 'error');
+                      "Gagal", (state as UserEditedFailed).message, 'error');
                   setState(() {
-                    error = (state as UserLoadingFailed).error != null
-                        ? (state as UserLoadingFailed).error
+                    error = (state as UserEditedFailed).error != null
+                        ? (state as UserEditedFailed).error
                         : null;
                     isLoading = false;
                   });

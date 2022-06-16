@@ -78,45 +78,49 @@ class UserServices {
     }
   }
 
-  static Future<ApiReturnValueShop<User, Shop>> changePassword(
-      String oldPassword, String newPassword, String confPassword, Shop shop,
+  static Future<ApiReturnValue<String>> changePassword(
+      String oldPassword, String newPassword, String confPassword,
       {http.Client client}) async {
+    if (newPassword != confPassword) {
+      return ApiReturnValue(
+          message: 'Konfirmasi password tidak sama', isException: true);
+    }
+
     try {
       client ??= http.Client();
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'changepassword';
+      final _storage = const FlutterSecureStorage();
+      String token = await _storage.read(key: 'token');
 
-      var response = await client.post(url,
+      String url = baseURLAPI + '/users/change-password';
+
+      var response = await client.patch(url,
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Token": tokenAPI,
-            "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+            "Authorization": "Bearer $token"
           },
           body: jsonEncode(<String, String>{
-            'oldpassword': oldPassword,
-            'newpassword': newPassword,
-            'confpassword': confPassword
+            'old_password': oldPassword,
+            'new_password': newPassword,
           }));
 
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
-        return ApiReturnValueShop(
+        return ApiReturnValue(
             message: data['message'], error: data['error']);
       }
 
-      User user = User.fromJson(data['user']);
-      saveUserData(email: user.email, token: User.token);
-      return ApiReturnValueShop(value: user, shop: shop);
+      // saveUserData(password: newPassword);
+      return ApiReturnValue(message: data['message']);
     } on SocketException {
-      return ApiReturnValueShop(message: socketException, isException: true);
+      return ApiReturnValue(message: socketException, isException: true);
     } on HttpException {
-      return ApiReturnValueShop(message: httpException, isException: true);
+      return ApiReturnValue(message: httpException, isException: true);
     } on FormatException {
-      return ApiReturnValueShop(message: formatException, isException: true);
+      return ApiReturnValue(message: formatException, isException: true);
     } catch (e) {
-      return ApiReturnValueShop(message: e.toString(), isException: true);
+      return ApiReturnValue(message: e.toString(), isException: true);
     }
   }
 

@@ -59,18 +59,20 @@ class UserCubit extends Cubit<UserState> {
 //   }
 // }
 //
-// Future<void> changePassword(String oldPassword, String newPassword,
-//     String confPassword, Shop shop) async {
-//   ApiReturnValueShop<User, Shop> result = await UserServices.changePassword(
-//       oldPassword, newPassword, confPassword, shop);
-//
-//   if (result.value != null) {
-//     emit(UserLoadedWithShop(result.value, result.shop));
-//   } else {
-//     emit(UserLoadingFailed(result.message, result.error));
-//   }
-// }
-//
+Future<void> changePassword(String oldPassword, String newPassword,
+    String confPassword) async {
+  ApiReturnValue<String> result = await UserServices.changePassword(
+      oldPassword, newPassword, confPassword);
+
+  print('result isException: ${result.isException}');
+
+  if (result.isException == false) {
+    emit(UserEdited(result.message));
+  } else {
+    emit(UserEditedFailed(result.message, result.error));
+  }
+}
+
 // Future<void> uploadShopPicture(
 //     String token, File pictureFile, String urlPath) async {
 //   ApiReturnValue<String> result =
