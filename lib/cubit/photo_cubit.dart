@@ -33,12 +33,12 @@ class PhotoCubit extends Cubit<PhotoState> {
 
   Future<void> uploadMultiple(int productId,
       {List<Object> picturesFile}) async {
-    ApiReturnValue<List<Photo>> result = await PhotoServices.uploadMultiple(
+    ApiReturnValue<String> result = await PhotoServices.uploadMultiple(
         productId,
         picturesFile: picturesFile);
 
-    if (result.value != null) {
-      emit(PhotoAdded(result.value));
+    if (result.isException == false) {
+      emit(PhotoAdded(result.message));
     } else {
       emit(PhotoAddedFailed(result.message, result.error));
     }

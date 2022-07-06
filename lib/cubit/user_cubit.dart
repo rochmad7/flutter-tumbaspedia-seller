@@ -64,8 +64,6 @@ Future<void> changePassword(String oldPassword, String newPassword,
   ApiReturnValue<String> result = await UserServices.changePassword(
       oldPassword, newPassword, confPassword);
 
-  print('result isException: ${result.isException}');
-
   if (result.isException == false) {
     emit(UserEdited(result.message));
   } else {

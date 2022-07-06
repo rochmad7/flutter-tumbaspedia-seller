@@ -31,12 +31,13 @@ class PhotoLoadingFailed extends PhotoState {
 }
 
 class PhotoAdded extends PhotoState {
-  final List<Photo> photos;
+  // final List<Photo> photos;
+  final String message;
 
-  PhotoAdded(this.photos);
+  PhotoAdded(this.message);
 
   @override
-  List<Object> get props => [photos];
+  List<Object> get props => [message];
 }
 
 class PhotoAddedFailed extends PhotoState {

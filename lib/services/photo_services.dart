@@ -6,35 +6,35 @@ class PhotoServices {
       {http.Client client}) async {
     try {
       client ??= http.Client();
+      final _storage = const FlutterSecureStorage();
+      String token = await _storage.read(key: 'token');
 
       String url;
       start ??= 0;
 
-      if (productId == null) {
-        url = baseURLAPI + 'product/photo?start=' + start.toString();
-      } else {
-        url = baseURLAPI + 'product/photo?product_id=' + productId.toString();
-      }
-      if (limit != null) {
-        url += '&limit=' + limit.toString();
-      }
+      // if (productId == null) {
+      //   url = baseURLAPI + '/product-pictures?start=' + start.toString();
+      // } else {
+      url = baseURLAPI + '/product-pictures?product_id=' + productId.toString();
+      // }
+      // if (limit != null) {
+      //   url += '&limit=' + limit.toString();
+      // }
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Token": tokenAPI
+        "Authorization": "Bearer " + token,
       });
 
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
-      List<Photo> photos = (data['data']['data'] as Iterable)
-          .map((e) => Photo.fromJson(e))
-          .toList();
+      List<Photo> photos =
+          (data['data'] as Iterable).map((e) => Photo.fromJson(e)).toList();
 
       return ApiReturnValue(value: photos);
     } on SocketException {
@@ -53,24 +53,28 @@ class PhotoServices {
     try {
       client ??= http.Client();
 
-      String url = baseURLAPI + 'product?product_id=' + product.id.toString();
+      final _storage = const FlutterSecureStorage();
+      String token = await _storage.read(key: 'token');
+
+      String url =
+          baseURLAPI + '/product-pictures?product_id=' + product.id.toString();
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Token": tokenAPI
+        "Authorization": "Bearer " + token
       });
 
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
-      List<Photo> photos = (data['data']['data'] as Iterable)
-          .map((e) => Photo.fromJson(e))
-          .toList();
+      print(data);
+
+      List<Photo> photos =
+          (data['data'] as Iterable).map((e) => Photo.fromJson(e)).toList();
 
       return ApiReturnValue(value: photos);
     } on SocketException {
@@ -84,22 +88,23 @@ class PhotoServices {
     }
   }
 
-  static Future<ApiReturnValue<List<Photo>>> uploadMultiple(int productId,
+  static Future<ApiReturnValue<String>> uploadMultiple(int productId,
       {http.MultipartRequest request, List<Object> picturesFile}) async {
     try {
       if (picturesFile.toString() == '[Add Image, Add Image, Add Image]') {
         return ApiReturnValue(message: 'File gambar produk tidak ada');
       }
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final _storage = const FlutterSecureStorage();
+      String token = await _storage.read(key: 'token');
+
       String url =
-          baseURLAPI + 'shop/product/photo/multiple/' + productId.toString();
+          baseURLAPI + '/product-pictures?product_id=' + productId.toString();
       var uri = Uri.parse(url);
       if (request == null) {
         request = http.MultipartRequest("POST", uri)
           ..headers["Accept"] = "application/json"
           ..headers["Content-Type"] = "application/json"
-          ..headers["Token"] = tokenAPI
-          ..headers["Authorization"] = "Bearer ${prefs.getString('tokenshop')}";
+          ..headers["Authorization"] = "Bearer $token";
       }
 
       for (int i = 0; i < 3; i++) {
@@ -114,8 +119,8 @@ class PhotoServices {
           //           i.toString() +
           //           'tidak boleh lebih dari 2mb');
           // }
-          var multipartFile =
-              await http.MultipartFile.fromPath('file[]', photo.imageFile.path);
+          var multipartFile = await http.MultipartFile.fromPath(
+              'file${i + 1}', photo.imageFile.path);
           request.files.add(multipartFile);
         }
       }
@@ -123,16 +128,13 @@ class PhotoServices {
       var response = await request.send();
       String responseBody = await response.stream.bytesToString();
       var data = jsonDecode(responseBody);
+
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(), error: data['error']);
       }
-      List<Photo> photos = (data['data']['data'] as Iterable)
-          .map((e) => Photo.fromJson(e))
-          .toList();
 
-      return ApiReturnValue(value: photos);
+      return ApiReturnValue(message: data['message']);
     } on SocketException {
       return ApiReturnValue(message: socketException, isException: true);
     } on HttpException {
@@ -149,26 +151,22 @@ class PhotoServices {
       {http.Client client}) async {
     try {
       client ??= http.Client();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI +
-          'shop/product/photo/' +
-          (isAll ? 'all' : 'multiple') +
-          '/delete/' +
-          product.id.toString();
+      final _storage = const FlutterSecureStorage();
+      String token = await _storage.read(key: 'token');
+      String url =
+          baseURLAPI + '/product-pictures?product_id=' + product.id.toString();
 
       var response = await client.delete(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Token": tokenAPI,
-        "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+        "Authorization": "Bearer $token"
       });
 
       var data = jsonDecode(response.body);
 
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
       int code = response.statusCode;

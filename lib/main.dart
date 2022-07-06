@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
               : BlocProvider(
                   create: (_) =>
                       TransactionCubit()..getTransactions(null, token)),
-          // BlocProvider(create: (_) => PhotoCubit()),
+          BlocProvider(create: (_) => PhotoCubit()),
           // BlocProvider(create: (_) => RatingCubit()),
         ],
         child: GetMaterialApp(
