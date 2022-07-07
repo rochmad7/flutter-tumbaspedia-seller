@@ -17,7 +17,7 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> signIn(String email, String password) async {
     ApiReturnValueShop<User, Shop> result =
-    await UserServices.signIn(email, password);
+        await UserServices.signIn(email, password);
 
     if (result.value != null && result.shop != null) {
       emit(UserLoadedWithShop(result.value, result.shop, result.token));
@@ -59,17 +59,17 @@ class UserCubit extends Cubit<UserState> {
 //   }
 // }
 //
-Future<void> changePassword(String oldPassword, String newPassword,
-    String confPassword) async {
-  ApiReturnValue<String> result = await UserServices.changePassword(
-      oldPassword, newPassword, confPassword);
+  Future<void> changePassword(
+      String oldPassword, String newPassword, String confPassword) async {
+    ApiReturnValue<String> result = await UserServices.changePassword(
+        oldPassword, newPassword, confPassword);
 
-  if (result.isException == false) {
-    emit(UserEdited(result.message));
-  } else {
-    emit(UserEditedFailed(result.message, result.error));
+    if (result.isException == false) {
+      emit(UserEdited(result.message));
+    } else {
+      emit(UserEditedFailed(result.message, result.error));
+    }
   }
-}
 
 // Future<void> uploadShopPicture(
 //     String token, File pictureFile, String urlPath) async {
@@ -96,16 +96,16 @@ Future<void> changePassword(String oldPassword, String newPassword,
 //   }
 // }
 
-Future<void> getMyProfile(Shop shop) async {
-  ApiReturnValueShop<User, Shop> result =
-      await UserServices.getMyProfile(shop);
+  Future<void> getMyProfile(Shop shop) async {
+    ApiReturnValueShop<User, Shop> result =
+        await UserServices.getMyProfile(shop);
 
-  if (result.value != null && result.shop != null) {
-    emit(UserLoadedWithShop(result.value, result.shop, result.token));
-  } else {
-    emit(UserLoadingFailed(result.message, result.error));
+    if (result.value != null && result.shop != null) {
+      emit(UserLoadedWithShop(result.value, result.shop, result.token));
+    } else {
+      emit(UserLoadingFailed(result.message, result.error));
+    }
   }
-}
 
 // Future<void> addNib(User user, Shop shop, {File pictureFile}) async {
 //   ApiReturnValueShop<User, Shop> result =
@@ -119,7 +119,7 @@ Future<void> getMyProfile(Shop shop) async {
 
   Future<void> update(Shop shop, {File pictureFile}) async {
     ApiReturnValue<String> result =
-    await UserServices.update(shop, pictureFile: pictureFile);
+        await UserServices.update(shop, pictureFile: pictureFile);
 
     if (result.isException != null || result.error != null) {
       emit(UserEdited(result.message));
@@ -140,18 +140,18 @@ Future<void> getMyProfile(Shop shop) async {
 //             .copyWith(images: baseURL + "storage/" + result.value)));
 //   }
 // }
-//
-// Future<void> changeStatus(bool status) async {
-//   ApiReturnValueShop<User, Shop> result =
-//       await UserServices.changeStatus(status);
-//
-//   if (result.value != null && result.shop != null) {
-//     emit(UserLoadedWithShop(result.value, result.shop));
-//   } else {
-//     emit(UserLoadingFailed(result.message, result.error));
-//   }
-// }
-//
+
+  Future<void> changeStatus(bool status, int shopId) async {
+    ApiReturnValueShop<User, Shop> result =
+        await UserServices.changeStatus(status, shopId);
+
+    if (result.value != null && result.shop != null) {
+      emit(UserLoadedWithShop(result.value, result.shop, result.token));
+    } else {
+      emit(UserLoadingFailed(result.message, result.error));
+    }
+  }
+
 // Future<void> logOut() async {
 //   await UserServices.logOut();
 // }

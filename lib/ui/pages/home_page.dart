@@ -34,9 +34,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               extendBody: true,
               body: RefreshIndicator(
                 onRefresh: () async {
-                  // await context.read<UserCubit>().getMyProfile(
-                  //     (context.read<UserCubit>().state as UserLoadedWithShop)
-                  //         .shop);
+                  await context.read<UserCubit>().getMyProfile(
+                      (context.read<UserCubit>().state as UserLoadedWithShop)
+                          .shop);
                   await context
                       .read<ProductCubit>()
                       .getMyProducts(null, null, null, null);
@@ -48,6 +48,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   child: Column(
                     children: <Widget>[
                       ProfileHeader(
+                        shopId: state.shop.id,
+                        status: state.shop.status,
                         shopOpenHours: state.shop.openingHours,
                         shopClosedHours: state.shop.closedHours,
                         avatar: NetworkImage(state.shop.images),

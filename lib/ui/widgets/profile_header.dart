@@ -8,9 +8,11 @@ class ProfileHeader extends StatefulWidget {
   final bool status;
   final String shopOpenHours;
   final String shopClosedHours;
+  final int shopId;
 
   const ProfileHeader(
       {Key key,
+      this.shopId,
       this.status,
       this.shopOpenHours,
       this.shopClosedHours,
@@ -86,7 +88,9 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                         // ignore: missing_return
                         showCancelButton: true, onPress: (bool isConfirm) {
                       if (isConfirm) {
-                        // context.read<UserCubit>().changeStatus(value);
+                        context
+                            .read<UserCubit>()
+                            .changeStatus(value, widget.shopId);
                         SweetAlert.show(context,
                             style: SweetAlertStyle.success, title: "Berhasil");
                         setState(() {

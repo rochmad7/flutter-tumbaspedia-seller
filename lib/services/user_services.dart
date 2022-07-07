@@ -107,8 +107,7 @@ class UserServices {
 
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
-        return ApiReturnValue(
-            message: data['message'], error: data['error']);
+        return ApiReturnValue(message: data['message'], error: data['error']);
       }
 
       // saveUserData(password: newPassword);
@@ -494,22 +493,24 @@ class UserServices {
     }
   }
 
-  static Future<ApiReturnValueShop<User, Shop>> changeStatus(bool status,
+  static Future<ApiReturnValueShop<User, Shop>> changeStatus(
+      bool status, int shopId,
       {http.Client client}) async {
     try {
       client ??= http.Client();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'shop/status';
+      final _storage = const FlutterSecureStorage();
+      final _token = await _storage.read(key: 'token');
 
-      var response = await client.post(url,
+      String url = baseURLAPI + '/shops/' + shopId.toString();
+
+      var response = await client.patch(url,
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Token": tokenAPI,
-            "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+            "Authorization": "Bearer $_token"
           },
           body: jsonEncode(<String, dynamic>{
-            'status': status ? 1 : 0,
+            'is_open': status ? true : false,
           }));
 
       var data = jsonDecode(response.body);
@@ -519,10 +520,26 @@ class UserServices {
             message: data['message'].toString(), error: data['error']);
       }
 
-      Shop shopReturn = Shop.fromJson(data['shop']);
-      User value = User.fromJson(data['user']);
+      String getShopUrl = baseURLAPI + '/shops/' + shopId.toString();
 
-      return ApiReturnValueShop(value: value, shop: shopReturn);
+      var getShopResponse = await client.get(getShopUrl,
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer $_token"
+          });
+
+      var shopData = jsonDecode(getShopResponse.body);
+
+      if (getShopResponse.statusCode != 200) {
+        return ApiReturnValueShop(
+            message: shopData['message'].toString(), error: shopData['error']);
+      }
+
+      Shop shopReturn = Shop.fromJson(shopData['data']);
+      User value = User.fromJson(shopData['data']['user']);
+
+      return ApiReturnValueShop(value: value, shop: shopReturn, token: _token);
     } on SocketException {
       return ApiReturnValueShop(message: socketException, isException: true);
     } on HttpException {

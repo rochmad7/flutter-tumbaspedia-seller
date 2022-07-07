@@ -36,6 +36,7 @@ class Shop extends Equatable {
         // totalProducts: data["total_products"] != null
         //     ? int.parse(data["total_products"].toString())
         //     : 0,
+        status: data["is_open"] == true ? true : false,
         isValid: data["is_verified"],
         description: data["description"],
       );
