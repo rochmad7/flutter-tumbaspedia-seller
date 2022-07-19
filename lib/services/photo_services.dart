@@ -7,7 +7,7 @@ class PhotoServices {
     try {
       client ??= http.Client();
       final _storage = const FlutterSecureStorage();
-      String token = await _storage.read(key: 'token');
+      String token = await _storage.read(key: 'shop_token');
 
       String url;
       start ??= 0;
@@ -54,7 +54,7 @@ class PhotoServices {
       client ??= http.Client();
 
       final _storage = const FlutterSecureStorage();
-      String token = await _storage.read(key: 'token');
+      String token = await _storage.read(key: 'shop_token');
 
       String url =
           baseURLAPI + '/product-pictures?product_id=' + product.id.toString();
@@ -95,7 +95,7 @@ class PhotoServices {
         return ApiReturnValue(message: 'File gambar produk tidak ada');
       }
       final _storage = const FlutterSecureStorage();
-      String token = await _storage.read(key: 'token');
+      String token = await _storage.read(key: 'shop_token');
 
       String url =
           baseURLAPI + '/product-pictures?product_id=' + productId.toString();
@@ -152,7 +152,7 @@ class PhotoServices {
     try {
       client ??= http.Client();
       final _storage = const FlutterSecureStorage();
-      String token = await _storage.read(key: 'token');
+      String token = await _storage.read(key: 'shop_token');
       String url =
           baseURLAPI + '/product-pictures?product_id=' + product.id.toString();
 

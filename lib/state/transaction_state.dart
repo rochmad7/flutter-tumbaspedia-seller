@@ -28,12 +28,13 @@ class TransactionLoadingFailed extends TransactionState {
 }
 
 class TransactionUpdated extends TransactionState {
-  final Transaction transaction;
+  // final Transaction transaction;
+  final String message;
 
-  TransactionUpdated(this.transaction);
+  TransactionUpdated(this.message);
 
   @override
-  List<Object> get props => [transaction];
+  List<Object> get props => [message];
 }
 
 class TransactionUpdateFailed extends TransactionState {

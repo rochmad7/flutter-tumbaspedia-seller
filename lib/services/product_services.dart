@@ -7,7 +7,7 @@ class ProductServices {
     try {
       client ??= http.Client();
       final _storage = const FlutterSecureStorage();
-      final _token = await _storage.read(key: 'token');
+      final _token = await _storage.read(key: 'shop_token');
 
       String url;
       query ??= '';
@@ -78,7 +78,7 @@ class ProductServices {
 
       client ??= http.Client();
       final _storage = const FlutterSecureStorage();
-      final _token = await _storage.read(key: 'token');
+      final _token = await _storage.read(key: 'shop_token');
       String url = baseURLAPI + '/products';
 
       if (request == null) {
@@ -131,7 +131,7 @@ class ProductServices {
       client ??= http.Client();
       product ??= Product();
       final _storage = const FlutterSecureStorage();
-      final _token = await _storage.read(key: 'token');
+      final _token = await _storage.read(key: 'shop_token');
       String url = baseURLAPI + '/products/' + product.id.toString();
       var response = await client.patch(url,
           headers: {
@@ -179,7 +179,7 @@ class ProductServices {
       {http.MultipartRequest request}) async {
     try {
       final _storage = const FlutterSecureStorage();
-      final _token = await _storage.read(key: 'token');
+      final _token = await _storage.read(key: 'shop_token');
       String url = baseURLAPI + '/products/' + productId.toString();
       var uri = Uri.parse(url);
       if (request == null) {
@@ -261,7 +261,7 @@ class ProductServices {
     try {
       client ??= http.Client();
       final _storage = const FlutterSecureStorage();
-      final _token = await _storage.read(key: 'token');
+      final _token = await _storage.read(key: 'shop_token');
       String url = baseURLAPI + '/products/' + product.id.toString();
 
       // if (product != null) {

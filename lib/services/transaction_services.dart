@@ -8,7 +8,7 @@ class TransactionServices {
       client ??= http.Client();
       limit ??= 1000;
       final _storage = const FlutterSecureStorage();
-      final _token = await _storage.read(key: 'token');
+      final _token = await _storage.read(key: 'shop_token');
 
       String url = baseURLAPI + '/shops/transactions';
 
@@ -40,41 +40,41 @@ class TransactionServices {
     }
   }
 
-  static Future<ApiReturnValue<Transaction>> updateTransaction(
+  static Future<ApiReturnValue<String>> updateTransaction(
       Transaction transaction,
       {http.Client client}) async {
     try {
       client ??= http.Client();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'shop/transaction/' + transaction.id.toString();
+      final _storage = const FlutterSecureStorage();
+      final _token = await _storage.read(key: 'shop_token');
 
-      var response = await client.post(url,
+      String url = baseURLAPI + '/transactions/' + transaction.id.toString();
+
+      var response = await client.patch(url,
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
             "Token": tokenAPI,
-            "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+            "Authorization": "Bearer $_token"
           },
           body: jsonEncode(<String, dynamic>{
             'status': (transaction.status == TransactionStatus.delivered)
-                ? 'DELIVERED'
+                ? 'delivered'
                 : (transaction.status == TransactionStatus.cancelled)
-                    ? 'CANCELLED'
+                    ? 'canceled'
                     : (transaction.status == TransactionStatus.pending)
-                        ? 'PENDING'
-                        : 'ON_DELIVERY',
+                        ? 'pending'
+                        : 'on_delivery',
           }));
 
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         return ApiReturnValue(
-            message: data['data']['message'].toString(),
-            error: data['data']['error']);
+            message: data['message'].toString(),
+            error: data['error']);
       }
 
-      Transaction value = Transaction.fromJson(data['data']['transaction']);
-
-      return ApiReturnValue(value: value);
+      return ApiReturnValue(message: data['message'].toString());
     } on SocketException {
       return ApiReturnValue(message: socketException, isException: true);
     } on HttpException {

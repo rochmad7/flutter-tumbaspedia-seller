@@ -96,7 +96,9 @@ class _EditTransactionPageState extends State<EditTransactionPage> {
 
                     if (state is TransactionUpdated) {
                       Navigator.of(context).pop();
-                      // context.read<TransactionCubit>().getTransactions(null);
+                      context
+                          .read<TransactionCubit>()
+                          .getTransactions(10, null);
                       Get.to(() => MainPage(
                             initialPage: 3,
                           ));
@@ -108,11 +110,13 @@ class _EditTransactionPageState extends State<EditTransactionPage> {
                       });
                     } else {
                       Navigator.of(context).pop();
-                      // context.read<TransactionCubit>().getTransactions(null);
-                      // context.read<UserCubit>().getMyProfile((context
-                      //         .read<UserCubit>()
-                      //         .state as UserLoadedWithShop)
-                      //     .shop);
+                      context
+                          .read<TransactionCubit>()
+                          .getTransactions(10, null);
+                      context.read<UserCubit>().getMyProfile((context
+                              .read<UserCubit>()
+                              .state as UserLoadedWithShop)
+                          .shop);
                       setState(() {
                         isLoading = false;
                       });

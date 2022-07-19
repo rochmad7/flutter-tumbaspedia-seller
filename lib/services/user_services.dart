@@ -90,7 +90,7 @@ class UserServices {
       client ??= http.Client();
 
       final _storage = const FlutterSecureStorage();
-      String token = await _storage.read(key: 'token');
+      String token = await _storage.read(key: 'shop_token');
 
       String url = baseURLAPI + '/users/change-password';
 
@@ -415,7 +415,7 @@ class UserServices {
     try {
       shop ??= Shop();
       final _storage = const FlutterSecureStorage();
-      final _token = await _storage.read(key: 'token');
+      final _token = await _storage.read(key: 'shop_token');
 
       String url = baseURLAPI + '/shops/' + shop.id.toString();
       var uri = Uri.parse(url);
@@ -462,7 +462,7 @@ class UserServices {
       client ??= http.Client();
       shop ??= Shop();
       final _storage = const FlutterSecureStorage();
-      final _token = await _storage.read(key: 'token');
+      final _token = await _storage.read(key: 'shop_token');
 
       String url = baseURLAPI + '/shops/' + shop.id.toString();
 
@@ -499,7 +499,7 @@ class UserServices {
     try {
       client ??= http.Client();
       final _storage = const FlutterSecureStorage();
-      final _token = await _storage.read(key: 'token');
+      final _token = await _storage.read(key: 'shop_token');
 
       String url = baseURLAPI + '/shops/' + shopId.toString();
 
