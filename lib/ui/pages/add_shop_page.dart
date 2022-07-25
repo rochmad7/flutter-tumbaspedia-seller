@@ -66,7 +66,7 @@ class _AddShopPageState extends State<AddShopPage> {
                 icon: Icons.shop,
                 controller: shopNameController,
                 hintText: "Nama Toko"),
-            TextDanger(error: error, param: "shopname"),
+            TextDanger(error: error, param: "shop_name"),
             SizedBox(
               height: 15,
             ),
@@ -77,7 +77,7 @@ class _AddShopPageState extends State<AddShopPage> {
                 maxLines: 3,
                 controller: shopAddressController,
                 hintText: "Alamat Toko"),
-            TextDanger(error: error, param: "shopaddress"),
+            TextDanger(error: error, param: "shop_address"),
             SizedBox(
               height: 15,
             ),
@@ -90,7 +90,7 @@ class _AddShopPageState extends State<AddShopPage> {
                 maxLines: 6,
                 controller: shopDescController,
                 hintText: "Deskripsi Toko"),
-            TextDanger(error: error, param: "shopdescription"),
+            TextDanger(error: error, param: "shop_description"),
             SizedBox(
               height: 15,
             ),
@@ -143,15 +143,15 @@ class _AddShopPageState extends State<AddShopPage> {
                 setState(() {
                   isLoading = true;
                 });
-                // await context.read<UserCubit>().signUp(
-                //     user, widget.password, shop,
-                //     pictureFile: pictureFile, nibFile: nibFile);
+                await context.read<UserCubit>().signUp(
+                    user, widget.password, shop,
+                    pictureFile: pictureFile, nibFile: nibFile);
                 UserState state = context.read<UserCubit>().state;
 
                 if (state is UserLoadedWithShop) {
-                  // context
-                  //     .read<ProductCubit>()
-                  //     .getMyProducts(null, null, null, null);
+                  context
+                      .read<ProductCubit>()
+                      .getMyProducts(null, null, null, null);
                   User user =
                       (context.read<UserCubit>().state as UserLoadedWithShop)
                           .user;

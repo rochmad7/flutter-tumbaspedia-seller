@@ -128,13 +128,12 @@ class UserServices {
     try {
       client ??= http.Client();
 
-      String url = baseURLAPI + 'checkuser';
+      String url = baseURLAPI + '/users';
 
       var response = await client.post(url,
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Token": tokenAPI,
           },
           body: jsonEncode(<String, dynamic>{
             'name': user.name,
@@ -145,10 +144,12 @@ class UserServices {
 
       var data = jsonDecode(response.body);
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != 200 || response.statusCode != 201) {
         return ApiReturnValue(
             message: data['message'].toString(), error: data['error']);
       }
+
+      user = User.fromJson(data['data']);
 
       return ApiReturnValue(value: user);
     } on SocketException {
@@ -189,61 +190,63 @@ class UserServices {
 
       client ??= http.Client();
       shop ??= Shop();
+      user ??= User();
 
-      String url = baseURLAPI + 'shopregister3';
+      String url = baseURLAPI + '/auth/shop/register';
 
       var response = await client.post(url,
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Token": tokenAPI,
           },
           body: jsonEncode(<String, dynamic>{
-            'roleid': 3,
             'name': user.name,
             'email': user.email,
-            'phone': user.phoneNumber,
+            'phone_number': user.phoneNumber,
+            'address': shop.address,
             'password': password,
-            'shopname': shop.name,
-            'shopaddress': shop.address,
-            'shopdescription': shop.description,
+            'shop_name': shop.name,
+            'shop_address': shop.address,
+            'shop_description': shop.description,
           }));
 
       var data = jsonDecode(response.body);
 
-      if (response.statusCode != 200) {
+      print('response.statusCode: ${response.statusCode}');
+      print('response.body: ${response.body}');
+
+      if (data['errors'] != null) {
         removeUserData();
         return ApiReturnValueShop(
-            message: data['message'].toString(), error: data['error']);
+            message: data['message'].toString(), error: data['errors']);
       }
+      User.token = data['data']['access_token'];
+      User value = User.fromJson(data['data']['shop']['user']);
+      Shop shopReturn = Shop.fromJson(data['data']['shop']);
 
-      User.token = data['access_token'];
-      User value = User.fromJson(data['user']);
-      Shop shopReturn = Shop.fromJson(data['shop']);
-
-      if (pictureFile != null) {
-        ApiReturnValue<String> result = await uploadShopPicture(
-            data['access_token'], pictureFile, 'shop/photo');
-        if (result.value != null) {
-          value =
-              value.copyWith(picturePath: "assets/img/shop/" + result.value);
-        }
-      }
-
-      // if (nibFile != null) {
-      //   ApiReturnValue<String> result = await uploadShopPicture(
-      //       data['access_token'], nibFile, 'shop/nib');
-      //   if (result.value != null) {
-      //     shopReturn =
-      //         shopReturn.copyWith(nib: "assets/img/shop/nib/" + result.value);
-      //   }
-      // }
       saveUserData(
         email: user.email,
         token: User.token,
       );
 
-      return ApiReturnValueShop(value: value, shop: shopReturn);
+      if (pictureFile != null) {
+        ApiReturnValue<String> result =
+            await uploadShopPictureAndNib(shopReturn.id, pictureFile, null);
+        if (result.isException == true) {
+          return ApiReturnValueShop(message: result.message, error: result.error);
+        }
+      }
+
+      if (nibFile != null) {
+        ApiReturnValue<String> result =
+            await uploadShopPictureAndNib(shopReturn.id, null, nibFile);
+        if (result.isException == true) {
+          return ApiReturnValueShop(message: result.message, error: result.error);
+        }
+      }
+
+      return ApiReturnValueShop(
+          value: value, shop: shopReturn, token: User.token);
     } on SocketException {
       return ApiReturnValueShop(message: socketException, isException: true);
     } on HttpException {
@@ -252,6 +255,57 @@ class UserServices {
       return ApiReturnValueShop(message: formatException, isException: true);
     } catch (e) {
       return ApiReturnValueShop(message: e.toString(), isException: true);
+    }
+  }
+
+  static Future<ApiReturnValue<String>> uploadShopPictureAndNib(
+      int shopId, File shopPicture, File shopNib,
+      {http.MultipartRequest request}) async {
+    try {
+      final _storage = const FlutterSecureStorage();
+      final _token = await _storage.read(key: 'shop_token');
+
+      String url = baseURLAPI + '/shops/' + shopId.toString();
+      var uri = Uri.parse(url);
+      if (request == null) {
+        request = http.MultipartRequest("PATCH", uri)
+          ..headers["Accept"] = "application/json"
+          ..headers["Content-Type"] = "application/json"
+          ..headers["Authorization"] = "Bearer $_token";
+      }
+
+      print(url);
+
+      if (shopPicture != null) {
+        var multipartFile =
+            await http.MultipartFile.fromPath('shop_picture', shopPicture.path);
+        request.files.add(multipartFile);
+      }
+
+      if (shopNib != null) {
+        var multipartFileNib =
+            await http.MultipartFile.fromPath('shop_nib', shopNib.path);
+        request.files.add(multipartFileNib);
+      }
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        String responseBody = await response.stream.bytesToString();
+        var data = jsonDecode(responseBody);
+
+        return ApiReturnValue(value: data['message']);
+      }
+
+      return null;
+    } on SocketException {
+      return ApiReturnValue(message: socketException, isException: true);
+    } on HttpException {
+      return ApiReturnValue(message: httpException, isException: true);
+    } on FormatException {
+      return ApiReturnValue(message: formatException, isException: true);
+    } catch (e) {
+      return ApiReturnValue(message: e.toString(), isException: true);
     }
   }
 
@@ -522,12 +576,11 @@ class UserServices {
 
       String getShopUrl = baseURLAPI + '/shops/' + shopId.toString();
 
-      var getShopResponse = await client.get(getShopUrl,
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": "Bearer $_token"
-          });
+      var getShopResponse = await client.get(getShopUrl, headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $_token"
+      });
 
       var shopData = jsonDecode(getShopResponse.body);
 

@@ -37,7 +37,7 @@ class WaitingShopPage extends StatelessWidget {
                   picturePath: protect,
                   buttonTap1: () async => await launch(
                       "mailto:doltinukuid@gmail.com?Subject=Pendaftaran%20Akun%20Toko%20Gagal"),
-                  buttonTitle1: "Hubungi Doltinuku",
+                  buttonTitle1: "Hubungi Tumbaspedia",
                 ));
           } else {
             return Scaffold(

@@ -3,6 +3,7 @@ part of 'pages.dart';
 class SignUpPage extends StatefulWidget {
   final User user;
   final String password;
+
   SignUpPage({this.user, this.password});
 
   @override
@@ -128,22 +129,22 @@ class _SignUpPageState extends State<SignUpPage> {
                   // await context
                   //     .read<UserCubit>()
                   //     .checkUser(user, passwordController.text);
-
-                  UserState state = context.read<UserCubit>().state;
-
-                  if (state is UserLoaded) {
-                    Get.off(AddShopPage(user, passwordController.text));
-                  } else {
-                    snackBar("Gagal Melanjutkan",
-                        (state as UserLoadingFailed).message, 'error');
-
-                    setState(() {
-                      error = (state as UserLoadingFailed).error != null
-                          ? (state as UserLoadingFailed).error
-                          : null;
-                      isLoading = false;
-                    });
-                  }
+                  //
+                  // UserState state = context.read<UserCubit>().state;
+                  //
+                  // if (state is UserLoaded) {
+                  Get.off(AddShopPage(user, passwordController.text));
+                  // } else {
+                  //   snackBar("Gagal Melanjutkan",
+                  //       (state as UserLoadingFailed).message, 'error');
+                  //
+                  //   setState(() {
+                  //     error = (state as UserLoadingFailed).error != null
+                  //         ? (state as UserLoadingFailed).error
+                  //         : null;
+                  //     isLoading = false;
+                  //   });
+                  // }
                 }),
             SizedBox(
               height: 25,

@@ -26,29 +26,29 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-// Future<void> checkUser(User user, String password) async {
-//   ApiReturnValue<User> result = await UserServices.checkUser(user, password);
-//
-//   if (result.value != null) {
-//     emit(UserLoaded(result.value));
-//   } else {
-//     emit(UserLoadingFailed(result.message, result.error));
-//   }
-// }
-//
-// Future<void> signUp(User user, String password, Shop shop,
-//     {File pictureFile, File nibFile}) async {
-//   ApiReturnValueShop<User, Shop> result = await UserServices.signUp(
-//       user, password, shop,
-//       pictureFile: pictureFile, nibFile: nibFile);
-//
-//   if (result.value != null && result.shop != null) {
-//     emit(UserLoadedWithShop(result.value, result.shop));
-//   } else {
-//     emit(UserLoadingFailed(result.message, result.error));
-//   }
-// }
-//
+  Future<void> checkUser(User user, String password) async {
+    ApiReturnValue<User> result = await UserServices.checkUser(user, password);
+
+    if (result.value != null) {
+      emit(UserLoaded(result.value, ""));
+    } else {
+      emit(UserLoadingFailed(result.message, result.error));
+    }
+  }
+
+  Future<void> signUp(User user, String password, Shop shop,
+      {File pictureFile, File nibFile}) async {
+    ApiReturnValueShop<User, Shop> result = await UserServices.signUp(
+        user, password, shop,
+        pictureFile: pictureFile, nibFile: nibFile);
+
+    if (result.isException == false) {
+      emit(UserLoadedWithShop(result.value, result.shop, result.token));
+    } else {
+      emit(UserLoadingFailed(result.message, result.error));
+    }
+  }
+
 // Future<void> forgotPassword(String email) async {
 //   ApiReturnValue<bool> result = await UserServices.forgotPassword(email);
 //
