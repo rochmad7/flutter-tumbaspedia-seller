@@ -13,7 +13,7 @@ class CustomBottomNavbar extends StatelessWidget {
       height: 65,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.green,
+        color: Color(0xff541690),
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25), topRight: Radius.circular(25)),
         boxShadow: [
@@ -101,13 +101,13 @@ class IconBottomNavbar extends StatelessWidget {
               children: [
                 Icon(icon,
                     size: 26,
-                    color: (selectedIndex == index) ? mainColor : Colors.white70),
+                    color: (selectedIndex == index) ? Colors.orange : Colors.white70),
                 Text(
                   title,
                   style: blackFontStyle2.copyWith(
                       fontSize: 12,
                       color:
-                          (selectedIndex == index) ? mainColor : Colors.white70),
+                          (selectedIndex == index) ? Colors.orange : Colors.white70),
                 ),
               ],
             ),

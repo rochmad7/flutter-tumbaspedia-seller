@@ -52,7 +52,7 @@ class WaitingShopPage extends StatelessWidget {
                           ") \ntelah lolos proses verifikasi \ntim Doltinuku. Silahkan\nmulai kelola toko Anda"
                       : "Berkas Anda telah diterima\ntetapi toko Anda (toko " +
                           shop.name +
-                          ")\n sedang diverifikasi\noleh tim Doltinuku",
+                          ")\n sedang diverifikasi\noleh tim Tumbaspedia",
                   picturePath: (shop.isValid) ? shopIllustration : verification,
                   buttonTap1: (shop.isValid)
                       ? () {
@@ -62,7 +62,7 @@ class WaitingShopPage extends StatelessWidget {
                           "mailto:doltinukuid@gmail.com?Subject=Menunggu%20Verifikasi%20Akun%20Toko"),
                   buttonTitle1: (shop.isValid)
                       ? 'Mulai kelola toko'
-                      : "Hubungi Doltinuku",
+                      : "Hubungi Tumbaspedia",
                 ));
           }
         } else

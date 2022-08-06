@@ -324,7 +324,7 @@ class _ProductPageState extends State<ProductPage> {
                                   CustomIllustration(
                                 picturePath: foodWishes,
                                 title: "Maaf",
-                                subtitle: "Produk gagal dimuat",
+                                subtitle: "Produk gagal dimuat atau kosong",
                               ),
                               noItemsFoundIndicatorBuilder: (context) =>
                                   CustomIllustration(
