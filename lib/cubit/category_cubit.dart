@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:shop_tumbaspedia/services/services.dart';
-import 'package:shop_tumbaspedia/models/models.dart';
+import 'package:tumbaspedia_seller/services/services.dart';
+import 'package:tumbaspedia_seller/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 part '../state/category_state.dart';

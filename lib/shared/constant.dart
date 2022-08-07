@@ -22,12 +22,13 @@ void removeUserData() async {
 String tokenAPI = "VUJDZFIYZD6TJ4DFDGULFGXZDPOVI94R";
 
 // String baseURL = 'http://192.168.81.14:8000/';
-String baseURL = 'https://betav2.doltinuku.id/';
-String baseURLStorage = baseURL + 'storage/';
+// String baseURL = 'https://betav2.doltinuku.id/';
+// String baseURLStorage = baseURL + 'storage/';
 String baseURLAPI = 'http://10.0.2.2:3000/api';
-// String baseURLAPI = 'http://192.168.81.33:3000/api';
+// String baseURLAPI = 'http://192.168.1.166:3000/api';
 
-Color mainColor = "032339".toColor();
+Color mainColor = Color(0xff541690);
+// Color mainColor = "032339".toColor();
 Color greyColor = "8D92A3".toColor();
 Color secondaryColor = "FFC700".toColor();
 const kSecondaryColor = Color(0xFF979797);

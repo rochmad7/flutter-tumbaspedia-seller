@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:equatable/equatable.dart';
-import 'package:shop_tumbaspedia/models/models.dart';
-import 'package:shop_tumbaspedia/services/services.dart';
+import 'package:tumbaspedia_seller/models/models.dart';
+import 'package:tumbaspedia_seller/services/services.dart';
 
 part '../state/photo_state.dart';
 

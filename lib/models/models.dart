@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
-import 'package:shop_tumbaspedia/shared/shared.dart';
+import 'package:tumbaspedia_seller/shared/shared.dart';
 
 part 'product.dart';
 part 'shop.dart';

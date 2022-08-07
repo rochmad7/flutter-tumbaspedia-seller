@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shop_tumbaspedia/cubit/cubit.dart';
-import 'package:shop_tumbaspedia/models/models.dart';
+import 'package:tumbaspedia_seller/cubit/cubit.dart';
+import 'package:tumbaspedia_seller/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:shop_tumbaspedia/shared/shared.dart';
+import 'package:tumbaspedia_seller/shared/shared.dart';
 import 'package:intl/intl.dart';
 
 part 'user_services.dart';

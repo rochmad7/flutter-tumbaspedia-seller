@@ -69,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             LabelFormField(
               label: "Email *",
-              example: "Contoh: doltinukuid@gmail.com",
+              example: "Contoh: tumbaspedia@gmail.com",
             ),
             TextFieldDefault(
                 icon: Icons.mail_outline,

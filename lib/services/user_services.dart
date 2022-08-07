@@ -212,9 +212,6 @@ class UserServices {
 
       var data = jsonDecode(response.body);
 
-      print('response.statusCode: ${response.statusCode}');
-      print('response.body: ${response.body}');
-
       if (data['errors'] != null) {
         removeUserData();
         return ApiReturnValueShop(
@@ -232,17 +229,17 @@ class UserServices {
       if (pictureFile != null) {
         ApiReturnValue<String> result =
             await uploadShopPictureAndNib(shopReturn.id, pictureFile, null);
-        if (result.isException == true) {
-          return ApiReturnValueShop(message: result.message, error: result.error);
-        }
+        // if (result.isException == true) {
+        //   return ApiReturnValueShop(message: result.message, error: result.error);
+        // }
       }
 
       if (nibFile != null) {
         ApiReturnValue<String> result =
             await uploadShopPictureAndNib(shopReturn.id, null, nibFile);
-        if (result.isException == true) {
-          return ApiReturnValueShop(message: result.message, error: result.error);
-        }
+        // if (result.isException == true) {
+        //   return ApiReturnValueShop(message: result.message, error: result.error);
+        // }
       }
 
       return ApiReturnValueShop(
@@ -265,7 +262,7 @@ class UserServices {
       final _storage = const FlutterSecureStorage();
       final _token = await _storage.read(key: 'shop_token');
 
-      String url = baseURLAPI + '/shops/' + shopId.toString();
+      String url = baseURLAPI + '/shops/upload-image/' + shopId.toString();
       var uri = Uri.parse(url);
       if (request == null) {
         request = http.MultipartRequest("PATCH", uri)
@@ -274,30 +271,35 @@ class UserServices {
           ..headers["Authorization"] = "Bearer $_token";
       }
 
-      print(url);
-
       if (shopPicture != null) {
+        print('uploading picture');
         var multipartFile =
             await http.MultipartFile.fromPath('shop_picture', shopPicture.path);
         request.files.add(multipartFile);
       }
 
       if (shopNib != null) {
+
+        print(shopNib.path);
         var multipartFileNib =
             await http.MultipartFile.fromPath('shop_nib', shopNib.path);
         request.files.add(multipartFileNib);
       }
 
       var response = await request.send();
+      String responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
+      print('data: $data');
 
       if (response.statusCode == 200) {
         String responseBody = await response.stream.bytesToString();
         var data = jsonDecode(responseBody);
 
+        print('data2: ' + data.toString());
         return ApiReturnValue(value: data['message']);
       }
 
-      return null;
+      return ApiReturnValue();
     } on SocketException {
       return ApiReturnValue(message: socketException, isException: true);
     } on HttpException {

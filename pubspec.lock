@@ -44,7 +44,7 @@ packages:
     source: hosted
     version: "2.4.1"
   change_app_package_name:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: change_app_package_name
       url: "https://pub.dartlang.org"

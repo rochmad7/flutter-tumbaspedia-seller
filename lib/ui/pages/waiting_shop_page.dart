@@ -33,7 +33,7 @@ class WaitingShopPage extends StatelessWidget {
                   isBackHome: true,
                   subtitle: "Sayangnya toko Anda\nyaitu (toko " +
                       shop.name +
-                      ")\ntidak lolos proses verifikasi oleh\ntim Doltinuku & Pengurus UKM\nGerai Kopimi Gedawang",
+                      ")\ntidak lolos proses verifikasi oleh\ntim Tumbaspedia & Pengurus UKM\nGerai Kopimi Rowosari",
                   picturePath: protect,
                   buttonTap1: () async => await launch(
                       "mailto:doltinukuid@gmail.com?Subject=Pendaftaran%20Akun%20Toko%20Gagal"),

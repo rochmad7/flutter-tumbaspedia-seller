@@ -33,7 +33,6 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     compileSdkVersion 32
-    ndkVersion "25.0.8775105"
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -45,7 +44,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.tumbaspedia.shoptumbaspedia"
+        applicationId "com.tumbaspedia.tumbaspediaseller"
         minSdkVersion 18
         targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
