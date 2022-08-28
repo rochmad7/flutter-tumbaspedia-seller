@@ -19,12 +19,12 @@ class RefreshButton extends StatelessWidget {
         ),
         onTap: press,
         child: Padding(
-          padding: const EdgeInsets.only(left: 8),
+          padding: const EdgeInsets.only(left: 8, top: 12),
           child: Row(
             children: [
               isLabel ? Text('Refresh', style: blackFontStyle3) : SizedBox(),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Icon(Icons.refresh, color: mainColor),
               ),
             ],

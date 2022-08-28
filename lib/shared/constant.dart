@@ -21,9 +21,6 @@ void removeUserData() async {
 
 String tokenAPI = "VUJDZFIYZD6TJ4DFDGULFGXZDPOVI94R";
 
-// String baseURL = 'http://192.168.81.14:8000/';
-// String baseURL = 'https://betav2.doltinuku.id/';
-// String baseURLStorage = baseURL + 'storage/';
 String baseURLAPI = 'http://10.0.2.2:3000/api';
 // String baseURLAPI = 'http://192.168.1.166:3000/api';
 

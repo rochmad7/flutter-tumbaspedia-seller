@@ -55,56 +55,56 @@ class _ProfileHeaderState extends State<ProfileHeader> {
               children: widget.actions,
             ),
           ),
-        Container(
-          width: double.infinity,
-          height: 200,
-          padding: const EdgeInsets.only(bottom: 10, left: 10),
-          alignment: Alignment.bottomLeft,
-          child: Container(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(5),
-                child: FlutterSwitch(
-                  width: 70.0,
-                  height: 25.0,
-                  toggleSize: 15.0,
-                  activeText: "Buka",
-                  inactiveText: "Tutup",
-                  showOnOff: true,
-                  valueFontSize: 12,
-                  activeColor: Colors.green,
-                  inactiveColor: Colors.grey,
-                  value: isSwitched,
-                  onToggle: (value) {
-                    SweetAlert.show(context,
-                        title: "Apakah Anda yakin?",
-                        subtitle:
-                            "Toko Anda akan " + (isSwitched ? "tutup" : "buka"),
-                        style: SweetAlertStyle.confirm,
-                        confirmButtonText: "Ya",
-                        cancelButtonText: "Batal",
-                        // ignore: missing_return
-                        showCancelButton: true, onPress: (bool isConfirm) {
-                      if (isConfirm) {
-                        context
-                            .read<UserCubit>()
-                            .changeStatus(value, widget.shopId);
-                        SweetAlert.show(context,
-                            style: SweetAlertStyle.success, title: "Berhasil");
-                        setState(() {
-                          isSwitched = value;
-                        });
-                        return false;
-                      }
-                    });
-                  },
-                ),
-              ),
-            ),
-          ),
-        ),
+        // Container(
+        //   width: double.infinity,
+        //   height: 200,
+        //   padding: const EdgeInsets.only(bottom: 10, left: 10),
+        //   alignment: Alignment.bottomLeft,
+        //   child: Container(
+        //     child: ClipRRect(
+        //       borderRadius: BorderRadius.circular(15),
+        //       child: Container(
+        //         color: Colors.white,
+        //         padding: const EdgeInsets.all(5),
+        //         child: FlutterSwitch(
+        //           width: 70.0,
+        //           height: 25.0,
+        //           toggleSize: 15.0,
+        //           activeText: "Buka",
+        //           inactiveText: "Tutup",
+        //           showOnOff: true,
+        //           valueFontSize: 12,
+        //           activeColor: Colors.green,
+        //           inactiveColor: Colors.grey,
+        //           value: isSwitched,
+        //           onToggle: (value) {
+        //             SweetAlert.show(context,
+        //                 title: "Apakah Anda yakin?",
+        //                 subtitle:
+        //                     "Toko Anda akan " + (isSwitched ? "tutup" : "buka"),
+        //                 style: SweetAlertStyle.confirm,
+        //                 confirmButtonText: "Ya",
+        //                 cancelButtonText: "Batal",
+        //                 // ignore: missing_return
+        //                 showCancelButton: true, onPress: (bool isConfirm) {
+        //               if (isConfirm) {
+        //                 context
+        //                     .read<UserCubit>()
+        //                     .changeStatus(value, widget.shopId);
+        //                 SweetAlert.show(context,
+        //                     style: SweetAlertStyle.success, title: "Berhasil");
+        //                 setState(() {
+        //                   isSwitched = value;
+        //                 });
+        //                 return false;
+        //               }
+        //             });
+        //           },
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
         Container(
           width: double.infinity,
           margin: const EdgeInsets.only(top: 160),

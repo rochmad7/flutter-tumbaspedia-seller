@@ -5,13 +5,13 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GeneralPage(
         title: 'Tentang Kami',
-        subtitle: 'Sekilas pandang Doltinuku',
+        subtitle: 'Mengenal sekilas Tumbaspedia',
         onBackButtonPressed: () {
           Get.back();
         },
         child: Column(
           children: [
-            CardAccordion(title: "Apa itu Doltinuku", text: doltinuku),
+            CardAccordion(title: "Apa itu Tumbaspedia", text: tumbaspedia),
             CardAccordion(title: "Apa itu Gerai Kopimi", text: kopimi),
           ],
         ));

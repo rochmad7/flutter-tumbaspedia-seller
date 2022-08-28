@@ -22,9 +22,9 @@ class ProductServices {
       if (categoryId != null) {
         url += '&category=' + categoryId.toString();
       }
-      if (limit != null) {
-        url += '&limit=' + limit.toString();
-      }
+      // if (limit != null) {
+      //   url += '&limit=' + limit.toString();
+      // }
       if (sort == SortMethod.terbaru) {
         url += '&sortBy=date&sortType=desc';
       } else if (sort == SortMethod.terlaris) {
