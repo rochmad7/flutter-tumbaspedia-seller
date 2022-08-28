@@ -14,7 +14,7 @@ class _ProductPageState extends State<ProductPage> {
   SortMethod _selectedSortMethod = SortMethod.acak;
   String message;
   String query;
-  String categoryname;
+  // String categoryname;
   List<Category> categories;
   var categoriesname = [];
   var category = <Category>[];
@@ -49,8 +49,11 @@ class _ProductPageState extends State<ProductPage> {
       if (isLastPage) {
         _pagingController.appendLastPage(newItems.value);
       } else {
-        final nextPageKey = pageKey + newItems.value.length;
-        _pagingController.appendPage(newItems.value, nextPageKey);
+        if (pageKey == 0) {
+          _pagingController.appendPage(newItems.value, pageKey + 2);
+        } else {
+          _pagingController.appendPage(newItems.value, pageKey + 1);
+        }
       }
     } catch (error) {
       _pagingController.error = error;
@@ -63,7 +66,6 @@ class _ProductPageState extends State<ProductPage> {
       final response = await http.get(baseURLAPI + '/categories', headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Token": tokenAPI
       });
       if (response.statusCode == 200) {
         if (mounted) {
@@ -101,8 +103,8 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     bool isLogin = (context.watch<UserCubit>().state is UserLoadedWithShop);
-    categoryname =
-        selectedIndex == 0 ? '' : categoriesname[selectedIndex - 1].name;
+    // categoryname =
+    //     selectedIndex == 0 ? '' : categoriesname[selectedIndex - 1].name;
     if (context.watch<UserCubit>().state is UserLoadingFailed)
       return IllustrationPage(
         title: 'Gagal memuat!',
@@ -241,29 +243,82 @@ class _ProductPageState extends State<ProductPage> {
                                                   scrollDirection:
                                                       Axis.horizontal,
                                                   child: Row(
-                                                    children: category
-                                                        .map(
-                                                          (e) => ItemTabBar(
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
                                                             left: defaultMargin,
-                                                            right: (e ==
-                                                                    category
-                                                                        .last)
-                                                                ? defaultMargin
-                                                                : 0,
-                                                            category: e,
-                                                            selectedIndex:
-                                                                selectedIndex,
-                                                            onTap: (index) {
-                                                              setState(() {
-                                                                selectedIndex =
-                                                                    index;
-                                                              });
-                                                              _pagingController
-                                                                  .refresh();
-                                                            },
-                                                          ),
-                                                        )
-                                                        .toList(),
+                                                            right: 0),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                          children: [
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  selectedIndex =
+                                                                  -1;
+                                                                });
+                                                                _pagingController
+                                                                    .refresh();
+                                                              },
+                                                              child: Text(
+                                                                "Semua",
+                                                                style: (selectedIndex ==
+                                                                    -1)
+                                                                    ? blackFontStyle3
+                                                                    .copyWith(
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                                )
+                                                                    : greyFontStyle,
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              width: 40,
+                                                              height: 3,
+                                                              margin:
+                                                              EdgeInsets.only(
+                                                                  top: 13),
+                                                              decoration:
+                                                              BoxDecoration(
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    1.5),
+                                                                color:
+                                                                (selectedIndex ==
+                                                                    -1)
+                                                                    ? "020202"
+                                                                    .toColor()
+                                                                    : Colors
+                                                                    .transparent,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      for (var i = 0;
+                                                      i < category.length;
+                                                      i++)
+                                                        ItemTabBar(
+                                                          left: defaultMargin,
+                                                          right: (category[i] ==
+                                                              category.last)
+                                                              ? defaultMargin
+                                                              : 0,
+                                                          category: category[i],
+                                                          selectedIndex:
+                                                          selectedIndex,
+                                                          onTap: (index) {
+                                                            setState(() {
+                                                              selectedIndex = index;
+                                                            });
+                                                            _pagingController
+                                                                .refresh();
+                                                          },
+                                                        ),
+                                                    ],
                                                   ),
                                                 )),
                                   const Positioned(
@@ -331,9 +386,7 @@ class _ProductPageState extends State<ProductPage> {
                                 picturePath: notFound,
                                 title: selectedIndex != 0 ? "Kosong" : "Oops",
                                 subtitle: selectedIndex != 0
-                                    ? "Produk di toko Anda dengan\nkategori '" +
-                                        categoryname +
-                                        "' tidak ditemukan"
+                                    ? "Produk di toko Anda dengan\nkategori tersebut tidak ditemukan"
                                     : "Produk di toko Anda\n masih kosong",
                               ),
                             ),

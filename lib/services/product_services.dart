@@ -32,7 +32,6 @@ class ProductServices {
       } else if (sort == SortMethod.termurah) {
         url += '&sortBy=price&sortType=asc';
       }
-
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
