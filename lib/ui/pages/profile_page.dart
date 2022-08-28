@@ -76,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   )
                 : TitlePage(
                     title: "Pengaturan",
-                    subtitle: "Pengaturan Akun Toko Doltinuku",
+                    subtitle: "Pengaturan Akun Toko Tumbaspedia",
                     isContainer: true),
             //// Body
             Container(

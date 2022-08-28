@@ -36,7 +36,7 @@ class WaitingShopPage extends StatelessWidget {
                       ")\ntidak lolos proses verifikasi oleh\ntim Tumbaspedia & Pengurus UKM\nGerai Kopimi Rowosari",
                   picturePath: protect,
                   buttonTap1: () async => await launch(
-                      "mailto:doltinukuid@gmail.com?Subject=Pendaftaran%20Akun%20Toko%20Gagal"),
+                      "mailto:Tumbaspediaid@gmail.com?Subject=Pendaftaran%20Akun%20Toko%20Gagal"),
                   buttonTitle1: "Hubungi Tumbaspedia",
                 ));
           } else {
@@ -49,7 +49,7 @@ class WaitingShopPage extends StatelessWidget {
                   subtitle: (shop.isValid)
                       ? "Toko Anda (toko " +
                           shop.name +
-                          ") \ntelah lolos proses verifikasi \ntim Doltinuku. Silahkan\nmulai kelola toko Anda"
+                          ") \ntelah lolos proses verifikasi \ntim Tumbaspedia. Silahkan\nmulai kelola toko Anda"
                       : "Berkas Anda telah diterima\ntetapi toko Anda (toko " +
                           shop.name +
                           ")\n sedang diverifikasi\noleh tim Tumbaspedia",
@@ -59,7 +59,7 @@ class WaitingShopPage extends StatelessWidget {
                           Get.offAll(() => MainPage(initialPage: 0));
                         }
                       : () async => await launch(
-                          "mailto:doltinukuid@gmail.com?Subject=Menunggu%20Verifikasi%20Akun%20Toko"),
+                          "mailto:admin@tumbaspedia.my.id?Subject=Menunggu%20Verifikasi%20Akun%20Toko"),
                   buttonTitle1: (shop.isValid)
                       ? 'Mulai kelola toko'
                       : "Hubungi Tumbaspedia",

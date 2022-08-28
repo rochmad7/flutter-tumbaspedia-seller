@@ -54,7 +54,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         label: "Anda Lupa Password?",
                       ),
                       Text(
-                        "Anda lupa password akun Doltinuku? Tidak masalah. Anda hanya butuh mengisi email akun Doltinuku yang telah terdaftar, di kolom bawah ini dan kami akan mengirimkan link reset password ke email Anda. Selanjutnya Anda bisa me-reset password akun Anda",
+                        "Anda lupa password akun Tumbaspedia? Tidak masalah. Anda hanya butuh mengisi email akun Tumbaspedia yang telah terdaftar, di kolom bawah ini dan kami akan mengirimkan link reset password ke email Anda. Selanjutnya Anda bisa me-reset password akun Anda",
                         style: blackFontStyle3.copyWith(fontSize: 12),
                       ),
                       SizedBox(

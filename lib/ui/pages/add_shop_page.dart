@@ -97,7 +97,7 @@ class _AddShopPageState extends State<AddShopPage> {
             LabelFormField(
                 label: "File NIB Toko *", example: ".jpg, .png, max: 2mb"),
             Text(
-              "*NIB adalah Nomor Induk Berusaha yang merupakan syarat mendaftar sebagai penjual di aplikasi Shop Doltinuku",
+              "*NIB adalah Nomor Induk Berusaha yang merupakan syarat mendaftar sebagai penjual di aplikasi Shop Tumbaspedia",
               style: blackFontStyle3.copyWith(fontSize: 12),
             ),
             SizedBox(
