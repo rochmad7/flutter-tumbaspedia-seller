@@ -18,10 +18,10 @@ class UserServices {
               <String, String>{'email': email, 'password': password}));
 
       var data = jsonDecode(response.body);
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         removeUserData();
         return ApiReturnValueShop(
-            message: data['message'].toString(), error: data['error']);
+            message: 'Email atau password salah', error: data['errors']);
       }
 
       String token = data['data']['access_token'];
@@ -279,7 +279,6 @@ class UserServices {
       }
 
       if (shopNib != null) {
-
         print(shopNib.path);
         var multipartFileNib =
             await http.MultipartFile.fromPath('shop_nib', shopNib.path);

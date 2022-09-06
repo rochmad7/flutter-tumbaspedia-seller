@@ -19,9 +19,10 @@ class UserCubit extends Cubit<UserState> {
     ApiReturnValueShop<User, Shop> result =
         await UserServices.signIn(email, password);
 
-    if (result.value != null && result.shop != null) {
+    if (result.error == null) {
       emit(UserLoadedWithShop(result.value, result.shop, result.token));
     } else {
+      print('error: ${result.error}');
       emit(UserLoadingFailed(result.message, result.error));
     }
   }
