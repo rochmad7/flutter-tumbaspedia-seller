@@ -22,7 +22,6 @@ class UserCubit extends Cubit<UserState> {
     if (result.error == null) {
       emit(UserLoadedWithShop(result.value, result.shop, result.token));
     } else {
-      print('error: ${result.error}');
       emit(UserLoadingFailed(result.message, result.error));
     }
   }
@@ -50,16 +49,16 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-// Future<void> forgotPassword(String email) async {
-//   ApiReturnValue<bool> result = await UserServices.forgotPassword(email);
-//
-//   if (result.error == null && !result.isException) {
-//     emit(UserForgotPassword(result.message, email));
-//   } else {
-//     emit(UserForgotPasswordFailed(result.message, result.error));
-//   }
-// }
-//
+Future<void> forgotPassword(String email) async {
+  ApiReturnValue<bool> result = await UserServices.forgotPassword(email);
+
+  if (result.error == null && !result.isException) {
+    emit(UserForgotPassword(result.message, email));
+  } else {
+    emit(UserForgotPasswordFailed(result.message, result.error));
+  }
+}
+
   Future<void> changePassword(
       String oldPassword, String newPassword, String confPassword) async {
     ApiReturnValue<String> result = await UserServices.changePassword(

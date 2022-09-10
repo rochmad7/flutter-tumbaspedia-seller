@@ -110,7 +110,7 @@ class _SignInPageState extends State<SignInPage> {
                       .read<ProductCubit>()
                       .getMyProducts(null, null, null, null);
                   context.read<CategoryCubit>().getCategories(null);
-                  // context.read<UserCubit>().getMyProfile(state.shop);
+                  context.read<UserCubit>().getMyProfile(state.shop);
                   context.read<TransactionCubit>().getTransactions(null, state.token);
 
                   User user =

@@ -79,9 +79,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             isLoading = true;
                           });
 
-                          // await context
-                          //     .read<UserCubit>()
-                          //     .forgotPassword(emailController.text);
+                          await context
+                              .read<UserCubit>()
+                              .forgotPassword(emailController.text);
                           UserState state = context.read<UserCubit>().state;
 
                           if (state is UserForgotPassword) {

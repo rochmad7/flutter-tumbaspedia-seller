@@ -18,7 +18,7 @@ class UserServices {
               <String, String>{'email': email, 'password': password}));
 
       var data = jsonDecode(response.body);
-      if (data['errors'] != null) {
+      if (data['errors'] != null || data['shop']['is_valid'] == false) {
         removeUserData();
         return ApiReturnValueShop(
             message: 'Email atau password salah', error: data['errors']);
@@ -50,20 +50,19 @@ class UserServices {
     try {
       client ??= http.Client();
 
-      String url = baseURLAPI + 'forgotpassword';
+      String url = baseURLAPI + '/auth/send-reset-password';
 
       var response = await client.post(url,
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Token": tokenAPI
           },
           body: jsonEncode(<String, String>{'email': email}));
 
       var data = jsonDecode(response.body);
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValue(
-            message: data['message'].toString(), error: data['error']);
+            message: data['message'].toString(), error: data['errors']);
       }
 
       return ApiReturnValue(message: data['message'].toString(), error: null);
@@ -570,9 +569,9 @@ class UserServices {
 
       var data = jsonDecode(response.body);
 
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValueShop(
-            message: data['message'].toString(), error: data['error']);
+            message: data['message'].toString(), error: data['errors']);
       }
 
       String getShopUrl = baseURLAPI + '/shops/' + shopId.toString();
@@ -585,9 +584,9 @@ class UserServices {
 
       var shopData = jsonDecode(getShopResponse.body);
 
-      if (getShopResponse.statusCode != 200) {
+      if (shopData['errors'] != null) {
         return ApiReturnValueShop(
-            message: shopData['message'].toString(), error: shopData['error']);
+            message: shopData['message'].toString(), error: shopData['errors']);
       }
 
       Shop shopReturn = Shop.fromJson(shopData['data']);
@@ -609,20 +608,20 @@ class UserServices {
       {http.Client client}) async {
     try {
       client ??= http.Client();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String url = baseURLAPI + 'logout';
-
-      var response = await client.post(url, headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Token": tokenAPI,
-        "Authorization": "Bearer ${prefs.getString('tokenshop')}"
-      });
-      var data = jsonDecode(response.body);
-      if (response.statusCode != 200) {
-        return ApiReturnValueShop(
-            message: data['message'].toString(), error: data['error']);
-      }
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // String url = baseURLAPI + 'logout';
+      //
+      // var response = await client.post(url, headers: {
+      //   "Content-Type": "application/json",
+      //   "Accept": "application/json",
+      //   "Token": tokenAPI,
+      //   "Authorization": "Bearer ${prefs.getString('tokenshop')}"
+      // });
+      // var data = jsonDecode(response.body);
+      // if (response.statusCode != 200) {
+      //   return ApiReturnValueShop(
+      //       message: data['message'].toString(), error: data['error']);
+      // }
       removeUserData();
 
       return ApiReturnValueShop();
