@@ -19,9 +19,13 @@ Future<void> main() async {
   // bool isValid = prefs.getBool('isValid') ?? false;
 
   final _storage = const FlutterSecureStorage();
-  String token = await _storage.read(key: 'token') ?? '';
-  String email = await _storage.read(key: 'email') ?? '';
-  String password = await _storage.read(key: 'password') ?? '';
+  String token = await _storage.read(key: 'shop_token') ?? '';
+  String email = await _storage.read(key: 'shop_email') ?? '';
+  String password = await _storage.read(key: 'shop_password') ?? '';
+
+  print(token);
+  print(email);
+  print(password);
 
   runApp(MyApp(email: email, password: password, token: token));
 }
@@ -35,17 +39,11 @@ class MyApp extends StatelessWidget {
   final String email;
   final String password;
   final String token;
-  final String nib;
-  final bool isReject;
-  final bool isValid;
 
   MyApp(
-      {this.email = '',
-      this.password = '',
-      this.token = '',
-      this.nib = '',
-      this.isReject = false,
-      this.isValid = false});
+      {this.email,
+      this.password,
+      this.token});
 
   @override
   Widget build(BuildContext context) {

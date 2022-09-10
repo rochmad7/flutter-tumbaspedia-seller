@@ -18,7 +18,8 @@ class UserServices {
               <String, String>{'email': email, 'password': password}));
 
       var data = jsonDecode(response.body);
-      if (data['errors'] != null || data['shop']['is_valid'] == false) {
+
+      if (data['errors'] != null) {
         removeUserData();
         return ApiReturnValueShop(
             message: 'Email atau password salah', error: data['errors']);

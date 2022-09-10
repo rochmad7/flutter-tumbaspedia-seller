@@ -14,13 +14,14 @@ class _ProductPageState extends State<ProductPage> {
   SortMethod _selectedSortMethod = SortMethod.acak;
   String message;
   String query;
+
   // String categoryname;
   List<Category> categories;
   var categoriesname = [];
   var category = <Category>[];
   AnimationController animationController;
 
-  static const _pageSize = 1;
+  static const _pageSize = 8;
 
   final PagingController<int, Product> _pagingController =
       PagingController(firstPageKey: 0);
@@ -49,11 +50,8 @@ class _ProductPageState extends State<ProductPage> {
       if (isLastPage) {
         _pagingController.appendLastPage(newItems.value);
       } else {
-        if (pageKey == 0) {
-          _pagingController.appendPage(newItems.value, pageKey + 2);
-        } else {
-          _pagingController.appendPage(newItems.value, pageKey + 1);
-        }
+        final nextPageKey = pageKey + 1;
+        _pagingController.appendPage(newItems.value, nextPageKey);
       }
     } catch (error) {
       _pagingController.error = error;
@@ -250,13 +248,14 @@ class _ProductPageState extends State<ProductPage> {
                                                             right: 0),
                                                         child: Column(
                                                           mainAxisAlignment:
-                                                          MainAxisAlignment.end,
+                                                              MainAxisAlignment
+                                                                  .end,
                                                           children: [
                                                             GestureDetector(
                                                               onTap: () {
                                                                 setState(() {
                                                                   selectedIndex =
-                                                                  -1;
+                                                                      -1;
                                                                 });
                                                                 _pagingController
                                                                     .refresh();
@@ -264,55 +263,54 @@ class _ProductPageState extends State<ProductPage> {
                                                               child: Text(
                                                                 "Semua",
                                                                 style: (selectedIndex ==
-                                                                    -1)
+                                                                        -1)
                                                                     ? blackFontStyle3
-                                                                    .copyWith(
-                                                                  fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                                )
+                                                                        .copyWith(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      )
                                                                     : greyFontStyle,
                                                               ),
                                                             ),
                                                             Container(
                                                               width: 40,
                                                               height: 3,
-                                                              margin:
-                                                              EdgeInsets.only(
-                                                                  top: 13),
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      top: 13),
                                                               decoration:
-                                                              BoxDecoration(
+                                                                  BoxDecoration(
                                                                 borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                    1.5),
-                                                                color:
-                                                                (selectedIndex ==
-                                                                    -1)
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            1.5),
+                                                                color: (selectedIndex ==
+                                                                        -1)
                                                                     ? "020202"
-                                                                    .toColor()
+                                                                        .toColor()
                                                                     : Colors
-                                                                    .transparent,
+                                                                        .transparent,
                                                               ),
                                                             )
                                                           ],
                                                         ),
                                                       ),
                                                       for (var i = 0;
-                                                      i < category.length;
-                                                      i++)
+                                                          i < category.length;
+                                                          i++)
                                                         ItemTabBar(
                                                           left: defaultMargin,
                                                           right: (category[i] ==
-                                                              category.last)
+                                                                  category.last)
                                                               ? defaultMargin
                                                               : 0,
                                                           category: category[i],
                                                           selectedIndex:
-                                                          selectedIndex,
+                                                              selectedIndex,
                                                           onTap: (index) {
                                                             setState(() {
-                                                              selectedIndex = index;
+                                                              selectedIndex =
+                                                                  index;
                                                             });
                                                             _pagingController
                                                                 .refresh();

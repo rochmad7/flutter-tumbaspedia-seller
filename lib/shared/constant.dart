@@ -10,13 +10,11 @@ void saveUserData(
 }
 
 void removeUserData() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove('emailshop');
-  prefs.remove('passwordshop');
-  prefs.remove('tokenshop');
-  prefs.remove('isReject');
-  prefs.remove('isValid');
-  prefs.remove('nib');
+  final _storage = const FlutterSecureStorage();
+  _storage.delete(key: 'shop_email');
+  _storage.delete(key: 'shop_password');
+  _storage.delete(key: 'shop_token');
+  _storage.delete(key: 'shop_isValid');
 }
 
 String tokenAPI = "VUJDZFIYZD6TJ4DFDGULFGXZDPOVI94R";

@@ -204,6 +204,12 @@ class _AddProductPageState extends State<AddProductPage> {
                   ProductState state = context.read<ProductCubit>().state;
 
                   if (state is ProductAdded) {
+                    nameController.text = '';
+                    descriptionController.text = '';
+                    stockController.text = '';
+                    priceController.text = '';
+                    pictureFile = null;
+
                     context
                         .read<ProductCubit>()
                         .getMyProducts(null, null, null, null);
