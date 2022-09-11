@@ -18,15 +18,13 @@ class CategoryServices {
 
       var data = jsonDecode(response.body);
 
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValue(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
-      List<Category> categories = (data['data'] as Iterable)
-          .map((e) => Category.fromJson(e))
-          .toList();
+      List<Category> categories =
+          (data['data'] as Iterable).map((e) => Category.fromJson(e)).toList();
 
       return ApiReturnValue(value: categories);
     } on SocketException {

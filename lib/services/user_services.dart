@@ -106,7 +106,7 @@ class UserServices {
           }));
 
       var data = jsonDecode(response.body);
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValue(message: data['message'], error: data['error']);
       }
 
@@ -144,9 +144,9 @@ class UserServices {
 
       var data = jsonDecode(response.body);
 
-      if (response.statusCode != 200 || response.statusCode != 201) {
+      if (data['errors'] != null) {
         return ApiReturnValue(
-            message: data['message'].toString(), error: data['error']);
+            message: data['message'].toString(), error: data['errors']);
       }
 
       user = User.fromJson(data['data']);
@@ -272,14 +272,12 @@ class UserServices {
       }
 
       if (shopPicture != null) {
-        print('uploading picture');
         var multipartFile =
             await http.MultipartFile.fromPath('shop_picture', shopPicture.path);
         request.files.add(multipartFile);
       }
 
       if (shopNib != null) {
-        print(shopNib.path);
         var multipartFileNib =
             await http.MultipartFile.fromPath('shop_nib', shopNib.path);
         request.files.add(multipartFileNib);
@@ -288,13 +286,11 @@ class UserServices {
       var response = await request.send();
       String responseBody = await response.stream.bytesToString();
       var data = jsonDecode(responseBody);
-      print('data: $data');
 
-      if (response.statusCode == 200) {
+      if (data['errors'] != null) {
         String responseBody = await response.stream.bytesToString();
         var data = jsonDecode(responseBody);
 
-        print('data2: ' + data.toString());
         return ApiReturnValue(value: data['message']);
       }
 
@@ -334,11 +330,10 @@ class UserServices {
       request.files.add(multipartFile);
 
       var response = await request.send();
+      String responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
 
-      if (response.statusCode == 200) {
-        String responseBody = await response.stream.bytesToString();
-        var data = jsonDecode(responseBody);
-
+      if (data['errors'] != null) {
         String imagePath = data[0];
 
         return ApiReturnValue(value: imagePath);
@@ -402,7 +397,7 @@ class UserServices {
           }));
 
       var data = jsonDecode(response.body);
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValue(
             message: data['message'].toString(), error: data['error']);
       }
@@ -486,11 +481,10 @@ class UserServices {
       request.files.add(multipartFile);
 
       var response = await request.send();
+      String responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
 
-      if (response.statusCode == 200) {
-        String responseBody = await response.stream.bytesToString();
-        var data = jsonDecode(responseBody);
-
+      if (data['errors'] != null) {
         String imagePath = data[0];
 
         return ApiReturnValue(value: imagePath);
@@ -528,7 +522,7 @@ class UserServices {
       });
 
       var data = jsonDecode(response.body);
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValueShop(
             message: data['message'].toString(), error: data['error']);
       }

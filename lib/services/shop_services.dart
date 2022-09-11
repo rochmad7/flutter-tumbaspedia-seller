@@ -5,7 +5,7 @@ class ShopServices {
     try {
       client ??= http.Client();
 
-      String url = baseURLAPI + 'shop/my/';
+      String url = baseURLAPI + '/shops/me';
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
@@ -14,7 +14,7 @@ class ShopServices {
       });
 
       var data = jsonDecode(response.body);
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValue(
             message: data['message'].toString(),
             error: data['error']);

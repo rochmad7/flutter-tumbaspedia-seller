@@ -32,7 +32,6 @@ class ProductServices {
       } else if (sort == SortMethod.termurah) {
         url += '&sortBy=price&sortType=asc';
       }
-      print(url);
 
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
@@ -42,7 +41,7 @@ class ProductServices {
       });
 
       var data = jsonDecode(response.body);
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValue(
             message: data['message'].toString(), error: data['error']);
       }
@@ -101,7 +100,7 @@ class ProductServices {
 
       var response = await request.send();
       var data = jsonDecode(await response.stream.bytesToString());
-      if (response.statusCode != 201) {
+      if (data['errors'] != null) {
         return ApiReturnValue(message: data['message'], error: data['error']);
       }
 
@@ -150,7 +149,7 @@ class ProductServices {
 
       var data = jsonDecode(response.body);
 
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValue(
             message: data['message'].toString(), error: data['error']);
       }
@@ -196,9 +195,9 @@ class ProductServices {
 
       var response = await request.send();
 
-      if (response.statusCode == 200) {
-        String responseBody = await response.stream.bytesToString();
-        var data = jsonDecode(responseBody);
+      String responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
+      if (data['errors'] != null) {
 
         return ApiReturnValue(value: data['message']);
       }
@@ -272,13 +271,12 @@ class ProductServices {
       var response = await client.delete(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        // "Token": tokenAPI,
         "Authorization": "Bearer $_token"
       });
 
       var data = jsonDecode(response.body);
 
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValue(
             message: data['message'].toString(),
             error: data['error']);
