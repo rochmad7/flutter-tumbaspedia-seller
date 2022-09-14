@@ -10,22 +10,11 @@ import 'ui/pages/pages.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // SharedPreferences prefs = await SharedPreferences.getInstance();
-  // String password = prefs.getString('passwordshop') ?? '';
-  // String email = prefs.getString('emailshop') ?? '';
-  // String token = prefs.getString('tokenshop') ?? '';
-  // String nib = prefs.getString('nib') ?? '';
-  // bool isReject = prefs.getBool('isReject') ?? false;
-  // bool isValid = prefs.getBool('isValid') ?? false;
 
   final _storage = const FlutterSecureStorage();
   String token = await _storage.read(key: 'shop_token') ?? '';
   String email = await _storage.read(key: 'shop_email') ?? '';
   String password = await _storage.read(key: 'shop_password') ?? '';
-
-  print(token);
-  print(email);
-  print(password);
 
   runApp(MyApp(email: email, password: password, token: token));
 }

@@ -79,6 +79,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             isLoading = true;
                           });
 
+                          if (emailController.text.isEmpty) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            snackBar('Terjadi Kesalahan',
+                                'Email tidak boleh kosong', 'error');
+                          }
+
                           await context
                               .read<UserCubit>()
                               .forgotPassword(emailController.text);

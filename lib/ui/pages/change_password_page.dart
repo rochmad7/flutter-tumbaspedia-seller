@@ -106,6 +106,24 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   isLoading = true;
                 });
 
+                if (oldPasswordController.text.isEmpty ||
+                    newPasswordController.text.isEmpty ||
+                    confPasswordController.text.isEmpty) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  snackBar(
+                      'Terjadi kesalahan', 'Harap isi semua field', 'error');
+                }
+
+                if (newPasswordController.text != confPasswordController.text) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  snackBar('Terjadi kesalahan',
+                      'Konfirmasi password tidak sesuai', 'error');
+                }
+
                 await context.read<UserCubit>().changePassword(
                     oldPasswordController.text,
                     newPasswordController.text,
@@ -116,21 +134,21 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   context.read<UserCubit>().getMyProfile(widget.shop);
                   Get.to(() => SignInPage());
                   setState(() {
-                    error = null;
                     isLoading = false;
                   });
                   snackBar(
-                      "Berhasil", "Password Anda berhasil diubah. Silakan login ulang!", 'success');
+                      "Berhasil",
+                      "Password Anda berhasil diubah. Silakan login ulang!",
+                      'success');
+                  FocusManager.instance.primaryFocus?.unfocus();
                 } else {
                   context.read<UserCubit>().getMyProfile(widget.shop);
                   snackBar(
                       "Gagal", (state as UserEditedFailed).message, 'error');
                   setState(() {
-                    error = (state as UserEditedFailed).error != null
-                        ? (state as UserEditedFailed).error
-                        : null;
                     isLoading = false;
                   });
+                  FocusManager.instance.primaryFocus?.unfocus();
                 }
               },
             ),

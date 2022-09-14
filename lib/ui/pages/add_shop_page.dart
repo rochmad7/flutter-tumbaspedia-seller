@@ -133,6 +133,21 @@ class _AddShopPageState extends State<AddShopPage> {
               isLoading: isLoading,
               title: "Daftar Toko",
               press: () async {
+                if (shopNameController.text.isEmpty ||
+                    shopAddressController.text.isEmpty ||
+                    shopDescController.text.isEmpty) {
+                  // setState(() {
+                  //   error = {
+                  //     "shop_name": "Nama Toko tidak boleh kosong",
+                  //     "shop_address": "Alamat Toko tidak boleh kosong",
+                  //     "shop_description": "Deskripsi Toko tidak boleh kosong"
+                  //   };
+                  // });
+                  snackBar("Gagal Melanjutkan",
+                      "Semua field bertanda bintang harus diisi", 'error');
+
+                  return;
+                }
                 Shop shop = Shop(
                     name: shopNameController.text,
                     address: shopAddressController.text,
@@ -161,6 +176,7 @@ class _AddShopPageState extends State<AddShopPage> {
                   Get.offAll(() =>
                       WaitingShopPage(shopInitial: shop, userInitial: user));
                   snackBar("Berhasil", "Pendaftaran toko berhasil", 'success');
+                  FocusManager.instance.primaryFocus?.unfocus();
                 } else {
                   snackBar("Pendaftaran Gagal",
                       (state as UserLoadingFailed).message, 'error');
@@ -173,6 +189,7 @@ class _AddShopPageState extends State<AddShopPage> {
                     nibFile = null;
                     isLoading = false;
                   });
+                  FocusManager.instance.primaryFocus?.unfocus();
                 }
               },
             ),

@@ -176,13 +176,24 @@ class _EditProductPageState extends State<EditProductPage> {
                 isLoading: isLoading,
                 title: "Simpan Data",
                 press: () async {
+                  if (nameController.text.isEmpty ||
+                      descriptionController.text.isEmpty ||
+                      stockController.text.isEmpty ||
+                      priceController.text.isEmpty ||
+                      selectedCategory == null) {
+                    snackBar(
+                        'Gagal edit produk', 'Harap isi semua data', 'error');
+                  }
+
                   Product sproduct = new Product(
                       id: widget.product.id,
                       name: nameController.text ?? widget.product.name,
                       description: descriptionController.text ??
                           widget.product.description,
-                      stock: stockController.text.toInt()  ?? widget.product.stock,
-                      price: priceController.text.toInt() ?? widget.product.price,
+                      stock:
+                          stockController.text.toInt() ?? widget.product.stock,
+                      price:
+                          priceController.text.toInt() ?? widget.product.price,
                       category: selectedCategory ?? widget.product.category);
 
                   setState(() {

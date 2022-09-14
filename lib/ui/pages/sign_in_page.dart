@@ -101,8 +101,29 @@ class _SignInPageState extends State<SignInPage> {
                   isLoading = true;
                 });
 
-                await context.read<UserCubit>().signIn(
-                    emailController.text, passwordController.text);
+                if (emailController.text.isEmpty ||
+                    passwordController.text.isEmpty) {
+                  snackBar("Maaf login gagal",
+                      "Silakan masukkan email dan password", 'error');
+                  setState(() {
+                    isLoading = false;
+                  });
+                  return;
+                }
+
+                if (!emailController.text.isEmail ||
+                    passwordController.text.length < 6) {
+                  snackBar("Maaf login gagal",
+                      "Email atau password tidak valid", 'error');
+                  setState(() {
+                    isLoading = false;
+                  });
+                  return;
+                }
+
+                await context
+                    .read<UserCubit>()
+                    .signIn(emailController.text, passwordController.text);
                 UserState state = context.read<UserCubit>().state;
 
                 if (state is UserLoadedWithShop) {
@@ -111,7 +132,10 @@ class _SignInPageState extends State<SignInPage> {
                       .getMyProducts(null, null, null, null);
                   context.read<CategoryCubit>().getCategories(null);
                   context.read<UserCubit>().getMyProfile(state.shop);
-                  context.read<TransactionCubit>().getTransactions(null, state.token);
+                  context
+                      .read<TransactionCubit>()
+                      .getTransactions(null, state.token);
+                  FocusManager.instance.primaryFocus?.unfocus();
 
                   User user =
                       (context.read<UserCubit>().state as UserLoadedWithShop)
@@ -136,6 +160,7 @@ class _SignInPageState extends State<SignInPage> {
                         : null;
                     isLoading = false;
                   });
+                  FocusManager.instance.primaryFocus?.unfocus();
                 }
               },
             ),

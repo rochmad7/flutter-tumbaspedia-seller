@@ -19,8 +19,8 @@ class UserServices {
 
       var data = jsonDecode(response.body);
 
-      if (data['errors'] != null) {
-        removeUserData();
+      if (data['errors'] != null || data['error'] != null) {
+        print("error this");
         return ApiReturnValueShop(
             message: 'Email atau password salah', error: data['errors']);
       }
@@ -78,7 +78,7 @@ class UserServices {
     }
   }
 
-  static Future<ApiReturnValue<String>> changePassword(
+  static Future<ApiReturnValue<User>> changePassword(
       String oldPassword, String newPassword, String confPassword,
       {http.Client client}) async {
     if (newPassword != confPassword) {
@@ -110,8 +110,10 @@ class UserServices {
         return ApiReturnValue(message: data['message'], error: data['error']);
       }
 
-      // saveUserData(password: newPassword);
-      return ApiReturnValue(message: data['message']);
+      User value = User.fromJson(data['data']);
+
+      saveUserData(password: newPassword);
+      return ApiReturnValue(value: value);
     } on SocketException {
       return ApiReturnValue(message: socketException, isException: true);
     } on HttpException {
@@ -354,7 +356,7 @@ class UserServices {
     }
   }
 
-  static Future<ApiReturnValue<String>> update(Shop shop,
+  static Future<ApiReturnValue<User>> update(Shop shop,
       {File pictureFile, http.Client client}) async {
     try {
       var format = DateFormat("HH:mm");
@@ -376,7 +378,7 @@ class UserServices {
 
       client ??= http.Client();
       final _storage = const FlutterSecureStorage();
-      final _token = await _storage.read(key: 'token');
+      final _token = await _storage.read(key: 'shop_token');
 
       shop ??= Shop();
       String url = baseURLAPI + '/shops/' + shop.id.toString();
@@ -402,7 +404,9 @@ class UserServices {
             message: data['message'].toString(), error: data['error']);
       }
 
-      // User value = User.fromJson(data['data']['user']);
+      print(data);
+
+      User value = User.fromJson(data['data']);
       // Shop shopReturn = Shop.fromJson(data['data']['shop']);
       //
       // print(data['data']);
@@ -415,7 +419,7 @@ class UserServices {
         //       shopReturn.copyWith(images: baseURLStorage + result.value);
         // }
       }
-      return ApiReturnValue(message: data['message']);
+      return ApiReturnValue(value: value);
     } on SocketException {
       return ApiReturnValue(message: socketException, isException: true);
     } on HttpException {

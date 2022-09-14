@@ -14,13 +14,11 @@ void removeUserData() async {
   _storage.delete(key: 'shop_email');
   _storage.delete(key: 'shop_password');
   _storage.delete(key: 'shop_token');
-  _storage.delete(key: 'shop_isValid');
 }
 
 String tokenAPI = "VUJDZFIYZD6TJ4DFDGULFGXZDPOVI94R";
 
 // String baseURLAPI = 'http://10.0.2.2:3000/api';
-// String baseURLAPI = 'http://192.168.1.166:3000/api';
 String baseURLAPI = 'https://dev.tumbaspedia.my.id/api';
 
 Color mainColor = Color(0xff541690);

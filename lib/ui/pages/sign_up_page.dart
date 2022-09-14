@@ -93,6 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             LabelFormField(
               label: "Password *",
+              example: "Minimal 6 karakter",
             ),
             TextFieldDefault(
                 suffixIcon: () => _toggle(),
@@ -116,6 +117,18 @@ class _SignUpPageState extends State<SignUpPage> {
                 isLoading: isLoading,
                 title: "Lanjutkan",
                 press: () async {
+                  if (nameController.text.isEmpty ||
+                      emailController.text.isEmpty ||
+                      !emailController.text.isEmail ||
+                      passwordController.text.isEmpty ||
+                      passwordController.text.length < 6 ||
+                      phoneController.text.isEmpty) {
+                    snackBar("Gagal Melanjutkan", "Semua field harus diisi",
+                        'error');
+
+                    return;
+                  }
+
                   User user = User(
                     name: nameController.text,
                     email: emailController.text,
@@ -125,6 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   setState(() {
                     isLoading = true;
                   });
+                  FocusManager.instance.primaryFocus?.unfocus();
 
                   // await context
                   //     .read<UserCubit>()

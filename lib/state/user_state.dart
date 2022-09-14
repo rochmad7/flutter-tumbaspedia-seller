@@ -70,13 +70,13 @@ class UserForgotPasswordFailed extends UserState {
 }
 
 class UserEdited extends UserState {
-  // final User user;
-  final String message;
+  final User user;
+  // final String message;
 
-  UserEdited(this.message);
+  UserEdited(this.user);
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [user];
 }
 
 class UserEditedFailed extends UserState {

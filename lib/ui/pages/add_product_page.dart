@@ -78,7 +78,7 @@ class _AddProductPageState extends State<AddProductPage> {
         subtitle: notLogin,
         picturePath: protect,
         buttonTap1: () {
-          Get.to(()=>SignInPage());
+          Get.to(() => SignInPage());
         },
         buttonTitle1: 'Login',
       );
@@ -182,6 +182,14 @@ class _AddProductPageState extends State<AddProductPage> {
                 isLoading: isLoading,
                 title: "Simpan Data",
                 press: () async {
+                  if (nameController.text.isEmpty ||
+                      descriptionController.text.isEmpty ||
+                      stockController.text.isEmpty ||
+                      priceController.text.isEmpty) {
+                    snackBar('Gagal menambahkan produk', 'Periksa kembali data',
+                        'error');
+                  }
+
                   Product product = Product(
                       name: nameController.text ?? nameController.text,
                       description: descriptionController.text ??
@@ -209,6 +217,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     stockController.text = '';
                     priceController.text = '';
                     pictureFile = null;
+                    FocusManager.instance.primaryFocus?.unfocus();
 
                     context
                         .read<ProductCubit>()
@@ -216,9 +225,9 @@ class _AddProductPageState extends State<AddProductPage> {
                     setState(() {
                       isLoading = false;
                     });
-                    Get.to(()=>MainPage(
-                      initialPage: 1,
-                    ));
+                    Get.to(() => MainPage(
+                          initialPage: 1,
+                        ));
                     snackBar(
                         "Berhasil", "Produk berhasil ditambahkan", 'success');
                   } else {
@@ -235,6 +244,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       pictureFile = null;
                       isLoading = false;
                     });
+                    FocusManager.instance.primaryFocus?.unfocus();
                   }
                 },
               ),

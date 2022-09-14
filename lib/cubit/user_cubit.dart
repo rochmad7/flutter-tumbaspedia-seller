@@ -49,23 +49,23 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-Future<void> forgotPassword(String email) async {
-  ApiReturnValue<bool> result = await UserServices.forgotPassword(email);
+  Future<void> forgotPassword(String email) async {
+    ApiReturnValue<bool> result = await UserServices.forgotPassword(email);
 
-  if (result.error == null && !result.isException) {
-    emit(UserForgotPassword(result.message, email));
-  } else {
-    emit(UserForgotPasswordFailed(result.message, result.error));
+    if (result.error == null && !result.isException) {
+      emit(UserForgotPassword(result.message, email));
+    } else {
+      emit(UserForgotPasswordFailed(result.message, result.error));
+    }
   }
-}
 
   Future<void> changePassword(
       String oldPassword, String newPassword, String confPassword) async {
-    ApiReturnValue<String> result = await UserServices.changePassword(
+    ApiReturnValue<User> result = await UserServices.changePassword(
         oldPassword, newPassword, confPassword);
 
     if (result.isException == false) {
-      emit(UserEdited(result.message));
+      emit(UserEdited(result.value));
     } else {
       emit(UserEditedFailed(result.message, result.error));
     }
@@ -118,11 +118,11 @@ Future<void> forgotPassword(String email) async {
 // }
 
   Future<void> update(Shop shop, {File pictureFile}) async {
-    ApiReturnValue<String> result =
+    ApiReturnValue<User> result =
         await UserServices.update(shop, pictureFile: pictureFile);
 
     if (result.isException != null || result.error != null) {
-      emit(UserEdited(result.message));
+      emit(UserEdited(result.value));
     } else {
       emit(UserEditedFailed(result.message, result.error));
     }
@@ -152,8 +152,7 @@ Future<void> forgotPassword(String email) async {
     }
   }
 
-// Future<void> logOut() async {
-//   await UserServices.logOut();
-// }
-// }
+  Future<void> logOut() async {
+    await UserServices.logOut();
+  }
 }

@@ -23,6 +23,7 @@ class _EditShopPageState extends State<EditShopPage> {
 
   bool isLoading = false;
   Map<String, dynamic> error;
+
   // List<Category> categories;
   // Category selectedCategory;
 
@@ -202,6 +203,16 @@ class _EditShopPageState extends State<EditShopPage> {
               isLoading: isLoading,
               title: "Simpan Data",
               press: () async {
+                if (shopNameController.text.isEmpty ||
+                    shopOpenController.text.isEmpty ||
+                    shopClosedController.text.isEmpty ||
+                    shopAddressController.text.isEmpty ||
+                    shopDescController.text.isEmpty) {
+                  snackBar(
+                      'Edit toko gagal', 'Pastikan semua data terisi', 'error');
+                  return;
+                }
+
                 Shop shop = Shop(
                     id: (context.read<UserCubit>().state as UserLoadedWithShop)
                         .shop
@@ -238,6 +249,7 @@ class _EditShopPageState extends State<EditShopPage> {
                   setState(() {
                     isLoading = false;
                   });
+                  FocusManager.instance.primaryFocus?.unfocus();
                 } else {
                   context.read<UserCubit>().getMyProfile(shop);
                   snackBar("Data toko gagal diupdate",
@@ -250,6 +262,7 @@ class _EditShopPageState extends State<EditShopPage> {
                     pictureFile = null;
                     isLoading = false;
                   });
+                  FocusManager.instance.primaryFocus?.unfocus();
                 }
               },
             ),
