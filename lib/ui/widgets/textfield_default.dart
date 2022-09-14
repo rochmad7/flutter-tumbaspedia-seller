@@ -10,6 +10,7 @@ class TextFieldDefault extends StatelessWidget {
   final bool isPrefixIcon;
   final bool isMaxLines;
   final bool isSuffixIcon;
+  final bool enableInteractiveSelection;
   final Function suffixIcon;
   TextFieldDefault(
       {this.icon,
@@ -21,6 +22,7 @@ class TextFieldDefault extends StatelessWidget {
       this.maxLines,
       this.isSuffixIcon = false,
       this.hintText,
+      this.enableInteractiveSelection = true,
       this.controller});
 
   @override
@@ -32,6 +34,7 @@ class TextFieldDefault extends StatelessWidget {
         }
         return null;
       },
+      enableInteractiveSelection: enableInteractiveSelection,
       onTap: press != null ? press : null,
       obscureText: isObscureText,
       maxLines: (!isMaxLines) ? 1 : maxLines,

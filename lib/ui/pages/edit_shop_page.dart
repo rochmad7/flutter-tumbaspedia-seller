@@ -143,6 +143,7 @@ class _EditShopPageState extends State<EditShopPage> {
             SizedBox(height: 15),
             LabelFormField(label: "Jam Buka Toko"),
             TextFieldDefault(
+                enableInteractiveSelection: false,
                 icon: MdiIcons.clock,
                 controller: shopOpenController,
                 press: () async {
@@ -150,9 +151,21 @@ class _EditShopPageState extends State<EditShopPage> {
                   FocusScope.of(context).requestFocus(new FocusNode());
 
                   TimeOfDay pickedOpen = await showTimePicker(
-                      context: context, initialTime: timeOpen);
+                      context: context,
+                      initialTime: timeOpen,
+                      builder: (context, child) {
+                        return MediaQuery(
+                          data: MediaQuery.of(context)
+                              .copyWith(alwaysUse24HourFormat: true),
+                          child: child,
+                        );
+                      });
                   if (pickedOpen != null && pickedOpen != timeOpen) {
-                    shopOpenController.text = pickedOpen.format(context);
+                    // shopOpenController.text = pickedOpen.format(context);
+                    shopOpenController.text = pickedOpen.hour.toString().padLeft(2, '0') +
+                        ':' +
+                        pickedOpen.minute.toString().padLeft(2, '0') +
+                        ':00';
                     setState(() {
                       timeOpen = pickedOpen;
                     });
@@ -163,6 +176,7 @@ class _EditShopPageState extends State<EditShopPage> {
             SizedBox(height: 15),
             LabelFormField(label: "Jam Tutup Toko"),
             TextFieldDefault(
+                enableInteractiveSelection: false,
                 icon: MdiIcons.clock,
                 controller: shopClosedController,
                 press: () async {
@@ -170,9 +184,21 @@ class _EditShopPageState extends State<EditShopPage> {
                   FocusScope.of(context).requestFocus(new FocusNode());
 
                   TimeOfDay pickedClosed = await showTimePicker(
-                      context: context, initialTime: timeClosed);
+                      context: context,
+                      initialTime: timeClosed,
+                      builder: (context, child) {
+                        return MediaQuery(
+                          data: MediaQuery.of(context)
+                              .copyWith(alwaysUse24HourFormat: true),
+                          child: child,
+                        );
+                      });
                   if (pickedClosed != null && pickedClosed != timeClosed) {
-                    shopClosedController.text = pickedClosed.format(context);
+                    // shopClosedController.text = pickedClosed.format(context);
+                    shopClosedController.text = pickedClosed.hour.toString().padLeft(2, '0') +
+                        ':' +
+                        pickedClosed.minute.toString().padLeft(2, '0') +
+                        ':00';
                     setState(() {
                       timeClosed = pickedClosed;
                     });
@@ -210,6 +236,18 @@ class _EditShopPageState extends State<EditShopPage> {
                     shopDescController.text.isEmpty) {
                   snackBar(
                       'Edit toko gagal', 'Pastikan semua data terisi', 'error');
+                  return;
+                }
+
+                var format = DateFormat("HH:mm");
+
+                if (format
+                    .parse(shopOpenController.text)
+                    .isAfter(format.parse(shopClosedController.text))) {
+                  snackBar(
+                      'Edit toko gagal',
+                      'Jam buka tidak boleh lebih besar dari jam tutup',
+                      'error');
                   return;
                 }
 

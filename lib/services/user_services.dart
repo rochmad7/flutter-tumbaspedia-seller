@@ -359,14 +359,6 @@ class UserServices {
   static Future<ApiReturnValue<User>> update(Shop shop,
       {File pictureFile, http.Client client}) async {
     try {
-      var format = DateFormat("HH:mm");
-      if (format
-          .parse(shop.openingHours)
-          .isAfter(format.parse(shop.closedHours))) {
-        return ApiReturnValue(
-            message: 'Jam tutup toko tidak boleh kurang dari jam buka toko');
-      }
-
       if (pictureFile != null) {
         final bytes1 = pictureFile.readAsBytesSync().lengthInBytes;
         final kb1 = bytes1 / 1024;
