@@ -188,6 +188,16 @@ class _AddProductPageState extends State<AddProductPage> {
                       priceController.text.isEmpty) {
                     snackBar('Gagal menambahkan produk', 'Periksa kembali data',
                         'error');
+                    return;
+                  }
+
+                  if (stockController.text.contains(RegExp(r'[a-zA-Z]')) ||
+                      priceController.text.contains(RegExp(r'[a-zA-Z]')) ||
+                      int.parse(stockController.text) < 0 ||
+                      int.parse(priceController.text) < 0) {
+                    snackBar('Gagal menambahkan produk',
+                        'Data yang diisi tidak valid', 'error');
+                    return;
                   }
 
                   Product product = Product(

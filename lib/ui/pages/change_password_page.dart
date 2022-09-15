@@ -114,6 +114,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   });
                   snackBar(
                       'Terjadi kesalahan', 'Harap isi semua field', 'error');
+                  return;
                 }
 
                 if (newPasswordController.text != confPasswordController.text) {
@@ -122,6 +123,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   });
                   snackBar('Terjadi kesalahan',
                       'Konfirmasi password tidak sesuai', 'error');
+                  return;
                 }
 
                 await context.read<UserCubit>().changePassword(

@@ -119,13 +119,19 @@ class _SignUpPageState extends State<SignUpPage> {
                 press: () async {
                   if (nameController.text.isEmpty ||
                       emailController.text.isEmpty ||
-                      !emailController.text.isEmail ||
                       passwordController.text.isEmpty ||
-                      passwordController.text.length < 6 ||
                       phoneController.text.isEmpty) {
                     snackBar("Gagal Melanjutkan", "Semua field harus diisi",
                         'error');
 
+                    return;
+                  }
+
+                  if (!emailController.text.isEmail ||
+                      !phoneController.text.isPhoneNumber ||
+                      passwordController.text.length < 6) {
+                    snackBar("Gagal Melanjutkan", "Format data tidak sesuai",
+                        'error');
                     return;
                   }
 

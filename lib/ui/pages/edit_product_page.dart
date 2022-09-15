@@ -183,6 +183,7 @@ class _EditProductPageState extends State<EditProductPage> {
                       selectedCategory == null) {
                     snackBar(
                         'Gagal edit produk', 'Harap isi semua data', 'error');
+                    return;
                   }
 
                   Product sproduct = new Product(
