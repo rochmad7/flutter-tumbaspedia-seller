@@ -54,7 +54,6 @@ class TransactionServices {
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Token": tokenAPI,
             "Authorization": "Bearer $_token"
           },
           body: jsonEncode(<String, dynamic>{
@@ -65,10 +64,13 @@ class TransactionServices {
                     : (transaction.status == TransactionStatus.pending)
                         ? 'pending'
                         : 'on_delivery',
+            'delivered_at': (transaction.status == TransactionStatus.delivered)
+                ? DateTime.now().toIso8601String()
+                : null,
           }));
 
       var data = jsonDecode(response.body);
-      if (response.statusCode != 200) {
+      if (data['errors'] != null) {
         return ApiReturnValue(
             message: data['message'].toString(),
             error: data['error']);

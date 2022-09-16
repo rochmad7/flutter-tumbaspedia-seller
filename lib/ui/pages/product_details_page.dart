@@ -307,41 +307,41 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 text: widget.transaction.product.description,
                                 maxLines: 4),
                             SizedBox(height: 25),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SectionTitle(
-                                  all: widget.transaction.product.totalReview >
-                                      1
-                                      ? true
-                                      : false,
-                                  press: () =>
-                                      Get.to(() =>
-                                          AllReviewsPage(
-                                              productId: widget.transaction
-                                                  .product.id)),
-                                  isColor: true,
-                                  sizeTitle: 15,
-                                  title: "Penilaian Produk",
-                                  defaultMargin: 0,
-                                ),
-                                SizedBox(height: 10),
-                                widget.transaction.product.totalReview < 1
-                                    ? CustomAlert(
-                                    icon: MdiIcons.alert,
-                                    type: 'warning',
-                                    isDistance: false,
-                                    title: 'Belum ada penilaian produk')
-                                    : isLoadingRating
-                                    ? ShimmerRow(
-                                    height: 80,
-                                    itemCount: 2,
-                                    isNoMargin: true,
-                                    isSymmetric: false)
-                                    : CommentRating(rating: rating),
-                                SizedBox(height: 30),
-                              ],
-                            ),
+                            // Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   children: [
+                            //     SectionTitle(
+                            //       all: widget.transaction.product.totalReview >
+                            //           1
+                            //           ? true
+                            //           : false,
+                            //       press: () =>
+                            //           Get.to(() =>
+                            //               AllReviewsPage(
+                            //                   productId: widget.transaction
+                            //                       .product.id)),
+                            //       isColor: true,
+                            //       sizeTitle: 15,
+                            //       title: "Penilaian Produk",
+                            //       defaultMargin: 0,
+                            //     ),
+                            //     SizedBox(height: 10),
+                            //     widget.transaction.product.totalReview < 1
+                            //         ? CustomAlert(
+                            //         icon: MdiIcons.alert,
+                            //         type: 'warning',
+                            //         isDistance: false,
+                            //         title: 'Belum ada penilaian produk')
+                            //         : isLoadingRating
+                            //         ? ShimmerRow(
+                            //         height: 80,
+                            //         itemCount: 2,
+                            //         isNoMargin: true,
+                            //         isSymmetric: false)
+                            //         : CommentRating(rating: rating),
+                            //     SizedBox(height: 30),
+                            //   ],
+                            // ),
                             Row(
                               children: [
                                 ButtonFlexible(
