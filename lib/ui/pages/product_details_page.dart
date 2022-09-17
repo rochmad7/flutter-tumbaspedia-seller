@@ -186,21 +186,21 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                       mainAxisAlignment: MainAxisAlignment
                                           .start,
                                       children: [
-                                        iconText(
-                                            MdiIcons.star,
-                                            widget.transaction.product.rating
-                                                .toStringAsFixed(1) +
-                                                (widget.transaction.product
-                                                    .totalReview ==
-                                                    0
-                                                    ? ""
-                                                    : " (" +
-                                                    formatNumber(widget
-                                                        .transaction
-                                                        .product
-                                                        .totalReview) +
-                                                    " review)"),
-                                            null),
+                                        // iconText(
+                                        //     MdiIcons.star,
+                                        //     widget.transaction.product.rating
+                                        //         .toStringAsFixed(1) +
+                                        //         (widget.transaction.product
+                                        //             .totalReview ==
+                                        //             0
+                                        //             ? ""
+                                        //             : " (" +
+                                        //             formatNumber(widget
+                                        //                 .transaction
+                                        //                 .product
+                                        //                 .totalReview) +
+                                        //             " review)"),
+                                        //     null),
                                         const SizedBox(width: 8),
                                         iconText(
                                             MdiIcons.cart,

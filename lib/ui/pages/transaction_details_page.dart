@@ -78,7 +78,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                             ),
                             Text(
                               getFormatRupiah(
-                                  (widget.transaction.total).round(), true),
+                                  (widget.transaction.product.price).round(), true),
                               style: textListStyle.copyWith(fontSize: 13),
                             )
                           ],
@@ -159,7 +159,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                             defaultMargin -
                             5,
                         child: Text(
-                          getFormatRupiah(widget.transaction.total, true),
+                          getFormatRupiah(widget.transaction.product.price, true),
                           style: blackFontStyle3,
                           textAlign: TextAlign.right,
                         ))
