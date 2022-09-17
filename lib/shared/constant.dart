@@ -115,15 +115,16 @@ String formatNumber(num) {
 
 String convertDate(DateTime dateTime, bool isFull) {
   if (isFull) {
-    return DateFormat('EEEE, d MMM, yyyy').format(dateTime);
+    return DateFormat('EEEE, d MMM yyyy', 'id_ID').format(dateTime);
   } else {
-    return DateFormat('EE, d MMM, yyyy').format(dateTime);
+    return DateFormat('EE, d MMM yyyy', 'id_ID').format(dateTime);
   }
 }
 
 String convertTime(DateTime dateTime) {
-  DateFormat dateFormat = DateFormat('').add_jms();
-  return dateFormat.format(dateTime);
+  String date = DateFormat('HH:mm', 'id_ID').format(dateTime);
+
+  return date + ' WIB';
 }
 
 bool containsIgnoreCase(String firstString, String secondString) {
