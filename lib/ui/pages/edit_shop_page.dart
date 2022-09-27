@@ -231,11 +231,18 @@ class _EditShopPageState extends State<EditShopPage> {
               press: () async {
                 if (shopNameController.text.isEmpty ||
                     shopOpenController.text.isEmpty ||
+                    phoneController.text.isEmpty ||
                     shopClosedController.text.isEmpty ||
                     shopAddressController.text.isEmpty ||
                     shopDescController.text.isEmpty) {
                   snackBar(
                       'Edit toko gagal', 'Pastikan semua data terisi', 'error');
+                  return;
+                } else if (!phoneController.text.isPhoneNumber) {
+                  snackBar('Edit toko gagal', 'No HP tidak valid', 'error');
+                  return;
+                } else if (shopOpenController.text == shopClosedController.text) {
+                  snackBar('Edit toko gagal', 'Jam buka dan tutup tidak boleh sama', 'error');
                   return;
                 }
 

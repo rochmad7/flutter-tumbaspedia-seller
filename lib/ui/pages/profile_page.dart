@@ -82,7 +82,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontWeight: FontWeight.w300),
                         ),
                         Text(
-                          user.address,
+                          shop.address,
+                          style: greyFontStyle.copyWith(
+                              fontWeight: FontWeight.w300),
+                        ),
+                        Text(
+                          shop.description,
                           style: greyFontStyle.copyWith(
                               fontWeight: FontWeight.w300),
                         ),

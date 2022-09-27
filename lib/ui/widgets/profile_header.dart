@@ -29,7 +29,6 @@ class ProfileHeader extends StatefulWidget {
 class _ProfileHeaderState extends State<ProfileHeader> {
   @override
   Widget build(BuildContext context) {
-    bool isSwitched = widget.status ?? false;
     return Stack(
       children: <Widget>[
         Ink(
@@ -145,11 +144,11 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          widget.shopOpenHours + " WIB",
+                          widget.shopOpenHours.substring(0, 5) + " WIB",
                           style: blackFontStyle3,
                         ),
                         Text(
-                          widget.shopClosedHours + " WIB",
+                          widget.shopClosedHours.substring(0, 5) + " WIB",
                           style: blackFontStyle3,
                         ),
                       ],
