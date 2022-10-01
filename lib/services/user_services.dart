@@ -396,12 +396,9 @@ class UserServices {
             message: data['message'].toString(), error: data['error']);
       }
 
-      print(data);
-
       User value = User.fromJson(data['data']);
       // Shop shopReturn = Shop.fromJson(data['data']['shop']);
       //
-      // print(data['data']);
 
       if (pictureFile != null) {
         ApiReturnValue<String> result =

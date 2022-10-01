@@ -105,46 +105,39 @@ class _ProfilePageState extends State<ProfilePage> {
               child: isLogin
                   ? Column(
                       children: [
-                        CustomTabBar(
-                          titles: ["Toko", "Shop Tumbaspedia"],
-                          selectedIndex: selectedIndex,
-                          onTap: (index) {
-                            setState(() {
-                              selectedIndex = index;
-                            });
-                          },
-                        ),
+                        // CustomTabBar(
+                        //   titles: ["Toko", "Shop Tumbaspedia"],
+                        //   selectedIndex: selectedIndex,
+                        //   onTap: (index) {
+                        //     setState(() {
+                        //       selectedIndex = index;
+                        //     });
+                        //   },
+                        // ),
                         SizedBox(
                           height: 16,
                         ),
                         Column(
-                          children: ((selectedIndex == 0)
-                                  ? [
-                                      {
-                                        'name': 'Edit Toko',
-                                        'press': EditShopPage(
-                                            shop: shop, user: user),
-                                      },
-                                      {
-                                        'name': 'Ganti Password',
-                                        'press': ChangePasswordPage(
-                                            user: user, shop: shop)
-                                      },
-                                    ]
-                                  : [
-                                      {
-                                        'name': 'Tentang Kami',
-                                        'press': AboutPage()
-                                      },
-                                      {
-                                        'name': 'Bantuan',
-                                        'press': HelpPage(),
-                                      },
-                                      {
-                                        'name': 'Kebijakan Privasi',
-                                        'press': PrivacyPage(),
-                                      },
-                                    ])
+                          children: [
+                            {
+                              'name': 'Edit Toko',
+                              'press': EditShopPage(shop: shop, user: user),
+                            },
+                            {
+                              'name': 'Ganti Password',
+                              'press':
+                                  ChangePasswordPage(user: user, shop: shop)
+                            },
+                            {'name': 'Tentang Kami', 'press': AboutPage()},
+                            {
+                              'name': 'Bantuan',
+                              'press': HelpPage(),
+                            },
+                            {
+                              'name': 'Kebijakan Privasi',
+                              'press': PrivacyPage(),
+                            },
+                          ]
                               .map((e) => GestureDetector(
                                   onTap: () => Get.to(e['press']),
                                   child: SettingTitle(title: e['name'])))
@@ -214,6 +207,7 @@ class SettingTitle extends StatelessWidget {
   final String title;
   final bool isCustomStyle;
   final TextStyle style;
+
   SettingTitle({this.title, this.isCustomStyle = false, this.style});
 
   @override
