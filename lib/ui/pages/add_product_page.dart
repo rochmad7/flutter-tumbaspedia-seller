@@ -104,7 +104,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 height: 15,
               ),
               LabelFormField(
-                  label: "Nama Produk *", example: "Contoh: Toko Makmur"),
+                  label: "Nama Produk *", example: "Contoh: Roti Bakar"),
               TextFieldDefault(
                   icon: MdiIcons.starPlus,
                   controller: nameController,

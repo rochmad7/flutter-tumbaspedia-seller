@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               'press': EditShopPage(shop: shop, user: user),
                             },
                             {
-                              'name': 'Ganti Password',
+                              'name': 'Ganti Kata Sandi',
                               'press':
                                   ChangePasswordPage(user: user, shop: shop)
                             },
@@ -154,7 +154,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Column(
                             children: [
                               SettingTitle(
-                                title: "Log Out",
+                                title: "Keluar",
                                 isCustomStyle: true,
                                 style: GoogleFonts.poppins(
                                   color: Colors.red,
