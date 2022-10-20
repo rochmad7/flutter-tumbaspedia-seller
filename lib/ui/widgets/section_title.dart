@@ -28,7 +28,7 @@ class SectionTitle extends StatelessWidget {
         children: [
           Text(
             title,
-            style: GoogleFonts.poppins().copyWith(
+            style: GoogleFonts.roboto().copyWith(
               fontSize: sizeTitle,
               fontWeight: FontWeight.w600,
             ),
@@ -38,7 +38,7 @@ class SectionTitle extends StatelessWidget {
                   onTap: press,
                   child: Text(
                     "Lihat Semua",
-                    style: GoogleFonts.poppins().copyWith(
+                    style: GoogleFonts.roboto().copyWith(
                       fontSize: 13.0,
                       color: Colors.orange,
                     ),

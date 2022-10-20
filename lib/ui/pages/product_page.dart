@@ -454,14 +454,14 @@ Widget getGeneralBarUI() {
               children: [
                 Text(
                   "Produk Saya",
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.roboto(
                     fontSize: 22,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
                   "Temukan Produk UKM milik Saya",
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w300,
                     color: "8D92A3".toColor(),
                   ),

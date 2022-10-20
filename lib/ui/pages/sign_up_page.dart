@@ -54,7 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Column(
           children: [
             SizedBox(
-              height: 26,
+              height: 12,
             ),
             LabelFormField(
               label: "Nama Lengkap *",

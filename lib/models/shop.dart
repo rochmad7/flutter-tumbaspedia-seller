@@ -13,6 +13,7 @@ class Shop extends Equatable {
   final String closedHours;
   final bool status;
   final String nib;
+  final String nibNumber;
 
   Shop(
       {this.id,
@@ -26,7 +27,8 @@ class Shop extends Equatable {
       this.closedHours,
       this.status = true,
       this.isValid,
-      this.nib});
+      this.nib,
+      this.nibNumber});
 
   factory Shop.fromJson(Map<String, dynamic> data) => Shop(
         id: data["id"],
@@ -42,6 +44,7 @@ class Shop extends Equatable {
         isValid: data["is_verified"] == true ? true : false,
         description: data["description"],
         nib: data["nib"],
+        nibNumber: data["nib_number"],
       );
 
   Shop copyWith(
@@ -56,7 +59,8 @@ class Shop extends Equatable {
           bool status,
           String description,
           double rating,
-          String nib}) =>
+          String nib,
+          String nibNumber}) =>
       Shop(
           id: id ?? this.id,
           address: address ?? this.address,
@@ -69,7 +73,8 @@ class Shop extends Equatable {
           status: status ?? this.status,
           description: description ?? this.description,
           rating: rating ?? this.rating,
-          nib: nib ?? this.nib);
+          nib: nib ?? this.nib,
+          nibNumber: nibNumber ?? this.nibNumber);
 
   @override
   List<Object> get props => [
@@ -84,6 +89,7 @@ class Shop extends Equatable {
         images,
         status,
         description,
-        nib
+        nib,
+        nibNumber
       ];
 }

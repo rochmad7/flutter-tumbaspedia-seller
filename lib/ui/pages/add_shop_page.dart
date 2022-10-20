@@ -17,6 +17,7 @@ class _AddShopPageState extends State<AddShopPage> {
   TextEditingController shopNameController = TextEditingController();
   TextEditingController shopDescController = TextEditingController();
   TextEditingController shopAddressController = TextEditingController();
+  TextEditingController shopNIBController = TextEditingController();
 
   bool isLoading = false;
   Map<String, dynamic> error;
@@ -95,9 +96,18 @@ class _AddShopPageState extends State<AddShopPage> {
               height: 15,
             ),
             LabelFormField(
+                label: "Nomor NIB Toko *", example: "Contoh: 123456"),
+            TextFieldDefault(
+                icon: Icons.confirmation_number,
+                controller: shopNIBController,
+                hintText: "Nomor NIB Toko"),
+            SizedBox(
+              height: 15,
+            ),
+            LabelFormField(
                 label: "File NIB Toko *", example: ".jpg, .png, max: 2mb"),
             Text(
-              "*NIB adalah Nomor Induk Berusaha yang merupakan syarat mendaftar sebagai penjual di aplikasi Shop Tumbaspedia",
+              "*NIB adalah Nomor Induk Berusaha yang merupakan syarat mendaftar sebagai penjual di aplikasi Tumbaspedia Seller",
               style: blackFontStyle3.copyWith(fontSize: 12),
             ),
             SizedBox(
@@ -135,7 +145,8 @@ class _AddShopPageState extends State<AddShopPage> {
               press: () async {
                 if (shopNameController.text.isEmpty ||
                     shopAddressController.text.isEmpty ||
-                    shopDescController.text.isEmpty) {
+                    shopDescController.text.isEmpty ||
+                    shopNIBController.text.isEmpty) {
                   // setState(() {
                   //   error = {
                   //     "shop_name": "Nama Toko tidak boleh kosong",
@@ -151,7 +162,8 @@ class _AddShopPageState extends State<AddShopPage> {
                 Shop shop = Shop(
                     name: shopNameController.text,
                     address: shopAddressController.text,
-                    description: shopDescController.text);
+                    description: shopDescController.text,
+                    nibNumber: shopNIBController.text);
 
                 User user = widget.user;
 
@@ -164,15 +176,15 @@ class _AddShopPageState extends State<AddShopPage> {
                 UserState state = context.read<UserCubit>().state;
 
                 if (state is UserLoadedWithShop) {
-                  context
-                      .read<ProductCubit>()
-                      .getMyProducts(null, null, null, null);
-                  User user =
-                      (context.read<UserCubit>().state as UserLoadedWithShop)
-                          .user;
-                  Shop shop =
-                      (context.read<UserCubit>().state as UserLoadedWithShop)
-                          .shop;
+                  // context
+                  //     .read<ProductCubit>()
+                  //     .getMyProducts(null, null, null, null);
+                  // User user =
+                  //     (context.read<UserCubit>().state as UserLoadedWithShop)
+                  //         .user;
+                  // Shop shop =
+                  //     (context.read<UserCubit>().state as UserLoadedWithShop)
+                  //         .shop;
                   Get.offAll(() =>
                       WaitingShopPage(shopInitial: shop, userInitial: user));
                   snackBar("Berhasil", "Pendaftaran toko berhasil", 'success');
@@ -185,8 +197,8 @@ class _AddShopPageState extends State<AddShopPage> {
                     error = (state as UserLoadingFailed).error != null
                         ? (state as UserLoadingFailed).error
                         : null;
-                    pictureFile = null;
-                    nibFile = null;
+                    // pictureFile = null;
+                    // nibFile = null;
                     isLoading = false;
                   });
                   FocusManager.instance.primaryFocus?.unfocus();

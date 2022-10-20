@@ -18,8 +18,8 @@ void removeUserData() async {
 
 String tokenAPI = "VUJDZFIYZD6TJ4DFDGULFGXZDPOVI94R";
 
-// String baseURLAPI = 'http://10.0.2.2:3000/api';
-String baseURLAPI = 'https://dev.tumbaspedia.my.id/api';
+String baseURLAPI = 'http://10.0.2.2:3000/api';
+// String baseURLAPI = 'https://dev.tumbaspedia.my.id/api';
 
 Color mainColor = Color(0xff541690);
 // Color mainColor = "032339".toColor();
@@ -33,48 +33,48 @@ Widget loadingIndicator = SpinKitWave(
   color: mainColor,
 );
 
-TextStyle redFontStyle = GoogleFonts.poppins().copyWith(color: Colors.red);
+TextStyle redFontStyle = GoogleFonts.roboto().copyWith(color: Colors.red);
 TextStyle orangeFontStyle =
-    GoogleFonts.poppins().copyWith(color: Colors.orange);
-TextStyle greenFontStyle = GoogleFonts.poppins().copyWith(color: Colors.green);
-TextStyle greyFontStyle = GoogleFonts.poppins().copyWith(color: greyColor);
+    GoogleFonts.roboto().copyWith(color: Colors.orange);
+TextStyle greenFontStyle = GoogleFonts.roboto().copyWith(color: Colors.green);
+TextStyle greyFontStyle = GoogleFonts.roboto().copyWith(color: greyColor);
 TextStyle greyFontStyle12 =
-    GoogleFonts.poppins().copyWith(color: greyColor, fontSize: 12);
+    GoogleFonts.roboto().copyWith(color: greyColor, fontSize: 12);
 TextStyle greyFontStyle13 =
-    GoogleFonts.poppins().copyWith(color: greyColor, fontSize: 13);
-TextStyle blackFontStyle = GoogleFonts.poppins().copyWith(color: Colors.black);
-TextStyle blackFontStyle1 = GoogleFonts.poppins()
+    GoogleFonts.roboto().copyWith(color: greyColor, fontSize: 13);
+TextStyle blackFontStyle = GoogleFonts.roboto().copyWith(color: Colors.black);
+TextStyle blackFontStyle1 = GoogleFonts.roboto()
     .copyWith(color: Colors.black, fontSize: 22, fontWeight: FontWeight.w500);
-TextStyle blackFontStyle2 = GoogleFonts.poppins()
+TextStyle blackFontStyle2 = GoogleFonts.roboto()
     .copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500);
-TextStyle blackFontStyle3 = GoogleFonts.poppins().copyWith(color: Colors.black);
+TextStyle blackFontStyle3 = GoogleFonts.roboto().copyWith(color: Colors.black);
 TextStyle blackFontStyle12 =
-    GoogleFonts.poppins().copyWith(color: Colors.black, fontSize: 12);
-TextStyle whiteFontStyle = GoogleFonts.poppins().copyWith(color: Colors.white);
-TextStyle whiteFontStyle1 = GoogleFonts.poppins()
+    GoogleFonts.roboto().copyWith(color: Colors.black, fontSize: 12);
+TextStyle whiteFontStyle = GoogleFonts.roboto().copyWith(color: Colors.white);
+TextStyle whiteFontStyle1 = GoogleFonts.roboto()
     .copyWith(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w500);
-TextStyle whiteFontStyle2 = GoogleFonts.poppins()
+TextStyle whiteFontStyle2 = GoogleFonts.roboto()
     .copyWith(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500);
-TextStyle whiteFontStyle3 = GoogleFonts.poppins().copyWith(color: Colors.white);
+TextStyle whiteFontStyle3 = GoogleFonts.roboto().copyWith(color: Colors.white);
 TextStyle whiteFontStyle12 =
-    GoogleFonts.poppins().copyWith(color: Colors.white, fontSize: 12);
-TextStyle orangeFontStyle2 = GoogleFonts.poppins().copyWith(
+    GoogleFonts.roboto().copyWith(color: Colors.white, fontSize: 12);
+TextStyle orangeFontStyle2 = GoogleFonts.roboto().copyWith(
     color: Colors.orange,
     fontSize: defaultFontSize,
     fontWeight: FontWeight.bold);
 
-TextStyle hintStyle = GoogleFonts.poppins().copyWith(
+TextStyle hintStyle = GoogleFonts.roboto().copyWith(
   color: Color(0xFF666666),
   fontSize: defaultFontSize,
 );
 
-TextStyle titleListStyle = GoogleFonts.poppins()
+TextStyle titleListStyle = GoogleFonts.roboto()
     .copyWith(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 14);
 
 TextStyle textListStyle = blackFontStyle2.copyWith(fontSize: 15);
 
 TextStyle sectionTitleStyle =
-    GoogleFonts.poppins().copyWith(fontSize: 16, fontWeight: FontWeight.w600);
+    GoogleFonts.roboto().copyWith(fontSize: 16, fontWeight: FontWeight.w600);
 
 String getFormatRupiah(int price, bool isFull) {
   if (price > 999999 && !isFull) {
@@ -172,7 +172,7 @@ void snackBar(String title, String subtitle, String type) {
             type == 'success' || type == 'error' ? Colors.white : Colors.black),
     titleText: Text(
       title,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.roboto(
           color: type == 'success' || type == 'error'
               ? Colors.white
               : Colors.black,
@@ -180,7 +180,7 @@ void snackBar(String title, String subtitle, String type) {
     ),
     messageText: Text(
       subtitle,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.roboto(
           color: type == 'success' || type == 'error'
               ? Colors.white
               : Colors.black),
@@ -194,5 +194,5 @@ String numberFormatDecimal(int number) {
 }
 
 const double defaultMargin = 24;
-const double defaultFontSize = 15;
+const double defaultFontSize = 18;
 const double defaultIconSize = 17;

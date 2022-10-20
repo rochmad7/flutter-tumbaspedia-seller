@@ -50,7 +50,7 @@ class ProductCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             "${product.name}",
-            style: GoogleFonts.poppins().copyWith(color: Colors.black),
+            style: GoogleFonts.roboto().copyWith(color: Colors.black),
             maxLines: 2,
           ),
           Row(
@@ -58,7 +58,7 @@ class ProductCard extends StatelessWidget {
             children: [
               Text(
                 getFormatRupiah(product.price, false),
-                style: GoogleFonts.poppins().copyWith(
+                style: GoogleFonts.roboto().copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: mainColor,

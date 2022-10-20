@@ -210,6 +210,7 @@ class UserServices {
             'shop_name': shop.name,
             'shop_address': shop.address,
             'shop_description': shop.description,
+            'shop_nib_number': shop.nibNumber,
           }));
 
       var data = jsonDecode(response.body);
@@ -217,7 +218,9 @@ class UserServices {
       if (data['errors'] != null) {
         removeUserData();
         return ApiReturnValueShop(
-            message: data['message'].toString(), error: data['errors']);
+            message: data['message'].toString(),
+            error: data['errors'],
+            isException: true);
       }
       User.token = data['data']['access_token'];
       User value = User.fromJson(data['data']['shop']['user']);

@@ -114,13 +114,13 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                       ? Text(
                           'Dibatalkan',
                           textAlign: TextAlign.right,
-                          style: GoogleFonts.poppins(color: 'D9435E'.toColor()),
+                          style: GoogleFonts.roboto(color: 'D9435E'.toColor()),
                         )
                       : (widget.transaction.status == TransactionStatus.pending)
                           ? Text(
                               'Pesanan Baru',
                               textAlign: TextAlign.right,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.roboto(
                                   color: 'D9435E'.toColor()),
                             )
                           : (widget.transaction.status ==
@@ -128,13 +128,13 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                               ? Text(
                                   'Sedang Diantar',
                                   textAlign: TextAlign.right,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                       color: "#128C7E".toColor()),
                                 )
                               : Text(
                                   'Pesanan Selesai',
                                   textAlign: TextAlign.right,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.roboto(
                                       color: "#128C7E".toColor()),
                                 ),
                 ),

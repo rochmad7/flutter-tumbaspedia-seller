@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             imageUrl:
-                                "https://ui-avatars.com/api/?name=" + shop.name,
+                                shop.images,
                             fit: BoxFit.cover,
                             // placeholder: (context, url) =>
                             //     CircularProgressIndicator(),
@@ -63,28 +63,43 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Text(
                           shop.name,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.roboto(
                               fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: 4,
                         ),
                         Text(
                           user.name,
                           style: greyFontStyle.copyWith(
                               fontWeight: FontWeight.w300),
                         ),
+                        SizedBox(
+                          height: 4,
+                        ),
                         Text(
                           user.email,
                           style: greyFontStyle.copyWith(
                               fontWeight: FontWeight.w300),
+                        ),
+                        SizedBox(
+                          height: 4,
                         ),
                         Text(
                           user.phoneNumber,
                           style: greyFontStyle.copyWith(
                               fontWeight: FontWeight.w300),
                         ),
+                        SizedBox(
+                          height: 4,
+                        ),
                         Text(
                           shop.address,
                           style: greyFontStyle.copyWith(
                               fontWeight: FontWeight.w300),
+                        ),
+                        SizedBox(
+                          height: 4,
                         ),
                         Text(
                           shop.description,
@@ -156,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               SettingTitle(
                                 title: "Keluar",
                                 isCustomStyle: true,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.roboto(
                                   color: Colors.red,
                                 ),
                               ),
@@ -194,8 +209,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
             ),
-            SizedBox(height: 10),
-            Center(child: Text("Versi 1.0", style: blackFontStyle)),
+            // SizedBox(height: 10),
+            // Center(child: Text("Versi 1.0", style: blackFontStyle)),
           ],
         ),
       ],

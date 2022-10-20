@@ -27,7 +27,7 @@ class ButtonDefault extends StatelessWidget {
               onPressed: press,
               child: Text(
                 title,
-                style: GoogleFonts.poppins().copyWith(
+                style: GoogleFonts.roboto().copyWith(
                   color: Colors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
