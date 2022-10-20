@@ -59,6 +59,13 @@ class ShopInfo extends StatelessWidget {
                             subtitle:
                                 Text(shop.description, style: textListStyle),
                           ),
+                          ListTile(
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 4),
+                            leading: Icon(Icons.confirmation_number),
+                            title: Text("No. NIB", style: titleListStyle),
+                            subtitle: Text(shop.nibNumber, style: textListStyle),
+                          ),
                         ],
                       ),
                     ],
