@@ -4,6 +4,7 @@ import 'package:tumbaspedia_seller/cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:tumbaspedia_seller/shared/shared.dart';
 
 import 'ui/pages/pages.dart';
 
@@ -16,7 +17,9 @@ Future<void> main() async {
   String email = await _storage.read(key: 'shop_email') ?? '';
   String password = await _storage.read(key: 'shop_password') ?? '';
 
-  runApp(MyApp(email: email, password: password, token: token));
+  String tumbaspediaDefinition = await fetchStaticData();
+
+  runApp(MyApp(email: email, password: password, token: token, tumbaspediaDefinition: tumbaspediaDefinition,));
 }
 
 // void main() {
@@ -28,11 +31,14 @@ class MyApp extends StatelessWidget {
   final String email;
   final String password;
   final String token;
+  final String tumbaspediaDefinition;
 
   MyApp(
       {this.email,
       this.password,
-      this.token});
+      this.token,
+      this.tumbaspediaDefinition
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +64,7 @@ class MyApp extends StatelessWidget {
             title: "Shop Tumbaspedia",
             home: email == '' && password == '' && token == ''
                 ? SignInPage()
-                : MainPage(initialPage: 0))
+                : MainPage(initialPage: 0, tumbaspediaDefinition: tumbaspediaDefinition,))
         // : WaitingShopPage(
         //     shopInitial: null, userInitial: null, isReject: false)),
         );

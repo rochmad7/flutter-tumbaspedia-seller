@@ -1,5 +1,12 @@
 part of 'shared.dart';
 
+Future<String> fetchStaticData() async {
+  var result = await http.get('https://dev.tumbaspedia.my.id/api');
+
+  return result.body;
+}
+
+// String tumbaspedia = tumbaspediaDef.then((value) => tumbaspedia = value) as String;
 const tumbaspedia =
     "Tumbaspedia merupakan sebuah aplikasi jual beli bagi UMKM anggota Gerai Kopimi Kelurahan Gedawang, Kecamatan Banyumanik Kota Semarang sebagai hasil dari program pengabdian masyarakat Univesitas Diponegoro melalui skema UKM Indonesia Bangkit Kementerian Riset dan Teknologi/Badan Riset dan Inovasi Nasional Tahun 2020. Sistem jual beli online ini meliputi dua aplikasi yaitu Tumbaspedia Seller untuk penjual dan Tumbaspedia untuk pembeli. Dengan adanya aplikasi Tumbaspedia, produk dan jasa yang dijual dari Gerai Kopimi dapat dengan mudah didistribusikan kepada konsumen.";
 const kopimi =

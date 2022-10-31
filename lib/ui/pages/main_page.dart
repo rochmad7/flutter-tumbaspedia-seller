@@ -2,16 +2,20 @@ part of 'pages.dart';
 
 class MainPage extends StatefulWidget {
   final int initialPage;
+  final String tumbaspediaDefinition;
 
-  MainPage({this.initialPage = 0});
+  MainPage({this.initialPage = 0, this.tumbaspediaDefinition});
 
   @override
-  _MainPageState createState() => _MainPageState();
+  _MainPageState createState() => _MainPageState(tumbaspediaDefinition: tumbaspediaDefinition);
 }
 
 class _MainPageState extends State<MainPage> {
   int selectedPage = 0;
+  String tumbaspediaDefinition;
   PageController pageController = PageController(initialPage: 0);
+
+  _MainPageState({this.tumbaspediaDefinition});
 
   @override
   void initState() {
@@ -55,7 +59,7 @@ class _MainPageState extends State<MainPage> {
                   child: OrderHistoryPage(),
                 ),
                 Center(
-                  child: ProfilePage(),
+                  child: ProfilePage(tumbaspediaDefinition: tumbaspediaDefinition),
                 ),
               ],
             ),

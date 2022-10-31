@@ -1,13 +1,19 @@
 part of 'pages.dart';
 
 class ProfilePage extends StatefulWidget {
+  String tumbaspediaDefinition;
+
+  ProfilePage({this.tumbaspediaDefinition});
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _ProfilePageState createState() => _ProfilePageState(tumbaspediaDefinition: tumbaspediaDefinition);
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   int selectedIndex = 0;
   bool isLoading = false;
+  String tumbaspediaDefinition;
+
+  _ProfilePageState({this.tumbaspediaDefinition});
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               'press':
                                   ChangePasswordPage(user: user, shop: shop)
                             },
-                            {'name': 'Tentang Kami', 'press': AboutPage()},
+                            {'name': 'Tentang Kami', 'press': AboutPage(tumbaspediaDefinition: tumbaspediaDefinition,)},
                             {
                               'name': 'Bantuan',
                               'press': HelpPage(),
