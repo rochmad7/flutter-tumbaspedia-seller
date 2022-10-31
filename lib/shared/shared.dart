@@ -5,10 +5,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tumbaspedia_seller/ui/pages/pages.dart';
 import 'package:supercharged/supercharged.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 part 'constant.dart';
 part 'size_config.dart';

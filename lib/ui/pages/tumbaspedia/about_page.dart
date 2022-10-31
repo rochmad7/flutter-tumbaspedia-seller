@@ -1,14 +1,8 @@
 part of '../pages.dart';
 
 class AboutPage extends StatelessWidget {
-  String tumbaspediaDefinition;
-
-  AboutPage({this.tumbaspediaDefinition});
-
   @override
   Widget build(BuildContext context) {
-    print(tumbaspediaDefinition);
-
     return GeneralPage(
         title: 'Tentang Kami',
         subtitle: 'Mengenal sekilas Tumbaspedia',
@@ -17,8 +11,7 @@ class AboutPage extends StatelessWidget {
         },
         child: Column(
           children: [
-            CardAccordion(
-                title: "Apa itu Tumbaspedia", text: tumbaspediaDefinition),
+            CardAccordion(title: "Apa itu Tumbaspedia", text: tumbaspedia),
             CardAccordion(title: "Apa itu Gerai Kopimi", text: kopimi),
           ],
         ));
@@ -29,7 +22,6 @@ class CardAccordion extends StatelessWidget {
   final int maxLines;
   final String text;
   final String title;
-
   CardAccordion({this.text, this.maxLines = 4, this.title});
 
   @override
