@@ -41,7 +41,7 @@ part 'success_sign_up_page.dart';
 part 'success_sign_in_page.dart';
 part 'order_history_page.dart';
 part 'transaction_details_page.dart';
-part 'edit_transaction_page.dart';
+// part 'edit_transaction_page.dart';
 part 'waiting_shop_page.dart';
 part 'forgot_password_page.dart';
 part 'change_password_page.dart';

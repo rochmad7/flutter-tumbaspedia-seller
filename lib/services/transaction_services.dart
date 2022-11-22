@@ -40,8 +40,8 @@ class TransactionServices {
     }
   }
 
-  static Future<ApiReturnValue<String>> updateTransaction(
-      Transaction transaction,
+  static Future<ApiReturnValue<String>> updateTransactionStatus(
+      Transaction transaction, TransactionStatus status,
       {http.Client client}) async {
     try {
       client ??= http.Client();
@@ -57,13 +57,7 @@ class TransactionServices {
             "Authorization": "Bearer $_token"
           },
           body: jsonEncode(<String, dynamic>{
-            'status': (transaction.status == TransactionStatus.delivered)
-                ? 'delivered'
-                : (transaction.status == TransactionStatus.cancelled)
-                    ? 'canceled'
-                    : (transaction.status == TransactionStatus.pending)
-                        ? 'pending'
-                        : 'on_delivery',
+            "status": status.toString().split('.').last,
             'delivered_at': (transaction.status == TransactionStatus.delivered)
                 ? DateTime.now().toIso8601String()
                 : null,

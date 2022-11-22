@@ -78,7 +78,7 @@ class OrderListItem extends StatelessWidget {
                               ? Text(
                                   'Pesanan Baru',
                                   style: GoogleFonts.roboto(
-                                      color: 'D9435E'.toColor(), fontSize: 10),
+                                      color: Colors.blueAccent, fontSize: 10),
                                 )
                               : (transaction.status ==
                                       TransactionStatus.on_delivery)
@@ -91,7 +91,7 @@ class OrderListItem extends StatelessWidget {
                                   : Text(
                                       'Pesanan Selesai',
                                       style: GoogleFonts.roboto(
-                                          color: "#128C7E".toColor(),
+                                          color: mainColor,
                                           fontSize: 10),
                                     )
                     ],

@@ -78,7 +78,8 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                             ),
                             Text(
                               getFormatRupiah(
-                                  (widget.transaction.product.price).round(), true),
+                                  (widget.transaction.product.price).round(),
+                                  true),
                               style: textListStyle.copyWith(fontSize: 13),
                             )
                           ],
@@ -120,8 +121,8 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                           ? Text(
                               'Pesanan Baru',
                               textAlign: TextAlign.right,
-                              style: GoogleFonts.roboto(
-                                  color: 'D9435E'.toColor()),
+                              style:
+                                  GoogleFonts.roboto(color: Colors.blueAccent),
                             )
                           : (widget.transaction.status ==
                                   TransactionStatus.on_delivery)
@@ -135,7 +136,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                                   'Pesanan Selesai',
                                   textAlign: TextAlign.right,
                                   style: GoogleFonts.roboto(
-                                      color: "#128C7E".toColor()),
+                                      color: mainColor),
                                 ),
                 ),
                 SizedBox(
@@ -159,7 +160,8 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                             defaultMargin -
                             5,
                         child: Text(
-                          getFormatRupiah(widget.transaction.product.price, true),
+                          getFormatRupiah(
+                              widget.transaction.product.price, true),
                           style: blackFontStyle3,
                           textAlign: TextAlign.right,
                         ))
@@ -238,25 +240,129 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
           SizedBox(
             height: 10,
           ),
-          (widget.transaction.status != TransactionStatus.delivered &&
-                  widget.transaction.status != TransactionStatus.on_delivery)
+          (widget.transaction.status == TransactionStatus.pending)
               ? ButtonIconDefault(
-                  title: "Edit Pesanan",
-                  press: () => Get.to(() =>
-                      EditTransactionPage(transaction: widget.transaction)),
-                  icon: Icons.edit)
-              : SizedBox(),
-          SizedBox(
-            height: 30,
-          ),
+                  title: "Batalkan Pesanan",
+                  color: "D9435E".toColor(),
+                  press: () {
+                    SweetAlert.show(context,
+                        title: "Batalkan Pesanan?",
+                        subtitle: "Pesanan akan dibatalkan",
+                        style: SweetAlertStyle.confirm,
+                        showCancelButton: true,
+                        onPress: cancelTransaction);
+                  },
+                  icon: MdiIcons.close)
+              : SizedBox(
+                  height: 8,
+                ),
+          SizedBox(height: 8),
+          (widget.transaction.status == TransactionStatus.pending)
+              ? ButtonIconDefault(
+                  title: "Konfirmasi Pesanan",
+                  color: Colors.blueAccent,
+                  press: () {
+                    SweetAlert.show(context,
+                        title: "Konfirmasi Pesanan?",
+                        subtitle: "Pesanan akan dikonfirmasi",
+                        style: SweetAlertStyle.confirm,
+                        showCancelButton: true,
+                        onPress: confirmTransaction);
+                  },
+                  icon: MdiIcons.check)
+              : SizedBox(
+                  height: 8,
+                ),
+          // (widget.transaction.status != TransactionStatus.delivered &&
+          //         widget.transaction.status != TransactionStatus.on_delivery)
+          //     ? ButtonIconDefault(
+          //         title: "Edit Pesanan",
+          //         press: () => Get.to(() =>
+          //             EditTransactionPage(transaction: widget.transaction)),
+          //         icon: Icons.edit)
+          //     : SizedBox(),
+          // SizedBox(
+          //   height: 30,
+          // ),
         ],
       ),
     );
+  }
+
+  bool cancelTransaction(bool isCancel) {
+    if (isCancel) {
+      SweetAlert.show(context,
+          subtitle: "Sedang memproses...", style: SweetAlertStyle.loading);
+      new Future.delayed(new Duration(seconds: 0), () async {
+        await context
+            .read<TransactionCubit>()
+            .updateTransaction(widget.transaction, TransactionStatus.cancelled);
+        TransactionState state = context.read<TransactionCubit>().state;
+        if (state is TransactionUpdated) {
+          SweetAlert.show(context,
+              subtitle: "Pesanan berhasil dibatalkan",
+              style: SweetAlertStyle.success);
+          snackBar("Sukses", "Pesanan Anda berhasil dibatalkan", 'success');
+          context.read<TransactionCubit>().getTransactions(10, null);
+          new Future.delayed(new Duration(seconds: 3), () {
+            Get.off(() => MainPage(initialPage: 3));
+          });
+          return false;
+        } else {
+          SweetAlert.show(context,
+              subtitle: (state as TransactionUpdateFailed).message,
+              style: SweetAlertStyle.error);
+          context.read<TransactionCubit>().getTransactions(10, null);
+          return false;
+        }
+      });
+    } else {
+      SweetAlert.show(context,
+          subtitle: "Pembatalan pesanan\n berhasil dibatalkan",
+          style: SweetAlertStyle.error);
+    }
+    return false;
+  }
+
+  bool confirmTransaction(bool isConfirm) {
+    if (isConfirm) {
+      SweetAlert.show(context,
+          subtitle: "Sedang memproses...", style: SweetAlertStyle.loading);
+      new Future.delayed(new Duration(seconds: 0), () async {
+        await context
+            .read<TransactionCubit>()
+            .updateTransaction(widget.transaction, TransactionStatus.on_delivery);
+        TransactionState state = context.read<TransactionCubit>().state;
+        if (state is TransactionUpdated) {
+          SweetAlert.show(context,
+              subtitle: "Pesanan berhasil dikonfirmasi",
+              style: SweetAlertStyle.success);
+          snackBar("Sukses", "Pesanan Anda berhasil dikonfirmasi", 'success');
+          context.read<TransactionCubit>().getTransactions(10, null);
+          new Future.delayed(new Duration(seconds: 3), () {
+            Get.off(() => MainPage(initialPage: 3));
+          });
+          return false;
+        } else {
+          SweetAlert.show(context,
+              subtitle: (state as TransactionUpdateFailed).message,
+              style: SweetAlertStyle.error);
+          context.read<TransactionCubit>().getTransactions(10, null);
+          return false;
+        }
+      });
+    } else {
+      SweetAlert.show(context,
+          subtitle: "Konfirmasi pesanan\n berhasil dibatalkan",
+          style: SweetAlertStyle.error);
+    }
+    return false;
   }
 }
 
 class TitleList extends StatelessWidget {
   final String title;
+
   TitleList({this.title});
 
   @override
@@ -275,6 +381,7 @@ class ItemList extends StatelessWidget {
   final String title;
   final String subtitle;
   final Widget customSubtitle;
+
   ItemList({this.title, this.subtitle, this.customSubtitle});
 
   @override

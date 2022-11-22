@@ -19,9 +19,10 @@ class TransactionCubit extends Cubit<TransactionState> {
     }
   }
 
-  Future<void> updateTransaction(Transaction transaction) async {
+  Future<void> updateTransaction(
+      Transaction transaction, TransactionStatus status) async {
     ApiReturnValue<String> result =
-        await TransactionServices.updateTransaction(transaction);
+        await TransactionServices.updateTransactionStatus(transaction, status);
 
     if (result.isException == false) {
       emit(TransactionUpdated(result.message));
@@ -32,16 +33,16 @@ class TransactionCubit extends Cubit<TransactionState> {
     }
   }
 
-  // Future<String> submitTransaction(Transaction transaction) async {
-  //   ApiReturnValue<Transaction> result =
-  //       await TransactionServices.submitTransaction(transaction);
+// Future<String> submitTransaction(Transaction transaction) async {
+//   ApiReturnValue<Transaction> result =
+//       await TransactionServices.submitTransaction(transaction);
 
-  //   if (result.value != null) {
-  //     emit(TransactionLoaded(
-  //         (state as TransactionLoaded).transactions + [result.value]));
-  //     return result.value.paymentUrl;
-  //   } else {
-  //     return null;
-  //   }
-  // }
+//   if (result.value != null) {
+//     emit(TransactionLoaded(
+//         (state as TransactionLoaded).transactions + [result.value]));
+//     return result.value.paymentUrl;
+//   } else {
+//     return null;
+//   }
+// }
 }
