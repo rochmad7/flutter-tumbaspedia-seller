@@ -87,7 +87,7 @@ class _SignInPageState extends State<SignInPage> {
                 controller: passwordController,
                 isObscureText: _obscureText,
                 isSuffixIcon: true,
-                hintText: "Password"),
+                hintText: "Kata Sandi"),
             TextDanger(error: error, param: "password"),
             // ErrorValidation(error: error),
             SizedBox(
@@ -104,7 +104,7 @@ class _SignInPageState extends State<SignInPage> {
                 if (emailController.text.isEmpty ||
                     passwordController.text.isEmpty) {
                   snackBar("Maaf login gagal",
-                      "Silakan masukkan email dan password", 'error');
+                      "Silakan masukkan email dan kata sandi", 'error');
                   setState(() {
                     isLoading = false;
                   });
@@ -114,7 +114,7 @@ class _SignInPageState extends State<SignInPage> {
                 if (!emailController.text.isEmail ||
                     passwordController.text.length < 6) {
                   snackBar("Maaf login gagal",
-                      "Email atau password tidak valid", 'error');
+                      "Email atau kata sandi tidak valid", 'error');
                   setState(() {
                     isLoading = false;
                   });

@@ -22,7 +22,7 @@ class UserServices {
       if (data['errors'] != null || data['error'] != null) {
         print("error this");
         return ApiReturnValueShop(
-            message: 'Email atau password salah', error: data['errors']);
+            message: 'Email atau kata sandi salah', error: data['errors']);
       }
 
       String token = data['data']['access_token'];
@@ -83,7 +83,7 @@ class UserServices {
       {http.Client client}) async {
     if (newPassword != confPassword) {
       return ApiReturnValue(
-          message: 'Konfirmasi password tidak sama', isException: true);
+          message: 'Konfirmasi kata sandi tidak sama', isException: true);
     }
 
     try {

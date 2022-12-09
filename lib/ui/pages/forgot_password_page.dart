@@ -23,8 +23,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         // await context.read<UserCubit>().getMyProfile(null);
         Get.back();
       },
-      title: 'Lupa Password',
-      subtitle: 'Reset Password Anda Melalui Email',
+      title: 'Lupa Kata Sandi',
+      subtitle: 'Reset Kata Sandi Anda Melalui Email',
       child: Container(
         margin: EdgeInsets.fromLTRB(defaultMargin, 0, defaultMargin, 6),
         child: Column(
@@ -51,10 +51,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       LabelFormField(
-                        label: "Anda Lupa Password?",
+                        label: "Anda Lupa Kata Sandi?",
                       ),
                       Text(
-                        "Anda lupa password akun Tumbaspedia? Tidak masalah. Anda hanya butuh mengisi email akun Tumbaspedia yang telah terdaftar, di kolom bawah ini dan kami akan mengirimkan link reset password ke email Anda. Selanjutnya Anda bisa me-reset password akun Anda",
+                        "Anda lupa kata sandi akun Tumbaspedia? Tidak masalah. Anda hanya butuh mengisi email akun Tumbaspedia yang telah terdaftar, di kolom bawah ini dan kami akan mengirimkan link reset kata sandi ke email Anda. Selanjutnya Anda bisa me-reset kata sandi akun Anda",
                         style: blackFontStyle3.copyWith(fontSize: 12),
                       ),
                       SizedBox(
@@ -73,7 +73,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ),
                       ButtonDefault(
                         isLoading: isLoading,
-                        title: "Reset Password",
+                        title: "Reset Kata Sandi",
                         press: () async {
                           setState(() {
                             isLoading = true;
@@ -100,7 +100,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             });
                             snackBar(
                                 "Berhasil",
-                                "Link reset password berhasil dikirim",
+                                "Link reset kata sandi berhasil dikirim",
                                 'success');
                           } else {
                             // await context.read<UserCubit>().getMyProfile(null);

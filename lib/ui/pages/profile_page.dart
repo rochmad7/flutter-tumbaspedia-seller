@@ -163,7 +163,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             await context.read<UserCubit>().logOut();
 
                             Get.offAll(() => SignInPage());
-                            snackBar("Berhasil", "Anda telah berhasil logout",
+                            snackBar("Berhasil", "Anda telah berhasil keluar",
                                 'success');
                           },
                           child: Column(
@@ -187,10 +187,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Column(
                           children: [
-                            {'name': 'Login', 'press': SignInPage()},
+                            {'name': 'Masuk', 'press': SignInPage()},
                             {'name': 'Daftar Toko Baru', 'press': SignUpPage()},
                             {
-                              'name': 'Lupa Password',
+                              'name': 'Lupa Kata Sandi',
                               'press': ForgotPasswordPage()
                             },
                             {'name': 'Tentang Kami', 'press': AboutPage()},
