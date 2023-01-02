@@ -51,6 +51,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   ffi: ^1.0.0
   flutter_secure_storage: ^4.2.1
+  font_awesome_flutter: ^10.3.0
 
 flutter_icons:
   image_path: "assets/images/logo/ic_launcher.png"

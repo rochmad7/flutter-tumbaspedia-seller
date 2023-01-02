@@ -51,8 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                             ),
-                            imageUrl:
-                                shop.images,
+                            imageUrl: shop.images,
                             fit: BoxFit.cover,
                             // placeholder: (context, url) =>
                             //     CircularProgressIndicator(),
@@ -148,10 +147,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               'name': 'Bantuan',
                               'press': HelpPage(),
                             },
-                            {
-                              'name': 'Kebijakan Privasi',
-                              'press': PrivacyPage(),
-                            },
+                            // {
+                            //   'name': 'Kebijakan Privasi',
+                            //   'press': PrivacyPage(),
+                            // },
                           ]
                               .map((e) => GestureDetector(
                                   onTap: () => Get.to(e['press']),
@@ -208,6 +207,57 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ],
                     ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Container(
+              height: 150,
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: TextButton(
+                      onPressed: () {
+                        launch("https://www.facebook.com/profile.php?id=100069886188294&mibextid=ZbWKwL");
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.squareFacebook,
+                          ),
+                          Text(
+                            " Gerai Kopimi Rowosari",
+                            style: GoogleFonts.roboto(
+                                fontSize: 14, fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: TextButton(
+                      onPressed: () {
+                        launch("https://instagram.com/gerai_kopimi.rowosari?igshid=YmMyMTA2M2Y=");
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.instagram,
+                            color: Colors.pink,
+                          ),
+                          Text(
+                            " gerai_kopimi.rowosari",
+                            style: GoogleFonts.roboto(
+                                fontSize: 14, fontWeight: FontWeight.w500, color: Colors.pink),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             // SizedBox(height: 10),
             // Center(child: Text("Versi 1.0", style: blackFontStyle)),

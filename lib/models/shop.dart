@@ -44,7 +44,7 @@ class Shop extends Equatable {
         isValid: data["is_verified"] == true ? true : false,
         description: data["description"],
         nib: data["nib"],
-        nibNumber: data["nib_number"],
+        nibNumber: data["nib_number"] != null ? data["nib_number"] : "",
       );
 
   Shop copyWith(
