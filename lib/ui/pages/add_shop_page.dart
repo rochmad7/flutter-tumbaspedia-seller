@@ -3,8 +3,9 @@ part of 'pages.dart';
 class AddShopPage extends StatefulWidget {
   final User user;
   final String password;
+  Shop shop;
 
-  AddShopPage(this.user, this.password);
+  AddShopPage({this.user, this.password, this.shop});
 
   @override
   _AddShopPageState createState() => _AddShopPageState();
@@ -27,6 +28,12 @@ class _AddShopPageState extends State<AddShopPage> {
   @override
   void initState() {
     super.initState();
+    if (widget.shop != null) {
+      shopNameController.text = widget.shop.name;
+      shopDescController.text = widget.shop.description;
+      shopAddressController.text = widget.shop.address;
+      shopNIBController.text = widget.shop.nibNumber;
+    }
   }
 
   @override
@@ -35,7 +42,8 @@ class _AddShopPageState extends State<AddShopPage> {
       title: 'Data Toko',
       subtitle: "Pastikan data yang diisi valid",
       onBackButtonPressed: () {
-        Get.off(SignUpPage(user: widget.user, password: widget.password));
+        Get.off(SignUpPage(
+            user: widget.user, password: widget.password, shop: widget.shop));
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(defaultMargin, 0, defaultMargin, 6),
@@ -155,7 +163,7 @@ class _AddShopPageState extends State<AddShopPage> {
                   //   };
                   // });
                   snackBar("Gagal Melanjutkan",
-                      "Semua field bertanda bintang harus diisi", 'error');
+                      "Semua kolom bertanda bintang harus diisi", 'error');
 
                   return;
                 }
@@ -179,12 +187,12 @@ class _AddShopPageState extends State<AddShopPage> {
                   // context
                   //     .read<ProductCubit>()
                   //     .getMyProducts(null, null, null, null);
-                  // User user =
-                  //     (context.read<UserCubit>().state as UserLoadedWithShop)
-                  //         .user;
-                  // Shop shop =
-                  //     (context.read<UserCubit>().state as UserLoadedWithShop)
-                  //         .shop;
+                  User user =
+                      (context.read<UserCubit>().state as UserLoadedWithShop)
+                          .user;
+                  Shop shop =
+                      (context.read<UserCubit>().state as UserLoadedWithShop)
+                          .shop;
                   Get.offAll(() =>
                       WaitingShopPage(shopInitial: shop, userInitial: user));
                   snackBar("Berhasil", "Pendaftaran toko berhasil", 'success');

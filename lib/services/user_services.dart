@@ -217,6 +217,7 @@ class UserServices {
 
       if (data['errors'] != null) {
         removeUserData();
+
         return ApiReturnValueShop(
             message: data['message'].toString(),
             error: data['errors'],

@@ -90,7 +90,7 @@ class IllustrationPage extends StatelessWidget {
           isBackHome
               ? TextUnderButton(
                   title: "",
-                  subtitle: "<- Home",
+                  subtitle: "<- Kembali",
                   press: () => Get.to(
                         () => SignInPage(),
                       ))

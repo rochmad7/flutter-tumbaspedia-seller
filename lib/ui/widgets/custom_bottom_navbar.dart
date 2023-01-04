@@ -33,7 +33,7 @@ class CustomBottomNavbar extends StatelessWidget {
               selectedIndex: selectedIndex,
               index: 0,
               icon: MdiIcons.home,
-              title: "Home",
+              title: "Beranda",
               onTap: onTap),
           IconBottomNavbar(
               selectedIndex: selectedIndex,

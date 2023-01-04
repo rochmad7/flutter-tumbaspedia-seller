@@ -3,8 +3,9 @@ part of 'pages.dart';
 class SignUpPage extends StatefulWidget {
   final User user;
   final String password;
+  final Shop shop;
 
-  SignUpPage({this.user, this.password});
+  SignUpPage({this.user, this.password, this.shop});
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -153,7 +154,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   // UserState state = context.read<UserCubit>().state;
                   //
                   // if (state is UserLoaded) {
-                  Get.off(AddShopPage(user, passwordController.text));
+                  Get.off(AddShopPage(user: user, password: passwordController.text, shop: widget.shop));
                   // } else {
                   //   snackBar("Gagal Melanjutkan",
                   //       (state as UserLoadingFailed).message, 'error');
