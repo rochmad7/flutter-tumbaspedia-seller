@@ -64,7 +64,7 @@ class UserCubit extends Cubit<UserState> {
     ApiReturnValue<User> result = await UserServices.changePassword(
         oldPassword, newPassword, confPassword);
 
-    if (result.isException == false) {
+    if (result.error == null && !result.isException) {
       emit(UserEdited(result.value));
     } else {
       emit(UserEditedFailed(result.message, result.error));

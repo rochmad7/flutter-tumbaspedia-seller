@@ -58,7 +58,10 @@ class UserServices {
             "Content-Type": "application/json",
             "Accept": "application/json",
           },
-          body: jsonEncode(<String, String>{'email': email}));
+          body: jsonEncode(<String, String>{
+            'email': email,
+            'type': 'seller',
+          }));
 
       var data = jsonDecode(response.body);
       if (data['errors'] != null) {
@@ -107,7 +110,8 @@ class UserServices {
 
       var data = jsonDecode(response.body);
       if (data['errors'] != null) {
-        return ApiReturnValue(message: data['message'], error: data['error']);
+        return ApiReturnValue(
+            message: data['message'], error: data['error'], isException: true);
       }
 
       User value = User.fromJson(data['data']);
