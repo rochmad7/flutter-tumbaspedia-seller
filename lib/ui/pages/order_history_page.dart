@@ -119,7 +119,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                               ? state.transactions
                                                   .where((element) =>
                                                       element.status ==
-                                                      TransactionStatus.cancelled)
+                                                      TransactionStatus.canceled)
                                                   .toList()
                                               : state.transactions
                                                   .where((element) =>

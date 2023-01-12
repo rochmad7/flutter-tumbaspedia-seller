@@ -68,7 +68,7 @@ class OrderListItem extends StatelessWidget {
                         convertTime(transaction.dateTime),
                         style: greyFontStyle.copyWith(fontSize: 12),
                       ),
-                      (transaction.status == TransactionStatus.cancelled)
+                      (transaction.status == TransactionStatus.canceled)
                           ? Text(
                               'Dibatalkan',
                               style: GoogleFonts.roboto(

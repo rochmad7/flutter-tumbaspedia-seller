@@ -1,6 +1,6 @@
 part of 'models.dart';
 
-enum TransactionStatus { delivered, on_delivery, pending, cancelled }
+enum TransactionStatus { delivered, on_delivery, pending, canceled }
 
 class Transaction extends Equatable {
   final int id;
@@ -50,7 +50,7 @@ class Transaction extends Equatable {
         : (data['status'] == 'delivered')
         ? TransactionStatus.delivered
         : (data['status'] == 'canceled')
-        ? TransactionStatus.cancelled
+        ? TransactionStatus.canceled
         : TransactionStatus.on_delivery,
   );
 

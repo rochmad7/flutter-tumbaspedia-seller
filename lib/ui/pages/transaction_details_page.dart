@@ -111,7 +111,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                 ItemList(
                   title: "Status",
                   customSubtitle: (widget.transaction.status ==
-                          TransactionStatus.cancelled)
+                          TransactionStatus.canceled)
                       ? Text(
                           'Dibatalkan',
                           textAlign: TextAlign.right,
@@ -296,7 +296,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
       new Future.delayed(new Duration(seconds: 0), () async {
         await context
             .read<TransactionCubit>()
-            .updateTransaction(widget.transaction, TransactionStatus.cancelled);
+            .updateTransaction(widget.transaction, TransactionStatus.canceled);
         TransactionState state = context.read<TransactionCubit>().state;
         if (state is TransactionUpdated) {
           SweetAlert.show(context,

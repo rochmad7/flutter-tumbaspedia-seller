@@ -216,7 +216,7 @@ class UserServices {
       var data = jsonDecode(response.body);
 
       if (data['errors'] != null) {
-        removeUserData();
+        // removeUserData();
 
         return ApiReturnValueShop(
             message: data['message'].toString(),
@@ -227,10 +227,10 @@ class UserServices {
       User value = User.fromJson(data['data']['shop']['user']);
       Shop shopReturn = Shop.fromJson(data['data']['shop']);
 
-      saveUserData(
-        email: user.email,
-        token: User.token,
-      );
+      // saveUserData(
+      //   email: user.email,
+      //   token: User.token,
+      // );
 
       if (pictureFile != null) {
         ApiReturnValue<String> result =
