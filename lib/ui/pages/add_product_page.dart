@@ -191,8 +191,8 @@ class _AddProductPageState extends State<AddProductPage> {
                     return;
                   }
 
-                  if (stockController.text.contains(RegExp(r'[a-zA-Z]')) ||
-                      priceController.text.contains(RegExp(r'[a-zA-Z]')) ||
+                  if (stockController.text.isNumericOnly == false ||
+                      priceController.text.isNumericOnly == false ||
                       int.parse(stockController.text) < 0 ||
                       int.parse(priceController.text) < 0) {
                     snackBar('Gagal menambahkan produk',

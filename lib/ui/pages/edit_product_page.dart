@@ -186,6 +186,15 @@ class _EditProductPageState extends State<EditProductPage> {
                     return;
                   }
 
+                  if (stockController.text.isNumericOnly == false ||
+                      priceController.text.isNumericOnly == false ||
+                      int.parse(stockController.text) < 0 ||
+                      int.parse(priceController.text) < 0) {
+                    snackBar('Gagal edit produk', 'Harap isi data dengan benar',
+                        'error');
+                    return;
+                  }
+
                   Product sproduct = new Product(
                       id: widget.product.id,
                       name: nameController.text ?? widget.product.name,
