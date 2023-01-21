@@ -331,7 +331,6 @@ class UserServices {
         request = http.MultipartRequest("POST", uri)
           ..headers["Accept"] = "application/json"
           ..headers["Content-Type"] = "application/json"
-          ..headers["Token"] = tokenAPI
           ..headers["Authorization"] = "Bearer " + token;
       }
 

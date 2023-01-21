@@ -22,9 +22,6 @@ class ProductServices {
       if (categoryId != null) {
         url += '&category=' + categoryId.toString();
       }
-      // if (limit != null) {
-      //   url += '&limit=' + limit.toString();
-      // }
       if (sort == SortMethod.terbaru) {
         url += '&sortBy=date&sortType=desc';
       } else if (sort == SortMethod.terlaris) {
@@ -36,11 +33,12 @@ class ProductServices {
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        // "Token": tokenAPI,
         "Authorization": "Bearer $_token"
       });
 
+      print(url);
       var data = jsonDecode(response.body);
+      print(data);
       if (data['errors'] != null) {
         return ApiReturnValue(
             message: data['message'].toString(), error: data['error']);

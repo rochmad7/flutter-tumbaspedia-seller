@@ -32,7 +32,7 @@ class _AddProductPageState extends State<AddProductPage> {
   void fetchData() async {
     try {
       final response = await http.get(baseURLAPI + '/categories',
-          headers: {"Accept": "application/json", "Token": tokenAPI});
+          headers: {"Accept": "application/json"});
       if (response.statusCode == 200) if (mounted)
         setState(() {
           var data = jsonDecode(response.body);

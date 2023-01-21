@@ -38,7 +38,7 @@ class ProductCard extends StatelessWidget {
                 bottom: 0,
                 left: 0,
                 child: Container(
-                  color: Colors.black87,
+                  color: mainColor,
                   padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   alignment: Alignment.center,
                   child: Text("Terjual " + formatNumber(product.sold),

@@ -23,7 +23,6 @@ class RatingServices {
       var response = await client.get(url, headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Token": tokenAPI
       });
 
       var data = jsonDecode(response.body);
