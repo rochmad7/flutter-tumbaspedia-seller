@@ -175,14 +175,16 @@ class UserServices {
     try {
       if (nibFile == null) {
         return ApiReturnValueShop(
-            message: 'File gambar NIB toko tidak boleh kosong');
+            message: 'File gambar NIB toko tidak boleh kosong',
+            isException: true);
       }
       if (nibFile != null) {
         final bytes2 = nibFile.readAsBytesSync().lengthInBytes;
         final kb2 = bytes2 / 1024;
         if (kb2 > 2048) {
           return ApiReturnValueShop(
-              message: 'File gambar NIB toko tidak boleh lebih dari 2mb');
+              message: 'File gambar NIB toko tidak boleh lebih dari 2mb',
+              isException: true);
         }
       }
       if (pictureFile != null) {
@@ -190,7 +192,8 @@ class UserServices {
         final kb1 = bytes1 / 1024;
         if (kb1 > 2048) {
           return ApiReturnValueShop(
-              message: 'File gambar toko tidak boleh lebih dari 2mb');
+              message: 'File gambar toko tidak boleh lebih dari 2mb',
+              isException: true);
         }
       }
 
@@ -371,7 +374,8 @@ class UserServices {
         final kb1 = bytes1 / 1024;
         if (kb1 > 2048) {
           return ApiReturnValue(
-              message: 'File gambar toko tidak boleh lebih dari 2mb');
+              message: 'File gambar toko tidak boleh lebih dari 2mb',
+              isException: true);
         }
       }
 

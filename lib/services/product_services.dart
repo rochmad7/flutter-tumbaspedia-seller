@@ -70,7 +70,10 @@ class ProductServices {
         final kb1 = bytes1 / 1024;
         if (kb1 > 2048) {
           return ApiReturnValue(
-              message: 'File gambar produk tidak boleh lebih dari 2mb');
+              message: 'File gambar produk tidak boleh lebih dari 2mb',
+              error: {
+                'picture': ['File gambar produk tidak boleh lebih dari 2mb']
+              });
         }
       }
 
@@ -122,7 +125,10 @@ class ProductServices {
         final kb1 = bytes1 / 1024;
         if (kb1 > 2048) {
           return ApiReturnValue(
-              message: 'File gambar produk tidak boleh lebih dari 2mb');
+              message: 'File gambar produk tidak boleh lebih dari 2mb',
+              error: {
+                'picture': ['File gambar produk tidak boleh lebih dari 2mb']
+              });
         }
       }
 
@@ -151,7 +157,7 @@ class ProductServices {
         return ApiReturnValue(
             message: data['message'].toString(), error: data['error']);
       }
-      
+
       if (pictureFile != null) {
         ApiReturnValue<String> result =
             await updateProductPicture(product.id, pictureFile);
@@ -196,7 +202,6 @@ class ProductServices {
       String responseBody = await response.stream.bytesToString();
       var data = jsonDecode(responseBody);
       if (data['errors'] != null) {
-
         return ApiReturnValue(value: data['message']);
       }
 
@@ -276,8 +281,7 @@ class ProductServices {
 
       if (data['errors'] != null) {
         return ApiReturnValue(
-            message: data['message'].toString(),
-            error: data['error']);
+            message: data['message'].toString(), error: data['error']);
       }
 
       int code = response.statusCode;
