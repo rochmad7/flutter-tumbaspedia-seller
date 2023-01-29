@@ -19,8 +19,8 @@ void removeUserData() async {
 String tokenAPI = "VUJDZFIYZD6TJ4DFDGULFGXZDPOVI94R";
 
 // String baseURLAPI = 'http://10.0.2.2:3000/api';
-String baseURLAPI = 'https://dev.tumbaspedia.my.id/api';
-// String baseURLAPI = 'https://prod.tumbaspedia.my.id/api';
+// String baseURLAPI = 'https://dev.tumbaspedia.my.id/api';
+String baseURLAPI = 'https://prod.tumbaspedia.my.id/api';
 
 Color mainColor = Color(0xff541690);
 // Color mainColor = "032339".toColor();
