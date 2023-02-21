@@ -239,7 +239,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Container(
                     child: TextButton(
                       onPressed: () {
-                        launch("https://instagram.com/gerai_kopimi.rowosari?igshid=YmMyMTA2M2Y=");
+                        launch("https://instagram.com/paguyubanumkmrowosari_semarang");
                       },
                       child: Row(
                         children: [
