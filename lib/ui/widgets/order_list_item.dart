@@ -8,96 +8,123 @@ class OrderListItem extends StatelessWidget {
 
   OrderListItem(
       {@required this.transaction,
-      this.isDate = true,
-      @required this.itemWidth,
-      this.press});
+        this.isDate = true,
+        @required this.itemWidth,
+        this.press});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: press,
-      child: Row(
+    return Container(
+      width: itemWidth,
+      child: Column(
         children: [
-          CachedNetworkImage(
-            imageBuilder: (context, imageProvider) => Container(
-              width: 60,
-              height: 60,
-              margin: EdgeInsets.only(right: 12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            imageUrl: transaction.product.images,
-            errorWidget: (context, url, error) => Icon(Icons.error),
-            repeat: ImageRepeat.repeat,
-          ),
-          SizedBox(
-            width: itemWidth - 182, // (60 + 12 + 110)
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          GestureDetector(
+            onTap: press,
+            child: Row(
               children: [
-                Text(
-                  transaction.product.name,
-                  style: blackFontStyle2,
-                  maxLines: 1,
-                  overflow: TextOverflow.clip,
+                Container(
+                  width: 60,
+                  height: 75,
+                  margin: EdgeInsets.only(right: 14),
+                  child: CachedNetworkImage(
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.circular(0),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    imageUrl: transaction.product.images,
+                    placeholder: (context, url) => CardShimmer(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    repeat: ImageRepeat.repeat,
+                  ),
                 ),
-                Text(
-                  "${transaction.quantity} item(s) • " +
-                      getFormatRupiah(transaction.total, true),
-                  style: greyFontStyle.copyWith(fontSize: 13),
-                )
-              ],
-            ),
-          ),
-          isDate
-              ? SizedBox(
+                SizedBox(
+                  width: itemWidth - 184, // (60 + 12 + 110)
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        transaction.product.name,
+                        style: blackFontStyle2.copyWith(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        "${transaction.quantity} produk",
+                        style: greyFontStyle.copyWith(
+                            fontSize: 13, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        "Total: " + getFormatRupiah(transaction.total, true),
+                        style: blackFontStyle2.copyWith(
+                            fontSize: 13, fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  ),
+                ),
+                isDate
+                    ? SizedBox(
                   width: 110,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
                         convertDate(transaction.dateTime, false),
-                        style: greyFontStyle.copyWith(fontSize: 12),
+                        style: blackFontStyle2.copyWith(
+                            fontSize: 12, fontWeight: FontWeight.w500),
                       ),
+                      SizedBox(height: 2),
                       Text(
                         convertTime(transaction.dateTime),
-                        style: greyFontStyle.copyWith(fontSize: 12),
+                        style: blackFontStyle2.copyWith(
+                            fontSize: 12, fontWeight: FontWeight.w500),
                       ),
-                      (transaction.status == TransactionStatus.canceled)
-                          ? Text(
-                              'Dibatalkan',
-                              style: GoogleFonts.roboto(
-                                  color: 'D9435E'.toColor(), fontSize: 10),
-                            )
-                          : (transaction.status == TransactionStatus.pending)
-                              ? Text(
-                                  'Pesanan Baru',
-                                  style: GoogleFonts.roboto(
-                                      color: Colors.blueAccent, fontSize: 10),
-                                )
-                              : (transaction.status ==
-                                      TransactionStatus.on_delivery)
-                                  ? Text(
-                                      'Diantar',
-                                      style: GoogleFonts.roboto(
-                                          color: "#128C7E".toColor(),
-                                          fontSize: 10),
-                                    )
-                                  : Text(
-                                      'Pesanan Selesai',
-                                      style: GoogleFonts.roboto(
-                                          color: mainColor,
-                                          fontSize: 10),
-                                    )
+                      SizedBox(height: 2),
+                      Container(
+                        width: 110,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: mainColor),
+                        ),
+                        child: Center(
+                          child: Text(
+                            transaction.status ==
+                                TransactionStatus.canceled
+                                ? "Dibatalkan"
+                                : transaction.status ==
+                                TransactionStatus.pending
+                                ? "Pesanan Baru"
+                                : transaction.status ==
+                                TransactionStatus.on_delivery
+                                ? "Diantar"
+                                : "Selesai",
+                            style: blackFontStyle2.copyWith(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 )
-              : SizedBox()
+                    : SizedBox(),
+              ],
+            ),
+          ),
+          SizedBox(height: 12),
+          Divider(
+            thickness: 1,
+            color: Colors.black12,
+          )
         ],
       ),
     );

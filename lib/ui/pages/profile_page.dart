@@ -104,6 +104,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           shop.description,
                           style: greyFontStyle.copyWith(
                               fontWeight: FontWeight.w300),
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),

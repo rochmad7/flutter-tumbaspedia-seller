@@ -15,7 +15,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
-      title: 'Pesanan Toko',
+      title: 'Pesanan ID: ' + widget.transaction.id.toString(),
       subtitle: 'Detail pesanan toko Anda',
       onBackButtonPressed: () {
         Get.back();
@@ -32,10 +32,6 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Pesanan [ID: ' + widget.transaction.id.toString() + "]",
-                  style: titleListStyle,
-                ),
                 SizedBox(
                   height: 12,
                 ),
@@ -47,7 +43,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                         CachedNetworkImage(
                           imageBuilder: (context, imageProvider) => Container(
                             width: 60,
-                            height: 60,
+                            height: 75,
                             margin: EdgeInsets.only(right: 12),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
@@ -87,7 +83,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                       ],
                     ),
                     Text(
-                      '${widget.transaction.quantity} item(s)',
+                      '${widget.transaction.quantity} produk',
                       style: textListStyle.copyWith(fontSize: 13),
                     )
                   ],
@@ -152,7 +148,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                             defaultMargin -
                             5,
                         child: Text(
-                          widget.transaction.product.name,
+                          'Harga Produk',
                           style: textListStyle.copyWith(fontSize: 14),
                         )),
                     SizedBox(
