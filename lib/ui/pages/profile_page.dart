@@ -140,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               'press': EditShopPage(shop: shop, user: user),
                             },
                             {
-                              'name': 'Ganti Kata Sandi',
+                              'name': 'Ubah Kata Sandi',
                               'press':
                                   ChangePasswordPage(user: user, shop: shop)
                             },
@@ -211,53 +211,63 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
             ),
             SizedBox(
-              height: 50,
+              height: 10,
             ),
             Container(
-              height: 150,
+              height: 100,
               width: double.infinity,
-              child: Row(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    child: TextButton(
-                      onPressed: () {
-                        launch("https://www.facebook.com/profile.php?id=100069886188294&mibextid=ZbWKwL");
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.squareFacebook,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: TextButton(
+                          onPressed: () {
+                            launch("https://www.facebook.com/profile.php?id=100069886188294&mibextid=ZbWKwL");
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.squareFacebook,
+                              ),
+                              Text(
+                                " Gerai Kopimi Rowosari",
+                                style: GoogleFonts.roboto(
+                                    fontSize: 14, fontWeight: FontWeight.w500),
+                              ),
+                            ],
                           ),
-                          Text(
-                            " Gerai Kopimi Rowosari",
-                            style: GoogleFonts.roboto(
-                                fontSize: 14, fontWeight: FontWeight.w500),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                  Container(
-                    child: TextButton(
-                      onPressed: () {
-                        launch("https://instagram.com/paguyubanumkmrowosari_semarang");
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.instagram,
-                            color: Colors.pink,
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: TextButton(
+                            onPressed: () {
+                              launch("https://instagram.com/paguyubanumkmrowosari_semarang");
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  FontAwesomeIcons.instagram,
+                                  color: Colors.pink,
+                                ),
+                                Text(
+                                  " paguyubanumkmrowosari_semarang",
+                                  style: GoogleFonts.roboto(
+                                      fontSize: 14, fontWeight: FontWeight.w500, color: Colors.pink),
+                                ),
+                              ],
+                            ),
                           ),
-                          Text(
-                            " gerai_kopimi.rowosari",
-                            style: GoogleFonts.roboto(
-                                fontSize: 14, fontWeight: FontWeight.w500, color: Colors.pink),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        ),
+                      ]
+                  )
                 ],
               ),
             ),
@@ -281,22 +291,30 @@ class SettingTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          bottom: 16, left: defaultMargin, right: defaultMargin),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          bottom: 8, left: defaultMargin, right: defaultMargin),
+      child: Column(
         children: [
-          Text(
-            title,
-            style: isCustomStyle ? style : blackFontStyle3,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: isCustomStyle ? style : blackFontStyle3.copyWith(
+                    fontWeight: FontWeight.w500
+                ),
+              ),
+              SizedBox(
+                child: Icon(Icons.arrow_forward_ios, size: 12
+                ),
+              )
+            ],
           ),
           SizedBox(
-            height: defaultMargin,
-            width: defaultMargin,
-            child: Image.asset(
-              'assets/icons/right_arrow.png',
-              fit: BoxFit.contain,
-            ),
-          )
+            height: 8,
+          ),
+          Divider(
+            thickness: 1,
+          ),
         ],
       ),
     );

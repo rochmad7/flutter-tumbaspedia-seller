@@ -5,7 +5,7 @@ class HelpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GeneralPage(
       title: 'Bantuan',
-      subtitle: 'Bantuan Permasalahan',
+      subtitle: 'Bantuan untuk pengguna',
       onBackButtonPressed: () {
         Get.back();
       },

@@ -14,8 +14,8 @@ class CustomBottomNavbar extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Color(0xff541690),
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+        // borderRadius: BorderRadius.only(
+        //     topLeft: Radius.circular(25), topRight: Radius.circular(25)),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -51,7 +51,7 @@ class CustomBottomNavbar extends StatelessWidget {
           IconBottomNavbar(
               selectedIndex: selectedIndex,
               index: 3,
-              icon: MdiIcons.creditCard,
+              icon: MdiIcons.cart,
               title: "Pesanan",
               marginHorizontal: 10,
               onTap: onTap),
@@ -105,7 +105,7 @@ class IconBottomNavbar extends StatelessWidget {
                 Text(
                   title,
                   style: blackFontStyle2.copyWith(
-                      fontSize: 12,
+                      fontSize: 13,
                       color:
                           (selectedIndex == index) ? Colors.orange : Colors.white70),
                 ),
