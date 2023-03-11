@@ -36,9 +36,7 @@ class ProductServices {
         "Authorization": "Bearer $_token"
       });
 
-      print(url);
       var data = jsonDecode(response.body);
-      print(data);
       if (data['errors'] != null) {
         return ApiReturnValue(
             message: data['message'].toString(), error: data['error']);

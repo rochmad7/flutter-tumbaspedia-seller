@@ -138,13 +138,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             },
                             child: Container(
                               padding: EdgeInsets.all(3),
-                              width: 30,
-                              height: 30,
+                              width: 40,
+                              height: 40,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  color: Colors.black12),
-                              child:
-                              Image.asset('assets/icons/back_arrow_white.png'),
+                                  color: mainColor),
+                              child: Icon(MdiIcons.arrowLeft, color: Colors.white, size: 30),
                             ),
                           ),
                         ),

@@ -26,10 +26,10 @@ class SortGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => _OptionList(
-        options: options,
-        selectedOptionId: selectedOptionId,
-        onOptionTap: onOptionTap,
-      );
+    options: options,
+    selectedOptionId: selectedOptionId,
+    onOptionTap: onOptionTap,
+  );
 }
 
 class _OptionList extends StatelessWidget {
@@ -48,25 +48,25 @@ class _OptionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Wrap(
-        spacing: 10,
-        children: [
-          ...options.map(
+    spacing: 10,
+    children: [
+      ...options.map(
             (option) {
-              final isItemSelected = selectedOptionId == option.id;
-              return ChoiceChip(
-                label: Text(option.name,
-                    style:
-                        isItemSelected ? whiteFontStyle12 : blackFontStyle12),
-                onSelected:
-                    onOptionTap != null ? (_) => onOptionTap(option) : null,
-                selected: isItemSelected,
-                backgroundColor: "eeeeee".toColor(),
-                selectedColor: Colors.green,
-              );
-            },
-          ).toList(),
-        ],
-      );
+          final isItemSelected = selectedOptionId == option.id;
+          return ChoiceChip(
+            label: Text(option.name,
+                style:
+                isItemSelected ? whiteFontStyle12 : blackFontStyle12),
+            onSelected:
+            onOptionTap != null ? (_) => onOptionTap(option) : null,
+            selected: isItemSelected,
+            backgroundColor: Colors.grey[300],
+            selectedColor: mainColor,
+          );
+        },
+      ).toList(),
+    ],
+  );
 }
 
 class SortMethodGroup extends StatelessWidget {
@@ -80,21 +80,21 @@ class SortMethodGroup extends StatelessWidget {
   final SortMethod selectedItem;
   @override
   Widget build(BuildContext context) => SortGroup(
-        options: SortMethod.values
-            .map(
-              (sortMethod) => SortOption(
-                id: sortMethod,
-                name: sortMethod == SortMethod.acak
-                    ? 'Acak'
-                    : sortMethod == SortMethod.terlaris
-                        ? 'Terlaris'
-                        : sortMethod == SortMethod.termurah
-                            ? 'Termurah'
-                            : 'Terbaru',
-              ),
-            )
-            .toList(),
-        selectedOptionId: selectedItem,
-        onOptionTap: onOptionTap,
-      );
+    options: SortMethod.values
+        .map(
+          (sortMethod) => SortOption(
+        id: sortMethod,
+        name: sortMethod == SortMethod.acak
+            ? 'Acak'
+            : sortMethod == SortMethod.terlaris
+            ? 'Terlaris'
+            : sortMethod == SortMethod.termurah
+            ? 'Termurah'
+            : 'Terbaru',
+      ),
+    )
+        .toList(),
+    selectedOptionId: selectedItem,
+    onOptionTap: onOptionTap,
+  );
 }
