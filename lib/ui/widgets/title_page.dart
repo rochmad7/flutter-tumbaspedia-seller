@@ -48,11 +48,12 @@ class TitlePage extends StatelessWidget {
                         width: defaultMargin,
                         height: defaultMargin,
                         margin: EdgeInsets.only(right: 26),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/icons/back_arrow.png"),
-                          ),
-                        ),
+                        // decoration: BoxDecoration(
+                        //   image: DecorationImage(
+                        //     image: AssetImage("assets/icons/back_arrow.png"),
+                        //   ),
+                        // ),
+                        child: Icon(MdiIcons.arrowLeft),
                       ),
                     )
                   : Container(),

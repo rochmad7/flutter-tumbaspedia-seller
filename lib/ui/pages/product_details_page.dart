@@ -51,7 +51,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           listPhotos.clear();
           listPhotos.addAll(photos);
           Photo initial =
-          Photo(id: 0, images: widget.transaction.product.images);
+              Photo(id: 0, images: widget.transaction.product.images);
           if (!listPhotos.contains(initial)) {
             listPhotos.insert(0, initial);
           }
@@ -97,336 +97,271 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           ),
           SafeArea(
               child: Container(
-                color: Colors.white,
-              )),
+            color: Colors.white,
+          )),
           SafeArea(
             child: CachedNetworkImage(
-              imageBuilder: (context, imageProvider) =>
-                  Container(
-                    height: 300,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                        repeat: ImageRepeat.repeat,
-                      ),
-                    ),
+              imageBuilder: (context, imageProvider) => Container(
+                height: 300,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                    repeat: ImageRepeat.repeat,
                   ),
+                ),
+              ),
               imageUrl: image,
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),
           SafeArea(
               child: ListView(
+            children: [
+              Column(
                 children: [
-                  Column(
-                    children: [
-                      //// Back Button
-                      Container(
-                        height: 100,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: defaultMargin),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () async {
-                              // await context
-                              //     .read<ProductCubit>()
-                              //     .getMyProducts(null, null, null, null);
-                              Get.back();
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(3),
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: mainColor),
-                              child: Icon(MdiIcons.arrowLeft, color: Colors.white, size: 30),
-                            ),
-                          ),
+                  //// Back Button
+                  Container(
+                    height: 100,
+                    padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: GestureDetector(
+                        onTap: () async {
+                          // await context
+                          //     .read<ProductCubit>()
+                          //     .getMyProducts(null, null, null, null);
+                          Get.back();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(3),
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: mainColor),
+                          child: Icon(MdiIcons.arrowLeft,
+                              color: Colors.white, size: 30),
                         ),
                       ),
-                      //// Body
-                      Container(
-                        margin: EdgeInsets.only(top: 180),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 26, horizontal: 16),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20)),
-                            color: Colors.white),
-                        child: Column(
+                    ),
+                  ),
+                  //// Body
+                  Container(
+                    margin: EdgeInsets.only(top: 180),
+                    padding: EdgeInsets.symmetric(vertical: 26, horizontal: 16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20)),
+                        color: Colors.white),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            (listPhotos.length == 1)
+                                ? _productImages(selectedIndex, selectedIndex,
+                                    widget.transaction.product.images)
+                                : Container(
+                                    width:
+                                        MediaQuery.of(context).size.width - 64,
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: (isLoadingPhoto)
+                                          ? ShimmerRow(
+                                              height: 30,
+                                              itemCount: 5,
+                                              isNoMargin: true,
+                                              isSymmetric: true)
+                                          : ProductImages(
+                                              photos: listPhotos,
+                                              selectedIndex: selectedIndex,
+                                              onTap: (index) {
+                                                setState(() {
+                                                  selectedIndex = index;
+                                                  image =
+                                                      listPhotos[index].images;
+                                                });
+                                              },
+                                            ),
+                                    ),
+                                  ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width -
+                              140, // 32 + 102
+                          child: Text(
+                            widget.transaction.product.name,
+                            style: blackFontStyle2.copyWith(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    SizedBox(
-                                      width: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width -
-                                          140, // 32 + 102
-                                      child: Text(
-                                        widget.transaction.product.name,
-                                        style: blackFontStyle2,
-                                      ),
-                                    ),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .center,
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .start,
-                                      children: [
-                                        // iconText(
-                                        //     MdiIcons.star,
-                                        //     widget.transaction.product.rating
-                                        //         .toStringAsFixed(1) +
-                                        //         (widget.transaction.product
-                                        //             .totalReview ==
-                                        //             0
-                                        //             ? ""
-                                        //             : " (" +
-                                        //             formatNumber(widget
-                                        //                 .transaction
-                                        //                 .product
-                                        //                 .totalReview) +
-                                        //             " review)"),
-                                        //     null),
-                                        const SizedBox(width: 8),
-                                        iconText(
-                                            MdiIcons.cart,
-                                            "Terjual " +
-                                                formatNumber(widget
-                                                    .transaction.product.sold),
-                                            15)
-                                      ],
+                                    SizedBox(width: 8),
+                                    Image.network(
+                                        widget
+                                            .transaction.product.category.icon,
+                                        width: 18,
+                                        height: 18,
+                                        color: mainColor,
+                                        fit: BoxFit.cover),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      'Kategori ' +
+                                          widget.transaction.product.category
+                                              .name,
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ],
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      getFormatRupiah(
-                                          widget.transaction.product.price,
-                                          true),
-                                      style: blackFontStyle2.copyWith(
-                                          fontSize: 17),
-                                    ),
-                                    Text(
-                                      "Stok " +
-                                          (widget.transaction.product.stock == 0
-                                              ? "habis"
-                                              : ": " +
+                                    SizedBox(width: 8),
+                                    iconText(
+                                        MdiIcons.cart,
+                                        "Terjual " +
+                                            formatNumber(widget
+                                                .transaction.product.sold),
+                                        18),
+                                    SizedBox(width: 8),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  getFormatRupiah(
+                                      widget.transaction.product.price, true),
+                                  style: blackFontStyle2.copyWith(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  "Stok " +
+                                      (widget.transaction.product.stock == 0
+                                          ? "habis"
+                                          : ": " +
                                               widget.transaction.product.stock
                                                   .toString()),
-                                      style: widget.transaction.product.stock ==
-                                          0
-                                          ? redFontStyle.copyWith(fontSize: 12)
-                                          : blackFontStyle3.copyWith(
-                                          fontSize: 12),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                (listPhotos.length == 1)
-                                    ? _productImages(
-                                    selectedIndex, selectedIndex,
-                                    widget.transaction.product.images)
-                                    : Container(
-                                  width:
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width - 160,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: (isLoadingPhoto)
-                                        ? ShimmerRow(
-                                        height: 30,
-                                        itemCount: 9,
-                                        isNoMargin: true,
-                                        isSymmetric: false)
-                                        : ProductImages(
-                                      photos: listPhotos,
-                                      selectedIndex: selectedIndex,
-                                      onTap: (index) {
-                                        setState(() {
-                                          selectedIndex = index;
-                                          image =
-                                              listPhotos[index].images;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Flexible(
-                                  child: Chip(
-                                    avatar: (listPhotos.length < 2 &&
-                                        (widget.transaction.product.category
-                                            .name)
-                                            .length <
-                                            10)
-                                        ? CircleAvatar(
-                                      backgroundColor: Colors.grey.shade800,
-                                      child: Icon(MdiIcons.tag),
-                                    )
-                                        : null,
-                                    label: Text(
-                                        widget.transaction.product.category
-                                            .name,
-                                        overflow: TextOverflow.ellipsis,
-                                        style:
-                                        blackFontStyle3.copyWith(fontSize: 11)),
-                                  ),
+                                  style: widget.transaction.product.stock == 0
+                                      ? redFontStyle.copyWith(fontSize: 14)
+                                      : blackFontStyle3.copyWith(fontSize: 14),
                                 ),
                               ],
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 25),
+                        Text("Deskripsi : ",
+                            style: titleListStyle.copyWith(fontSize: 16)),
+                        SizedBox(height: 10),
+                        Text(
+                          widget.transaction.product.description,
+                          style: blackFontStyle.copyWith(fontSize: 15),
+                        ),
+                        SizedBox(height: 25),
+                        Row(
+                          children: [
+                            ButtonFlexible(
+                              title: "Tambah Foto",
+                              press: () => Get.to(() => UploadPage(
+                                  product: widget.transaction.product)),
+                              icon: Icons.add_a_photo,
+                              color: Colors.blue,
                             ),
-                            SizedBox(height: 15),
-                            ExpandableText(
-                                header: Text('Deskripsi:',
-                                    style: titleListStyle.copyWith(
-                                        fontSize: 14)),
-                                text: widget.transaction.product.description,
-                                maxLines: 4),
-                            SizedBox(height: 25),
-                            // Column(
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: [
-                            //     SectionTitle(
-                            //       all: widget.transaction.product.totalReview >
-                            //           1
-                            //           ? true
-                            //           : false,
-                            //       press: () =>
-                            //           Get.to(() =>
-                            //               AllReviewsPage(
-                            //                   productId: widget.transaction
-                            //                       .product.id)),
-                            //       isColor: true,
-                            //       sizeTitle: 15,
-                            //       title: "Penilaian Produk",
-                            //       defaultMargin: 0,
-                            //     ),
-                            //     SizedBox(height: 10),
-                            //     widget.transaction.product.totalReview < 1
-                            //         ? CustomAlert(
-                            //         icon: MdiIcons.alert,
-                            //         type: 'warning',
-                            //         isDistance: false,
-                            //         title: 'Belum ada penilaian produk')
-                            //         : isLoadingRating
-                            //         ? ShimmerRow(
-                            //         height: 80,
-                            //         itemCount: 2,
-                            //         isNoMargin: true,
-                            //         isSymmetric: false)
-                            //         : CommentRating(rating: rating),
-                            //     SizedBox(height: 30),
-                            //   ],
-                            // ),
-                            Row(
-                              children: [
-                                ButtonFlexible(
-                                    title: "Tambah Foto",
-                                    press: () =>
-                                        Get.to(() =>
-                                            UploadPage(
-                                                product: widget.transaction
-                                                    .product)),
-                                    icon: Icons.add_a_photo,
-                                    color: Colors.blue),
-                                SizedBox(width: 5),
-                                ButtonFlexible(
-                                  title: "Hapus Foto",
-                                  press: () {
-                                    SweetAlert.show(context,
-                                        subtitle: "Yakin foto produk akan dihapus?",
-                                        style: SweetAlertStyle.confirm,
-                                        showCancelButton: true,
-                                        onPress: delete);
+                            SizedBox(width: 5),
+                            ButtonFlexible(
+                              title: "Hapus Foto",
+                              icon: MdiIcons.fileRemove,
+                              color: Colors.grey,
+                              press: () {
+                                showAlertDialog(
+                                  context,
+                                  () async {
+                                    delete(true);
                                   },
-                                  icon: MdiIcons.fileRemove,
-                                  color: Colors.grey,
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5),
-                            Row(
-                              children: [
-                                ButtonFlexible(
-                                  title: "Edit Produk",
-                                  press: () =>
-                                      Get.to(() =>
-                                          EditProductPage(
-                                              product: widget.transaction
-                                                  .product)),
-                                  icon: Icons.edit,
-                                  color: Colors.orangeAccent,
-                                ),
-                                SizedBox(width: 5),
-                                ButtonFlexible(
-                                  title: "Hapus Produk",
-                                  press: () {
-                                    showAlertDialog(context, () async {
-                                      await context.read<ProductCubit>()
-                                          .destroy(
-                                        widget.transaction.product,
-                                      );
-                                      ProductState state =
-                                          context
-                                              .read<ProductCubit>()
-                                              .state;
-                                      if (state is ProductDeleted) {
-                                        // context
-                                        //     .read<ProductCubit>()
-                                        //     .getMyProducts(null, null, null, null);
-
-                                        Get.to(() => MainPage(initialPage: 1));
-                                        snackBar("Berhasil",
-                                            "Produk berhasil dihapus",
-                                            'success');
-                                      } else {
-                                        // context
-                                        //     .read<ProductCubit>()
-                                        //     .getMyProducts(null, null, null, null);
-                                        snackBar(
-                                            "Gagal menghapus!",
-                                            (state as ProductDeletedFailed)
-                                                .message,
-                                            'error');
-                                      }
-                                    }, "Hapus",
-                                        "Yakin produk ini akan dihapus?");
-                                  },
-                                  icon: Icons.delete,
-                                  color: Colors.red,
-                                ),
-                              ],
+                                  "Hapus Foto",
+                                  "Apakah anda yakin ingin menghapus foto ini?",
+                                );
+                              },
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  )
+                        SizedBox(height: 5),
+                        Row(
+                          children: [
+                            ButtonFlexible(
+                              title: "Edit Produk",
+                              press: () => Get.to(() => EditProductPage(
+                                  product: widget.transaction.product)),
+                              icon: Icons.edit,
+                              color: Colors.orangeAccent,
+                            ),
+                            SizedBox(width: 5),
+                            ButtonFlexible(
+                              title: "Hapus Produk",
+                              press: () {
+                                showAlertDialog(
+                                  context,
+                                  () async {
+                                    await context
+                                        .read<ProductCubit>()
+                                        .destroy(widget.transaction.product);
+                                    ProductState state =
+                                        context.read<ProductCubit>().state;
+                                    if (state is ProductDeleted) {
+// context.read<ProductCubit>().getMyProducts(null, null, null, null);
+                                      Get.to(() => MainPage(initialPage: 1));
+                                      snackBar("Berhasil",
+                                          "Produk berhasil dihapus", 'success');
+                                    } else {
+// context.read<ProductCubit>().getMyProducts(null, null, null, null);
+                                      snackBar(
+                                          "Gagal menghapus!",
+                                          (state as ProductDeletedFailed)
+                                              .message,
+                                          'error');
+                                    }
+                                  },
+                                  "Hapus",
+                                  "Yakin produk ini akan dihapus?",
+                                );
+                              },
+                              icon: Icons.delete,
+                              color: Colors.red,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
-              ))
+              )
+            ],
+          ))
         ],
       ),
     );
@@ -457,9 +392,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         await context
             .read<PhotoCubit>()
             .destroyMultiple(widget.transaction.product, true);
-        PhotoState state = context
-            .read<PhotoCubit>()
-            .state;
+        PhotoState state = context.read<PhotoCubit>().state;
         if (state is PhotoDeleted) {
           SweetAlert.show(context,
               subtitle: "Foto produk berhasil dihapus!",
@@ -548,21 +481,20 @@ class ProductImages extends StatelessWidget {
 
 Widget _productImages(int selectedIndex, int index, String imageUrl) {
   return CachedNetworkImage(
-    imageBuilder: (context, imageProvider) =>
-        Container(
-          height: 35,
-          width: 45,
-          decoration: BoxDecoration(
-            border: (index == selectedIndex)
-                ? Border.all(color: Colors.orange, width: 3)
-                : null,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
-            ),
-          ),
+    imageBuilder: (context, imageProvider) => Container(
+      height: 35,
+      width: 45,
+      decoration: BoxDecoration(
+        border: (index == selectedIndex)
+            ? Border.all(color: Colors.orange, width: 3)
+            : null,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        image: DecorationImage(
+          image: imageProvider,
+          fit: BoxFit.cover,
         ),
+      ),
+    ),
     imageUrl: imageUrl,
     fit: BoxFit.cover,
     placeholder: (context, url) =>

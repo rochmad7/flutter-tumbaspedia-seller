@@ -53,11 +53,21 @@ class ShopInfo extends StatelessWidget {
                           ),
                           ListTile(
                             contentPadding:
-                                EdgeInsets.only(left: 12, right: 12, top: 10),
+                            EdgeInsets.only(left: 12, right: 12, top: 10),
+                            leading: Icon(Icons.schedule),
+                            title: Text("Jam Buka-Tutup", style: titleListStyle),
+                            subtitle: Text(
+                              "${shop.openingHours} - ${shop.closedHours}",
+                              style: textListStyle,
+                            ),
+                          ),
+                          ListTile(
+                            contentPadding:
+                            EdgeInsets.only(left: 12, right: 12, top: 10),
                             leading: Icon(Icons.description),
                             title: Text("Deskripsi", style: titleListStyle),
                             subtitle:
-                                Text(shop.description, style: textListStyle),
+                            Text(shop.description, style: textListStyle),
                           ),
                           ListTile(
                             contentPadding: EdgeInsets.symmetric(

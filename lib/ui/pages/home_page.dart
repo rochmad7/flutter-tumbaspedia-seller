@@ -20,14 +20,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
       builder: (_, state) {
-        if (state is UserLoadingFailed)
+        if (state is UserLoadingFailed) {
           return IllustrationPage(
             title: 'Gagal memuat!',
             sizeTitle: 20,
             subtitle: state.message,
             picturePath: notFound,
           );
-        else if (state is UserLoadedWithShop)
+        } else if (state is UserLoadedWithShop) {
           return Scaffold(
               backgroundColor: Colors.grey.shade100,
               extendBodyBehindAppBar: true,
@@ -71,18 +71,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           )
                         ],
                       ),
-                      FeaturedRow(shop: state.shop),
+                      // FeaturedRow(shop: state.shop),
                       UserInfo(user: state.user),
                       ShopInfo(shop: state.shop),
-                      SizedBox(
-                        height: 60,
-                      ),
+                      SizedBox(height: 60),
                     ],
                   ),
                 ),
               ));
-        else
+        } else {
           return loadingIndicator;
+        }
       },
     );
   }
@@ -95,37 +94,51 @@ class FeaturedRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            // CustomCard(
-            //   startColor: "#000428".toColor(),
-            //   endColor: "#004e92".toColor(),
-            //   icon: MdiIcons.shopping,
-            //   title: "Total Produk",
-            //   // count: shop.totalProducts,
-            // ),
-            // CustomCard(
-            //   startColor: "#42275a".toColor(),
-            //   endColor: "#734b6d".toColor(),
-            //   icon: MdiIcons.cart,
-            //   title: "Produk Terjual",
-            //   // count: shop.sold,
-            // ),
-            // CustomCard(
-            //   isPrice: true,
-            //   startColor: "#ff512f".toColor(),
-            //   endColor: "#dd2476".toColor(),
-            //   icon: MdiIcons.cashMultiple,
-            //   title: "Pendapatan",
-            //   // count: shop.income,
-            // ),
-          ],
-        ),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Jadwal Toko",
+                style: blackFontStyle1.copyWith(
+                    fontWeight: FontWeight.bold, fontSize: 18.0),
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Icon(
+                    Icons.schedule,
+                    size: 14.0,
+                    color: Colors.grey.shade600,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    "${shop.openingHours.substring(0, 5)} - ${shop.closedHours.substring(0, 5)}",
+                    style: blackFontStyle2,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              color: Colors.green,
+            ),
+            child: Text(
+              shop.status ? "Buka" : "Tutup",
+              style: whiteFontStyle.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -180,11 +193,7 @@ class CustomCard extends StatelessWidget {
                     top: 15,
                     left: 0,
                     right: 0,
-                    child: Icon(
-                      icon,
-                      color: Colors.white,
-                      size: 20,
-                    )),
+                    child: Icon(icon, color: Colors.white, size: 20)),
                 Center(
                     child: Text(
                   isPrice
@@ -193,13 +202,11 @@ class CustomCard extends StatelessWidget {
                   style: whiteFontStyle1,
                 )),
                 Positioned(
-                  bottom: 10,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * .44,
-                    alignment: Alignment.topCenter,
-                    child: Text(title, style: whiteFontStyle),
-                  ),
-                )
+                    bottom: 10,
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * .44,
+                        alignment: Alignment.topCenter,
+                        child: Text(title, style: whiteFontStyle)))
               ],
             ),
           ),

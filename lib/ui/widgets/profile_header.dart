@@ -32,133 +32,59 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     return Stack(
       children: <Widget>[
         Ink(
-          height: 200,
+          height: MediaQuery.of(context).size.height / 3,
           decoration: BoxDecoration(
             image: DecorationImage(image: widget.coverImage, fit: BoxFit.cover),
           ),
         ),
-        Ink(
-          height: 200,
+        Container(
+          height: MediaQuery.of(context).size.height / 3,
           decoration: BoxDecoration(
-            color: Colors.black38,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.transparent, Colors.black.withOpacity(0.8)],
+            ),
           ),
         ),
         if (widget.actions != null)
-          Container(
-            width: double.infinity,
-            height: 200,
-            padding: const EdgeInsets.only(bottom: 0.0, right: 0.0),
-            alignment: Alignment.bottomRight,
+          Positioned(
+            top: 30,
+            right: 20,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: widget.actions,
             ),
           ),
-        // Container(
-        //   width: double.infinity,
-        //   height: 200,
-        //   padding: const EdgeInsets.only(bottom: 10, left: 10),
-        //   alignment: Alignment.bottomLeft,
-        //   child: Container(
-        //     child: ClipRRect(
-        //       borderRadius: BorderRadius.circular(15),
-        //       child: Container(
+        Positioned(
+          left: 16,
+          bottom: 16,
+          child: Avatar(
+            image: widget.avatar,
+            radius: 40,
+            backgroundColor: Colors.white,
+            borderColor: Colors.grey.shade300,
+            borderWidth: 4.0,
+          ),
+        ),
+        // Positioned(
+        //   left: 80,
+        //   bottom: 50,
+        //   child: Row(
+        //     children: [
+        //       Icon(
+        //         Icons.schedule,
+        //         size: 14.0,
         //         color: Colors.white,
-        //         padding: const EdgeInsets.all(5),
-        //         child: FlutterSwitch(
-        //           width: 70.0,
-        //           height: 25.0,
-        //           toggleSize: 15.0,
-        //           activeText: "Buka",
-        //           inactiveText: "Tutup",
-        //           showOnOff: true,
-        //           valueFontSize: 12,
-        //           activeColor: Colors.green,
-        //           inactiveColor: Colors.grey,
-        //           value: isSwitched,
-        //           onToggle: (value) {
-        //             SweetAlert.show(context,
-        //                 title: "Apakah Anda yakin?",
-        //                 subtitle:
-        //                     "Toko Anda akan " + (isSwitched ? "tutup" : "buka"),
-        //                 style: SweetAlertStyle.confirm,
-        //                 confirmButtonText: "Ya",
-        //                 cancelButtonText: "Batal",
-        //                 // ignore: missing_return
-        //                 showCancelButton: true, onPress: (bool isConfirm) {
-        //               if (isConfirm) {
-        //                 context
-        //                     .read<UserCubit>()
-        //                     .changeStatus(value, widget.shopId);
-        //                 SweetAlert.show(context,
-        //                     style: SweetAlertStyle.success, title: "Berhasil");
-        //                 setState(() {
-        //                   isSwitched = value;
-        //                 });
-        //                 return false;
-        //               }
-        //             });
-        //           },
-        //         ),
         //       ),
-        //     ),
+        //       SizedBox(width: 5),
+        //       Text(
+        //         "${widget.shopOpenHours.substring(0, 5)} - ${widget.shopClosedHours.substring(0, 5)}",
+        //         style: whiteFontStyle,
+        //       ),
+        //     ],
         //   ),
         // ),
-        Container(
-          width: double.infinity,
-          margin: const EdgeInsets.only(top: 160),
-          child: Column(
-            children: <Widget>[
-              Avatar(
-                image: widget.avatar,
-                radius: 40,
-                backgroundColor: Colors.white,
-                borderColor: Colors.grey.shade300,
-                borderWidth: 4.0,
-              ),
-              Text(widget.title,
-                  style: blackFontStyle1.copyWith(
-                    fontWeight: FontWeight.w600,
-                  )),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 10,
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Jam Buka:",
-                          style: titleListStyle,
-                        ),
-                        Text(
-                          "Jam Tutup:",
-                          style: titleListStyle,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.shopOpenHours.substring(0, 5) + " WIB",
-                          style: blackFontStyle3,
-                        ),
-                        Text(
-                          widget.shopClosedHours.substring(0, 5) + " WIB",
-                          style: blackFontStyle3,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
       ],
     );
   }

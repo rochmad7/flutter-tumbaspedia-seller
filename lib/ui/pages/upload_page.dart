@@ -3,6 +3,7 @@ part of 'pages.dart';
 class UploadPage extends StatefulWidget {
   final List<Photo> photos;
   final Product product;
+
   UploadPage({this.product, this.photos});
 
   @override
@@ -20,6 +21,7 @@ class _UploadPageState extends State<UploadPage> {
 
   List<Object> images = [];
   Future<File> _imageFile;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +35,9 @@ class _UploadPageState extends State<UploadPage> {
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
+      onBackButtonPressed: () async {
+        Get.back();
+      },
       title: 'Tambah Foto Produk',
       subtitle: "Pastikan data yang diisi valid",
       child: Container(
@@ -44,26 +49,28 @@ class _UploadPageState extends State<UploadPage> {
               width: MediaQuery.of(context).size.width,
               height: 150,
               padding: EdgeInsets.all(10),
-              child: CachedNetworkImage(
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                imageUrl: widget.product.images,
-                errorWidget: (context, url, error) => Icon(Icons.error),
-                repeat: ImageRepeat.repeat,
-              ),
+              child: widget.product.images != null
+                  ? CachedNetworkImage(
+                      imageUrl: widget.product.images,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      repeat: ImageRepeat.repeat,
+                    )
+                  : Center(child: Text('No image')),
             ),
             LabelFormField(label: "Tambah Foto Lainnya"),
-            Text(
-              "Anda dapat menambahkan 3 foto produk yang lain",
-              style: blackFontStyle3.copyWith(fontSize: 12),
-            ),
+            // Text(
+            //   "Anda dapat menambahkan 3 foto produk yang lain",
+            //   style: blackFontStyle3.copyWith(fontSize: 14),
+            // ),
             buildGridView(),
             SizedBox(
               height: 15,
@@ -123,7 +130,20 @@ class _UploadPageState extends State<UploadPage> {
       childAspectRatio: 1,
       children: List.generate(images.length, (index) {
         if (images[index] is Photo) {
-          Photo photo = images[index];
+          // Make a copy of the images list
+          var copiedImages = List.from(images);
+          Photo photo = copiedImages[index];
+
+          if (photo.imageFile == null) {
+            return Card(
+              child: IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  _onAddImageClick(index);
+                },
+              ),
+            );
+          }
           return Card(
             clipBehavior: Clip.antiAlias,
             child: Stack(
@@ -144,7 +164,9 @@ class _UploadPageState extends State<UploadPage> {
                     ),
                     onTap: () {
                       setState(() {
-                        images.replaceRange(index, index + 1, ['Add Image']);
+                        copiedImages
+                            .replaceRange(index, index + 1, ['Add Image']);
+                        images = copiedImages;
                       });
                     },
                   ),
@@ -171,6 +193,12 @@ class _UploadPageState extends State<UploadPage> {
       _imageFile = ImagePicker.pickImage(source: ImageSource.gallery);
       getFileImage(index);
     });
+    // Check if the _imageFile is null
+    if (_imageFile == null) {
+      setState(() {
+        images.replaceRange(index, index + 1, ['Add Image']);
+      });
+    }
   }
 
   void getFileImage(int index) async {
