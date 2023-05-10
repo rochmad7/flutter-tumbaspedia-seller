@@ -94,6 +94,16 @@ class OrderListItem extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
                           border: Border.all(color: mainColor),
+                          color: transaction.status ==
+                              TransactionStatus.canceled
+                              ? Colors.red[100]
+                              : transaction.status ==
+                              TransactionStatus.pending
+                              ? Colors.yellow[100]
+                              : transaction.status ==
+                              TransactionStatus.on_delivery
+                              ? Colors.blue[100]
+                              : Colors.green[100],
                         ),
                         child: Center(
                           child: Text(

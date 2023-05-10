@@ -41,7 +41,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.tumbaspedia.tumbaspediaseller"
+        applicationId "com.tumbaspedia.tumbaspediasellerbeta"
         minSdkVersion 18
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
