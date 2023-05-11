@@ -376,7 +376,7 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                               firstPageErrorIndicatorBuilder: (context) =>
                                   CustomIllustration(
-                                picturePath: foodWishes,
+                                picturePath: unexpectedError,
                                 title: "Maaf",
                                 subtitle: "Produk gagal dimuat atau kosong",
                               ),

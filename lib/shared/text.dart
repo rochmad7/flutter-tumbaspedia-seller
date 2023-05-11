@@ -19,11 +19,12 @@ const socketException = 'Silahkan cek koneksi internet Anda';
 const httpException = 'Data tidak ditemukan';
 const formatException = 'Format respon salah';
 
-const notFound = 'assets/images/illustration/not-found.png';
+const imageUploadUrl = 'https://i.stack.imgur.com/y9DpT.jpg';
+const notFound = 'assets/images/illustration/not_found.png';
 const protect = 'assets/images/illustration/protect.png';
-const loveBurger = 'assets/images/illustration/love_burger.png';
+const shoppingAgain = 'assets/images/illustration/shopping_again.png';
 const emptyTransaction = 'assets/images/illustration/empty_transaction.png';
-const foodWishes = 'assets/images/illustration/food_wishes.png';
+const unexpectedError = 'assets/images/illustration/unexpected_error.png';
 const completeProfile = 'assets/images/illustration/complete_profile.png';
 const shopIllustration = 'assets/images/illustration/shop.png';
 const verification = 'assets/images/illustration/verification.png';

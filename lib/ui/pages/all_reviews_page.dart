@@ -65,7 +65,7 @@ class _AllReviewsPageState extends State<AllReviewsPage> {
                       child: CommentRating(rating: item)),
                   firstPageErrorIndicatorBuilder: (context) =>
                       CustomIllustration(
-                    picturePath: foodWishes,
+                    picturePath: unexpectedError,
                     title: "Maaf",
                     subtitle: "Review gagal dimuat",
                   ),
