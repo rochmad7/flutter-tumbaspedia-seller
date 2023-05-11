@@ -85,11 +85,38 @@ class _EditProductPageState extends State<EditProductPage> {
             children: [
               ImagePickerDefault(
                   press: () async {
-                    PickedFile pickedFile = await ImagePicker()
-                        .getImage(source: ImageSource.gallery);
-                    if (pickedFile != null) {
-                      pictureFile = File(pickedFile.path);
-                      setState(() {});
+                    final PermissionStatus status =
+                        await Permission.storage.request();
+
+                    if (status.isGranted) {
+                      PickedFile pickedFile = await ImagePicker()
+                          .getImage(source: ImageSource.gallery);
+                      if (pickedFile != null) {
+                        pictureFile = File(pickedFile.path);
+                        setState(() {});
+                      }
+                    } else if (status.isDenied ||
+                        status.isRestricted ||
+                        status.isPermanentlyDenied) {
+                      final PermissionStatus newStatus =
+                          await Permission.storage.request();
+                      if (newStatus.isGranted) {
+                        PickedFile pickedFile = await ImagePicker()
+                            .getImage(source: ImageSource.gallery);
+                        if (pickedFile != null) {
+                          pictureFile = File(pickedFile.path);
+                          setState(() {});
+                        }
+                      }
+
+                      Get.snackbar(
+                        "Izin Dibutuhkan",
+                        "Izin penyimpanan dibutuhkan untuk mengupload gambar, silakan coba lagi.",
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white,
+                        icon: Icon(MdiIcons.closeCircleOutline,
+                            color: Colors.white),
+                      );
                     }
                   },
                   pictureFile: pictureFile,

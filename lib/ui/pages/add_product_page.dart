@@ -91,33 +91,59 @@ class _AddProductPageState extends State<AddProductPage> {
           child: Column(
             children: [
               ImagePickerDefault(
+                  imageURL: imageUploadUrl,
                   press: () async {
-                    PickedFile pickedFile = await ImagePicker()
-                        .getImage(source: ImageSource.gallery);
-                    if (pickedFile != null) {
-                      pictureFile = File(pickedFile.path);
-                      setState(() {});
+                    final PermissionStatus status =
+                    await Permission.storage.request();
+
+                    if (status.isGranted) {
+                      PickedFile pickedFile =
+                      await ImagePicker().getImage(source: ImageSource.gallery);
+                      if (pickedFile != null) {
+                        pictureFile = File(pickedFile.path);
+                        setState(() {});
+                      }
+                    } else if (status.isDenied || status.isRestricted || status.isPermanentlyDenied) {
+                      final PermissionStatus newStatus = await Permission.storage.request();
+                      if (newStatus.isGranted) {
+                        PickedFile pickedFile =
+                        await ImagePicker().getImage(source: ImageSource.gallery);
+                        if (pickedFile != null) {
+                          pictureFile = File(pickedFile.path);
+                          setState(() {});
+                        }
+                      }
+
+                      Get.snackbar(
+                        "Izin Dibutuhkan",
+                        "Izin penyimpanan dibutuhkan untuk mengupload gambar, silakan coba lagi.",
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white,
+                        icon:
+                        Icon(MdiIcons.closeCircleOutline, color: Colors.white),
+                      );
                     }
                   },
-                  pictureFile: pictureFile
-              ),
+                  pictureFile: pictureFile),
               SizedBox(height: 15),
-              LabelFormField(label: "Nama Produk *", example: "Contoh: Roti Bakar"),
+              LabelFormField(
+                  label: "Nama Produk *", example: "Contoh: Roti Bakar"),
               TextFieldDefault(
                   icon: MdiIcons.starPlus,
                   controller: nameController,
-                  hintText: "Nama Produk"
-              ),
+                  hintText: "Nama Produk"),
               TextDanger(error: error, param: "name"),
               SizedBox(height: 15),
               LabelFormField(label: "Kategori Produk *"),
               DropdownDefault(
                 selectedCategory: selectedCategory,
                 categoryItems: categories != null
-                    ? categories.map((e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(e.name, style: blackFontStyle3),
-                )).toList()
+                    ? categories
+                        .map((e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(e.name, style: blackFontStyle3),
+                            ))
+                        .toList()
                     : null,
                 onChanged: (item) {
                   setState(() {
@@ -131,16 +157,14 @@ class _AddProductPageState extends State<AddProductPage> {
               TextFieldDefault(
                   icon: Icons.monetization_on,
                   controller: priceController,
-                  hintText: "Harga Produk"
-              ),
+                  hintText: "Harga Produk"),
               TextDanger(error: error, param: "price"),
               SizedBox(height: 15),
               LabelFormField(label: "Stok Produk *", example: "Contoh: 5"),
               TextFieldDefault(
                   icon: MdiIcons.safe,
                   controller: stockController,
-                  hintText: "Stok Produk"
-              ),
+                  hintText: "Stok Produk"),
               TextDanger(error: error, param: "stock"),
               SizedBox(height: 15),
               LabelFormField(label: "Deskripsi Produk *"),
@@ -149,11 +173,11 @@ class _AddProductPageState extends State<AddProductPage> {
                   isMaxLines: true,
                   maxLines: 7,
                   controller: descriptionController,
-                  hintText: "Deskripsi Produk"
-              ),
+                  hintText: "Deskripsi Produk"),
               TextDanger(error: error, param: "description"),
               SizedBox(height: 5),
-              Text("* Wajib diisi", style: orangeFontStyle2.copyWith(fontSize: 12)),
+              Text("* Wajib diisi",
+                  style: orangeFontStyle2.copyWith(fontSize: 12)),
               SizedBox(height: 15),
               ButtonDefault(
                 isLoading: isLoading,

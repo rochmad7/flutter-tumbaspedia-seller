@@ -71,11 +71,35 @@ class _EditShopPageState extends State<EditShopPage> {
           children: [
             ImagePickerDefault(
                 press: () async {
-                  PickedFile pickedFile =
+                  final PermissionStatus status =
+                  await Permission.storage.request();
+
+                  if (status.isGranted) {
+                    PickedFile pickedFile =
+                    await ImagePicker().getImage(source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      pictureFile = File(pickedFile.path);
+                      setState(() {});
+                    }
+                  } else if (status.isDenied || status.isRestricted || status.isPermanentlyDenied) {
+                    final PermissionStatus newStatus = await Permission.storage.request();
+                    if (newStatus.isGranted) {
+                      PickedFile pickedFile =
                       await ImagePicker().getImage(source: ImageSource.gallery);
-                  if (pickedFile != null) {
-                    pictureFile = File(pickedFile.path);
-                    setState(() {});
+                      if (pickedFile != null) {
+                        pictureFile = File(pickedFile.path);
+                        setState(() {});
+                      }
+                    }
+
+                    Get.snackbar(
+                      "Izin Dibutuhkan",
+                      "Izin penyimpanan dibutuhkan untuk mengupload gambar, silakan coba lagi.",
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white,
+                      icon:
+                      Icon(MdiIcons.closeCircleOutline, color: Colors.white),
+                    );
                   }
                 },
                 pictureFile: pictureFile,
@@ -162,10 +186,11 @@ class _EditShopPageState extends State<EditShopPage> {
                       });
                   if (pickedOpen != null && pickedOpen != timeOpen) {
                     // shopOpenController.text = pickedOpen.format(context);
-                    shopOpenController.text = pickedOpen.hour.toString().padLeft(2, '0') +
-                        ':' +
-                        pickedOpen.minute.toString().padLeft(2, '0') +
-                        ':00';
+                    shopOpenController.text =
+                        pickedOpen.hour.toString().padLeft(2, '0') +
+                            ':' +
+                            pickedOpen.minute.toString().padLeft(2, '0') +
+                            ':00';
                     setState(() {
                       timeOpen = pickedOpen;
                     });
@@ -195,10 +220,11 @@ class _EditShopPageState extends State<EditShopPage> {
                       });
                   if (pickedClosed != null && pickedClosed != timeClosed) {
                     // shopClosedController.text = pickedClosed.format(context);
-                    shopClosedController.text = pickedClosed.hour.toString().padLeft(2, '0') +
-                        ':' +
-                        pickedClosed.minute.toString().padLeft(2, '0') +
-                        ':00';
+                    shopClosedController.text =
+                        pickedClosed.hour.toString().padLeft(2, '0') +
+                            ':' +
+                            pickedClosed.minute.toString().padLeft(2, '0') +
+                            ':00';
                     setState(() {
                       timeClosed = pickedClosed;
                     });
@@ -241,8 +267,10 @@ class _EditShopPageState extends State<EditShopPage> {
                 } else if (!phoneController.text.isPhoneNumber) {
                   snackBar('Edit toko gagal', 'No HP tidak valid', 'error');
                   return;
-                } else if (shopOpenController.text == shopClosedController.text) {
-                  snackBar('Edit toko gagal', 'Jam buka dan tutup tidak boleh sama', 'error');
+                } else if (shopOpenController.text ==
+                    shopClosedController.text) {
+                  snackBar('Edit toko gagal',
+                      'Jam buka dan tutup tidak boleh sama', 'error');
                   return;
                 }
 

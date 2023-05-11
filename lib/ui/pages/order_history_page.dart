@@ -41,60 +41,62 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
     else if (isLogin)
       return BlocBuilder<TransactionCubit, TransactionState>(
           builder: (_, state) {
-            if (state is TransactionLoaded) {
-              if (state.transactions.length == 0) {
-                return IllustrationPage(
-                  title: 'Ouch!',
-                  subtitle:
-                  'Transaksi di tokomu masih kosong, yuk mulai berjualan!',
-                  picturePath: loveBurger,
-                  buttonTitle1: 'Mulai Berjualan',                );
-              } else {
-                double listItemWidth =
-                    MediaQuery.of(context).size.width - 2 * defaultMargin;
-                List<Transaction> onDelivery = state.transactions
-                    .where((element) =>
-                element.status == TransactionStatus.on_delivery)
-                    .toList();
-                int count = onDelivery.length;
-                List<Category> categoryStatus = [
-                  Category(id: 0, name: 'Semua'),
-                  Category(id: 1, name: 'Baru'),
-                  Category(id: 2, name: 'Diantar'),
-                  Category(id: 3, name: 'Dibatalkan'),
-                  Category(id: 4, name: 'Selesai'),
-                ];
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    await context.read<TransactionCubit>().getTransactions(null,null);
-                  },
-                  child: ListView(
-                    children: [
-                      TitlePage(
-                          title: "Pesanan Saya",
-                          subtitle:
-                          'Lihat pesanan yang telah masuk ke toko kamu',
-                          isContainerRight: true,
-                          isContainer: true,
-                          // press: () async {
-                          //   await showDialog(
-                          //       context: context,
-                          //       builder: (_) =>
-                          //           NotificationDialog(transactions: onDelivery));
-                          // },
-                          // count: count,
-                          child: Container(
-                              width: double.infinity,
-                              color: Colors.white,
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 10),
-                                  SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: categoryStatus
-                                          .map(
-                                            (e) => ItemTabBar(
+        if (state is TransactionLoaded) {
+          if (state.transactions.length == 0) {
+            return IllustrationPage(
+              title: 'Transaksi Kosong',
+              subtitle:
+                  'Transaksi di akun kamu masih kosong,\nYuk mulai bertransaksi!',
+              picturePath: shoppingAgain,
+              buttonTitle1: 'Mulai Transaksi',
+            );
+          } else {
+            double listItemWidth =
+                MediaQuery.of(context).size.width - 2 * defaultMargin;
+            List<Transaction> onDelivery = state.transactions
+                .where((element) =>
+                    element.status == TransactionStatus.on_delivery)
+                .toList();
+            int count = onDelivery.length;
+            List<Category> categoryStatus = [
+              Category(id: 0, name: 'Semua'),
+              Category(id: 1, name: 'Baru'),
+              Category(id: 2, name: 'Diantar'),
+              Category(id: 3, name: 'Dibatalkan'),
+              Category(id: 4, name: 'Selesai'),
+            ];
+            return RefreshIndicator(
+              onRefresh: () async {
+                await context
+                    .read<TransactionCubit>()
+                    .getTransactions(null, null);
+              },
+              child: ListView(
+                children: [
+                  TitlePage(
+                      title: "Pesanan Saya",
+                      subtitle: 'Lihat pesanan yang telah masuk ke toko kamu',
+                      isContainerRight: true,
+                      isContainer: true,
+                      // press: () async {
+                      //   await showDialog(
+                      //       context: context,
+                      //       builder: (_) =>
+                      //           NotificationDialog(transactions: onDelivery));
+                      // },
+                      // count: count,
+                      child: Container(
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: categoryStatus
+                                      .map(
+                                        (e) => ItemTabBar(
                                           left: defaultMargin,
                                           right: (e == categoryStatus.last)
                                               ? defaultMargin
@@ -108,100 +110,100 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                           },
                                         ),
                                       )
-                                          .toList(),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                  Builder(builder: (_) {
-                                    List<Transaction> transactions =
+                                      .toList(),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Builder(builder: (_) {
+                                List<Transaction> transactions =
                                     (selectedIndex == 0)
                                         ? state.transactions.toList()
                                         : (selectedIndex == 1)
-                                        ? state.transactions
-                                        .where((element) =>
-                                    element.status ==
-                                        TransactionStatus.pending)
-                                        .toList()
-                                        : (selectedIndex == 2)
-                                        ? state.transactions
-                                        .where((element) =>
-                                    element.status ==
-                                        TransactionStatus
-                                            .on_delivery)
-                                        .toList()
-                                        : (selectedIndex == 3)
-                                        ? state.transactions
-                                        .where((element) =>
-                                    element.status ==
-                                        TransactionStatus
-                                            .canceled)
-                                        .toList()
-                                        : state.transactions
-                                        .where((element) =>
-                                    element.status ==
-                                        TransactionStatus
-                                            .delivered)
-                                        .toList();
-                                    if (transactions.length > 0) {
-                                      return Column(
-                                        children: transactions
-                                            .map((e) => Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: defaultMargin,
-                                              left: defaultMargin,
-                                              bottom: 16),
-                                          child: OrderListItem(
-                                              transaction: e,
-                                              itemWidth: listItemWidth,
-                                              press: () {
-                                                Get.to(() =>
-                                                    TransactionDetailsPage(
-                                                        transaction: e,
+                                            ? state.transactions
+                                                .where((element) =>
+                                                    element.status ==
+                                                    TransactionStatus.pending)
+                                                .toList()
+                                            : (selectedIndex == 2)
+                                                ? state.transactions
+                                                    .where((element) =>
+                                                        element.status ==
+                                                        TransactionStatus
+                                                            .on_delivery)
+                                                    .toList()
+                                                : (selectedIndex == 3)
+                                                    ? state.transactions
+                                                        .where((element) =>
+                                                            element.status ==
+                                                            TransactionStatus
+                                                                .canceled)
+                                                        .toList()
+                                                    : state.transactions
+                                                        .where((element) =>
+                                                            element.status ==
+                                                            TransactionStatus
+                                                                .delivered)
+                                                        .toList();
+                                if (transactions.length > 0) {
+                                  return Column(
+                                    children: transactions
+                                        .map((e) => Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: defaultMargin,
+                                                  left: defaultMargin,
+                                                  bottom: 16),
+                                              child: OrderListItem(
+                                                  transaction: e,
+                                                  itemWidth: listItemWidth,
+                                                  press: () {
+                                                    Get.to(() =>
+                                                        TransactionDetailsPage(
+                                                          transaction: e,
                                                         ));
-                                              }),
-                                        ))
-                                            .toList(),
-                                      );
-                                    } else {
-                                      return Column(
-                                        children: [
-                                          SizedBox(height: 30),
-                                          CustomIllustration(
-                                            picturePath: emptyTransaction,
-                                            title: "Kosong",
-                                            subtitle:
+                                                  }),
+                                            ))
+                                        .toList(),
+                                  );
+                                } else {
+                                  return Column(
+                                    children: [
+                                      SizedBox(height: 30),
+                                      CustomIllustration(
+                                        picturePath: emptyTransaction,
+                                        title: "Kosong",
+                                        subtitle:
                                             "Pesanan Anda dengan\nstatus '" +
                                                 status +
                                                 "'\nmasih kosong",
-                                          ),
-                                        ],
-                                      );
-                                    }
-                                  }),
-                                  SizedBox(
-                                    height: 60,
-                                  ),
-                                ],
-                              ))),
-                    ],
-                  ),
-                );
-              }
-            } else if (state is TransactionLoadingFailed) {
-              return IllustrationPage(
-                title: 'Gagal memuat!',
-                sizeTitle: 20,
-                subtitle: state.message,
-                picturePath: notFound,
-              );
-            } else {
-              return Center(
-                child: loadingIndicator,
-              );
-            }
-          });
+                                      ),
+                                    ],
+                                  );
+                                }
+                              }),
+                              SizedBox(
+                                height: 60,
+                              ),
+                            ],
+                          ))),
+                ],
+              ),
+            );
+          }
+        } else if (state is TransactionLoadingFailed) {
+          return IllustrationPage(
+            title: 'Gagal memuat!',
+            sizeTitle: 20,
+            subtitle: state.message,
+            picturePath: notFound,
+          );
+        } else {
+          return Center(
+            child: loadingIndicator,
+          );
+        }
+      });
     else
       return loadingIndicator;
   }

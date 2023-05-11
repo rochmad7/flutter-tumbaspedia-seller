@@ -52,18 +52,43 @@ class _AddShopPageState extends State<AddShopPage> {
             LabelFormField(
                 label: "Logo/Gambar Toko", example: ".jpg, .png, max: 2mb"),
             ImagePickerDefault(
+              imageURL: imageUploadUrl,
                 press: () async {
-                  PickedFile pickedFile =
+                  final PermissionStatus status =
+                  await Permission.storage.request();
+
+                  if (status.isGranted) {
+                    PickedFile pickedFile =
+                    await ImagePicker().getImage(source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      pictureFile = File(pickedFile.path);
+                      setState(() {});
+                    }
+                  } else if (status.isDenied || status.isRestricted || status.isPermanentlyDenied) {
+                    final PermissionStatus newStatus = await Permission.storage.request();
+                    if (newStatus.isGranted) {
+                      PickedFile pickedFile =
                       await ImagePicker().getImage(source: ImageSource.gallery);
-                  if (pickedFile != null) {
-                    pictureFile = File(pickedFile.path);
-                    setState(() {});
+                      if (pickedFile != null) {
+                        pictureFile = File(pickedFile.path);
+                        setState(() {});
+                      }
+                    }
+
+                    Get.snackbar(
+                      "Izin Dibutuhkan",
+                      "Izin penyimpanan dibutuhkan untuk mengupload gambar, silakan coba lagi.",
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white,
+                      icon:
+                      Icon(MdiIcons.closeCircleOutline, color: Colors.white),
+                    );
                   }
                 },
                 pictureFile: pictureFile,
                 isMargin: true,
                 isPadding: true,
-                height: 150,
+                height: pictureFile == null ? 150 : 200,
                 width: double.infinity,
                 isCircle: false),
             SizedBox(
@@ -122,6 +147,7 @@ class _AddShopPageState extends State<AddShopPage> {
               height: 5,
             ),
             ImagePickerDefault(
+              imageURL: imageUploadUrl,
                 press: () async {
                   PickedFile pickedFile =
                       await ImagePicker().getImage(source: ImageSource.gallery);
@@ -133,7 +159,7 @@ class _AddShopPageState extends State<AddShopPage> {
                 pictureFile: nibFile,
                 isMargin: true,
                 isPadding: true,
-                height: 150,
+                height: pictureFile == null ? 150 : 200,
                 width: double.infinity,
                 isCircle: false),
             SizedBox(

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tumbaspedia_seller/cubit/cubit.dart';
 import 'package:tumbaspedia_seller/models/models.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:tumbaspedia_seller/shared/shared.dart';

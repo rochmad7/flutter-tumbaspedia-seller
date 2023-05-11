@@ -32,9 +32,9 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void _autoLogIn() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String email = prefs.getString('emailshop');
-    final String password = prefs.getString('passwordshop');
+    final _storage = const FlutterSecureStorage();
+    final String email = await _storage.read(key: 'emailshop');
+    final String password = await _storage.read(key: 'passwordshop');
 
     if (email != null) {
       setState(() {
