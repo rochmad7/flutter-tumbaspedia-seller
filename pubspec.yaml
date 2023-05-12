@@ -43,7 +43,6 @@ dependencies:
   flutter_launcher_icons: "^0.8.0"
   cached_network_image: ^2.4.1
   flutter_switch: ^0.2.0
-  sweetalert: ^0.0.1
   infinite_scroll_pagination: ^2.2.3
   shimmer: ^1.1.2
   timeago: ^2.0.30
@@ -52,6 +51,7 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   font_awesome_flutter: ^10.3.0
   permission_handler: ^5.1.0+2
+  rflutter_alert: ^2.0.4
 
 flutter_icons:
   image_path: "assets/images/logo/ic_launcher.png"

@@ -298,14 +298,41 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               icon: MdiIcons.fileRemove,
                               color: Colors.grey,
                               press: () {
-                                showAlertDialog(
-                                  context,
-                                  () async {
-                                    delete(true);
-                                  },
-                                  "Hapus Foto",
-                                  "Apakah anda yakin ingin menghapus foto ini?",
-                                );
+                                // showAlertDialog(
+                                //   context,
+                                //   () async {
+                                //     delete(true);
+                                //   },
+                                //   "Hapus Foto",
+                                //   "Apakah anda yakin ingin menghapus foto ini?",
+                                // );
+                                Alert(
+                                  context: context,
+                                  type: AlertType.warning,
+                                  title: "Hapus Foto",
+                                  desc:
+                                      "Apakah anda yakin ingin menghapus foto ini?",
+                                  buttons: [
+                                    DialogButton(
+                                      child: Text(
+                                        "Batal",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Get.back(),
+                                      color: Colors.grey,
+                                    ),
+                                    DialogButton(
+                                      child: Text(
+                                        "Hapus",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => delete(true),
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                ).show();
                               },
                             ),
                           ],
@@ -324,31 +351,80 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             ButtonFlexible(
                               title: "Hapus Produk",
                               press: () {
-                                showAlertDialog(
-                                  context,
-                                  () async {
-                                    await context
-                                        .read<ProductCubit>()
-                                        .destroy(widget.transaction.product);
-                                    ProductState state =
-                                        context.read<ProductCubit>().state;
-                                    if (state is ProductDeleted) {
-// context.read<ProductCubit>().getMyProducts(null, null, null, null);
-                                      Get.to(() => MainPage(initialPage: 1));
-                                      snackBar("Berhasil",
-                                          "Produk berhasil dihapus", 'success');
-                                    } else {
-// context.read<ProductCubit>().getMyProducts(null, null, null, null);
-                                      snackBar(
-                                          "Gagal menghapus!",
-                                          (state as ProductDeletedFailed)
-                                              .message,
-                                          'error');
-                                    }
-                                  },
-                                  "Hapus",
-                                  "Yakin produk ini akan dihapus?",
-                                );
+//                                 showAlertDialog(
+//                                   context,
+//                                   () async {
+//                                     await context
+//                                         .read<ProductCubit>()
+//                                         .destroy(widget.transaction.product);
+//                                     ProductState state =
+//                                         context.read<ProductCubit>().state;
+//                                     if (state is ProductDeleted) {
+// // context.read<ProductCubit>().getMyProducts(null, null, null, null);
+//                                       Get.to(() => MainPage(initialPage: 1));
+//                                       snackBar("Berhasil",
+//                                           "Produk berhasil dihapus", 'success');
+//                                     } else {
+// // context.read<ProductCubit>().getMyProducts(null, null, null, null);
+//                                       snackBar(
+//                                           "Gagal menghapus!",
+//                                           (state as ProductDeletedFailed)
+//                                               .message,
+//                                           'error');
+//                                     }
+//                                   },
+//                                   "Hapus",
+//                                   "Yakin produk ini akan dihapus?",
+//                                 );
+                                Alert(
+                                  context: context,
+                                  type: AlertType.warning,
+                                  title: "Hapus Produk",
+                                  desc: "Yakin produk ini akan dihapus?",
+                                  buttons: [
+                                    DialogButton(
+                                      child: Text(
+                                        "Batal",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Get.back(),
+                                      color: Colors.grey,
+                                    ),
+                                    DialogButton(
+                                      child: Text(
+                                        "Hapus",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () async {
+                                        await context
+                                            .read<ProductCubit>()
+                                            .destroy(
+                                                widget.transaction.product);
+                                        ProductState state =
+                                            context.read<ProductCubit>().state;
+                                        if (state is ProductDeleted) {
+                                          // context.read<ProductCubit>().getMyProducts(null, null, null, null);
+                                          Get.to(() =>
+                                              MainPage(initialPage: 1));
+                                          snackBar(
+                                              "Berhasil",
+                                              "Produk berhasil dihapus",
+                                              'success');
+                                        } else {
+                                          // context.read<ProductCubit>().getMyProducts(null, null, null, null);
+                                          snackBar(
+                                              "Gagal menghapus!",
+                                              (state as ProductDeletedFailed)
+                                                  .message,
+                                              'error');
+                                        }
+                                      },
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                ).show();
                               },
                               icon: Icons.delete,
                               color: Colors.red,
@@ -384,36 +460,163 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     super.dispose();
   }
 
-  bool delete(bool isConfirm) {
+  void delete(bool isConfirm) {
     if (isConfirm) {
-      SweetAlert.show(context,
-          subtitle: "Menghapus...", style: SweetAlertStyle.loading);
+      // SweetAlert.show(context,
+      //     subtitle: "Menghapus...", style: SweetAlertStyle.loading);
+      Alert(
+        context: context,
+        type: AlertType.warning,
+        title: "Hapus Foto",
+        desc: "Apakah anda yakin ingin menghapus foto ini?",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Batal",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Get.back(),
+            color: Colors.grey,
+          ),
+          DialogButton(
+            child: Text(
+              "Hapus",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () async {
+              await context
+                  .read<PhotoCubit>()
+                  .destroyMultiple(widget.transaction.product, true);
+              PhotoState state = context.read<PhotoCubit>().state;
+              if (state is PhotoDeleted) {
+                // SweetAlert.show(context,
+                //     subtitle: "Foto produk berhasil dihapus!",
+                //     style: SweetAlertStyle.success);
+                Alert(
+                  context: context,
+                  type: AlertType.success,
+                  title: "Berhasil",
+                  desc: "Foto produk berhasil dihapus!",
+                  buttons: [
+                    DialogButton(
+                      child: Text(
+                        "Oke",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () => Get.back(),
+                      color: Colors.green,
+                    ),
+                  ],
+                ).show();
+                // context.read<ProductCubit>().getMyProducts(null, null, null, null);
+                new Future.delayed(new Duration(seconds: 1), () {
+                  Get.off(MainPage(initialPage: 1));
+                });
+                // return false;
+              } else {
+                // SweetAlert.show(context,
+                //     subtitle: "Foto produk gagal dihapus!",
+                //     style: SweetAlertStyle.error);
+                Alert(
+                  context: context,
+                  type: AlertType.error,
+                  title: "Gagal",
+                  desc: "Foto produk gagal dihapus!",
+                  buttons: [
+                    DialogButton(
+                      child: Text(
+                        "Oke",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () => Get.back(),
+                      color: Colors.red,
+                    ),
+                  ],
+                ).show();
+                // return false;
+              }
+            },
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(116, 116, 191, 1.0),
+              Color.fromRGBO(52, 138, 199, 1.0)
+            ]),
+          )
+        ],
+      ).show();
       new Future.delayed(new Duration(seconds: 0), () async {
         await context
             .read<PhotoCubit>()
             .destroyMultiple(widget.transaction.product, true);
         PhotoState state = context.read<PhotoCubit>().state;
         if (state is PhotoDeleted) {
-          SweetAlert.show(context,
-              subtitle: "Foto produk berhasil dihapus!",
-              style: SweetAlertStyle.success);
+          // SweetAlert.show(context,
+          //     subtitle: "Foto produk berhasil dihapus!",
+          //     style: SweetAlertStyle.success);
+          Alert(
+            context: context,
+            type: AlertType.success,
+            title: "Berhasil",
+            desc: "Foto produk berhasil dihapus!",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "Oke",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Get.back(),
+                color: Colors.green,
+              ),
+            ],
+          ).show();
           // context.read<ProductCubit>().getMyProducts(null, null, null, null);
           new Future.delayed(new Duration(seconds: 1), () {
             Get.off(MainPage(initialPage: 1));
           });
-          return false;
+          // return false;
         } else {
-          SweetAlert.show(context,
-              subtitle: "Foto produk gagal dihapus!",
-              style: SweetAlertStyle.error);
-          return false;
+          // SweetAlert.show(context,
+          //     subtitle: "Foto produk gagal dihapus!",
+          //     style: SweetAlertStyle.error);
+          Alert(
+            context: context,
+            type: AlertType.error,
+            title: "Gagal",
+            desc: "Foto produk gagal dihapus!",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "Oke",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Get.back(),
+                color: Colors.red,
+              ),
+            ],
+          ).show();
+          // return false;
         }
       });
     } else {
-      SweetAlert.show(context,
-          subtitle: "Dibatalkan!", style: SweetAlertStyle.error);
+      // SweetAlert.show(context,
+      //     subtitle: "Dibatalkan!", style: SweetAlertStyle.error);
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "Dibatalkan",
+        desc: "Foto produk gagal dihapus!",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Oke",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Get.back(),
+            color: Colors.red,
+          ),
+        ],
+      ).show();
     }
-    return false;
+    // return false;
   }
 }
 
