@@ -75,7 +75,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                 children: [
                   TitlePage(
                       title: "Pesanan Saya",
-                      subtitle: 'Lihat pesanan yang telah masuk ke toko kamu',
+                      subtitle: 'Lihat pesanan yang telah masuk ke toko Anda',
                       isContainerRight: true,
                       isContainer: true,
                       // press: () async {

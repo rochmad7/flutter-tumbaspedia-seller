@@ -1,19 +1,37 @@
 part of 'shared.dart';
 
-const prosespesanan =
-    '1. Anda menerima pesanan dari Pembeli.\n2. Silahkan kontak dengan pembeli & sepakati pembayaran/pengantaran barang.\n3. Anda memproses pesanan tersebut dengan mengubah status pesanan menjadi "Pesanan diantar"\n4. Pembeli harus melakukan konfirmasi apabila pesanan/barang sudah diterima sehingga status pesanan akan menjadi "Pesanan selesai"';
-const buatakun =
-    '1. Klik "daftar" pada halaman pendaftaran\n2.	Masukkan data diri yang tertera yaitu Nama Lengkap, Email, No.HP dan Password, lalu akan diverifikasi. \n3. Klik lanjutkan dan masukkan data toko Anda (nama toko, alamat, deskripsi, nomor NIB & foto NIB, gambar toko). Pastikan seluruh data diri merupakan data yang valid dan telah diingat dengan baik\n3. Setelah selesai mengisi data tersebut, klik "Daftar"\n4. Setelah klik "Daftar", maka Anda diharapkan melakukan konfirmasi melalui email yang dikirim ke alamat email terdaftar. \n\n5. Setelah melakukan konfirmasi maka akun Tumbaspedia Anda akan menunggu aktivasi dari admin.\n\n6. Setelah admin mengkonfirmasi maka akun telah aktif dan Anda bisa mengaksesnya, mengatur toko Anda, menambahkan produk, dan bertransaksi dengan pembeli.';
-const tumbaspedia =
-    "Tumbaspedia merupakan sebuah aplikasi jual-beli bagi UMKM di Gerai Kopimi Kelurahan Rowosari, Kecamatan Tembalang, Kota Semarang sebagai hasil dari program penelitian skripsi dari salah satu mahasiswa Jurusan Informatika Universitas Diponegoro. \n \n Sistem jual beli online ini meliputi dua aplikasi yaitu Tumbaspedia Seller untuk penjual dan Tumbaspedia untuk pembeli. Dengan adanya aplikasi Tumbaspedia, diharapkan dapat memudahkan proses jual-beli produk UMKM Gerai Kopimi Rowosari.";
-const kopimi =
-    "Gerai Kopimi merupakan singkatan dari Gerakan Terintegrasi Koperasi dan Usaha Mikro, Kecil dan Menengah yang merupakan forum bagi usaha mikro, kecil dan menengah di Kota Semarang yang dibentuk berdasarkan SK Walikota No 518/1255 Tahun 2019. Forum ini mempunyai kepengurusan mulai dari tingkat kota, kecamatan hingga kelurahan.";
-const statuspesanan =
-    'Status pesanan Anda dapat diubah dengan kesepakatan penjual. Status yang ada adalah:\n1. Pesanan baru (ketika Anda pertama kali memesan produk di toko)\n2. Pesanan dibatalkan (apabila Anda/penjual membatalkan pesanan)\n3. Pesanan diantar (status final untuk penjual, tidak dapat diubah lagi oleh penjual)\n4. Pesanan selesai (Anda sebagai pembeli sudah mengkonfirmasi bahwa pesanan/barang sudah diterima. Caranya dengan mengklik tombol "Terima pesanan" pada detail pesanan dengan status "Pesanan diantar")';
-const tandamerah =
-    'Tanda merah di halaman transaksi menunjukkan pesanan Anda yang telah diantar/diproses oleh penjual. Anda harus melakukan konfirmasi apabila sudah benar menerima pesanan/barang tersebut. Caranya adalah:\n1. Klik tanda tersebut\n2.Pilih salah satu pesanan lalu lihat detailnya, di bawah, Anda akan menemukan tombol "Konfirmasi Terima Pesanan"\n3. Klik tombol tersebut, lalu pilih konfirmasi\n4. Dengan itu, pesanan Anda berhasil mencapai tahap selesai';
-const help =
-    "Jika Anda mengalami masalah saat mengakses aplikasi, mendaftar akun, maupun toko, Anda dapat menghubungi admin Tumbaspedia melalui akun Facebook atau Instagram Gerai Kopimi Rowosari. Apabila terjadi kesalahan sistem maka dapat menghubungi email pengembang aplikasi, yaitu rochmad.wa@gmail.com";
+const String tumbaspedia = "Tumbaspedia adalah sebuah aplikasi jual-beli bagi UMKM di Gerai Kopimi Kelurahan Rowosari, Kecamatan Tembalang, Kota Semarang. Aplikasi ini merupakan hasil dari program penelitian skripsi oleh seorang mahasiswa Jurusan Informatika Universitas Diponegoro. \n\nTumbaspedia terdiri dari dua aplikasi yaitu Tumbaspedia Seller untuk penjual dan Tumbaspedia untuk pembeli. Sistem jual beli online ini dirancang untuk memudahkan proses jual-beli produk UMKM di Gerai Kopimi Rowosari.";
+const String kopimi =
+    "Gerai Kopimi merupakan singkatan dari Gerakan Terintegrasi Koperasi dan Usaha Mikro, Kecil, dan Menengah yang merupakan forum bagi usaha mikro, kecil, dan menengah di Kota Semarang. Forum ini dibentuk berdasarkan SK Walikota No 518/1255 Tahun 2019 dan memiliki kepengurusan mulai dari tingkat kota, kecamatan hingga kelurahan.";
+
+const String prosesPesanan = "Langkah-langkah proses pesanan:\n" +
+    "1. Anda menerima pesanan dari Pembeli.\n" +
+    "2. Hubungi pembeli untuk menyetujui pembayaran dan pengiriman barang.\n" +
+    "3. Setelah kesepakatan tercapai, ubah status pesanan menjadi \"Pesanan sedang diproses\".\n" +
+    "4. Proses dan kirim pesanan sesuai dengan kesepakatan.\n" +
+    "5. Setelah pesanan sampai di tangan pembeli, ubah status pesanan menjadi \"Pesanan telah diterima\".\n" +
+    "6. Pembeli harus melakukan konfirmasi penerimaan barang agar status pesanan menjadi \"Pesanan selesai\".";
+
+const String buatAkun = "Cara membuat akun di Tumbaspedia:\n" +
+    "1. Klik tombol \"Daftar\" pada halaman pendaftaran.\n" +
+    "2. Isi formulir pendaftaran dengan data diri yang valid, seperti nama lengkap, email, nomor telepon, dan password. Setelah itu, klik tombol \"Lanjutkan\".\n" +
+    "3. Masukkan informasi mengenai toko Anda, seperti nama toko, alamat, deskripsi, nomor NIB dan foto NIB, serta gambar toko. Pastikan data yang dimasukkan sudah benar dan valid. Setelah selesai, klik tombol \"Daftar\".\n" +
+    "4. Lakukan konfirmasi melalui email yang telah dikirimkan ke alamat email yang didaftarkan.\n" +
+    "5. Setelah melakukan konfirmasi melalui email, akun Tumbaspedia Anda akan langsung aktif dan siap digunakan untuk mengatur toko Anda, menambahkan produk, dan melakukan transaksi dengan pembeli.";
+
+const String statusPesanan = "Status pesanan Anda dapat diubah dengan kesepakatan penjual. Berikut adalah beberapa status yang mungkin terjadi:\n" +
+    "1. Pesanan baru: Status awal ketika Anda pertama kali memesan produk di toko.\n" +
+    "2. Pesanan dibatalkan: Apabila Anda atau penjual membatalkan pesanan.\n" +
+    "3. Pesanan sedang diproses: Status pesanan setelah kesepakatan antara pembeli dan penjual tercapai, dan penjual mulai memproses pesanan. \n" +
+    "4. Pesanan dalam pengiriman: Status yang menunjukkan bahwa pesanan sudah dikirim oleh penjual dan sedang dalam proses pengiriman.\n" +
+    "5. Pesanan telah diterima: Status yang menunjukkan bahwa pesanan sudah diterima oleh pembeli.\n" +
+    "6. Pesanan selesai: Status akhir untuk penjual setelah pesanan telah diterima oleh pembeli dan pembeli mengkonfirmasi penerimaan barang melalui tombol \"Terima pesanan\" pada detail pesanan dengan status \"Pesanan dalam pengiriman\".";
+
+const String tandaMerah =
+    "Tanda notifikasi berwarna merah pada aplikasi menunjukkan bahwa ada pesanan baru yang masuk untuk penjual. Kemudian penjual dapat memprosesnya sesuai dengan kebutuhan.";
+
+const String help =
+    "Jika Anda mengalami masalah saat mengakses aplikasi, mendaftar akun, atau toko, silakan hubungi admin Tumbaspedia melalui akun Facebook atau Instagram Gerai Kopimi Rowosari. Jika terjadi kesalahan sistem, silakan hubungi pengembang aplikasi melalui email rochmad.wa@gmail.com.";
 
 const socketException = 'Silahkan cek koneksi internet Anda';
 const httpException = 'Data tidak ditemukan';
