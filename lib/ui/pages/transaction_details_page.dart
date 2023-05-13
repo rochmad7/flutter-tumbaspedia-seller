@@ -314,7 +314,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                             Navigator.pop(context);
                             confirmTransaction(true);
                           },
-                          color: Colors.greenAccent,
+                          color: Colors.green,
                         ),
                       ],
                     ).show();

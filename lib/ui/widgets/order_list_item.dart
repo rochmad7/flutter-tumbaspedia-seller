@@ -19,6 +19,7 @@ class OrderListItem extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
+            behavior: HitTestBehavior.translucent,
             onTap: press,
             child: Row(
               children: [
