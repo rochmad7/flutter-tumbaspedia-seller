@@ -85,7 +85,7 @@ class _AddProductPageState extends State<AddProductPage> {
     else if (isLogin)
       return GeneralPage(
         title: 'Tambah Produk',
-        subtitle: "Pastikan data yang diisi valid",
+        subtitle: "Tambahkan produk baru untuk dijual",
         child: Container(
           margin: EdgeInsets.fromLTRB(defaultMargin, 0, defaultMargin, 6),
           child: Column(
@@ -94,20 +94,23 @@ class _AddProductPageState extends State<AddProductPage> {
                   imageURL: imageUploadUrl,
                   press: () async {
                     final PermissionStatus status =
-                    await Permission.storage.request();
+                        await Permission.storage.request();
 
                     if (status.isGranted) {
-                      PickedFile pickedFile =
-                      await ImagePicker().getImage(source: ImageSource.gallery);
+                      PickedFile pickedFile = await ImagePicker()
+                          .getImage(source: ImageSource.gallery);
                       if (pickedFile != null) {
                         pictureFile = File(pickedFile.path);
                         setState(() {});
                       }
-                    } else if (status.isDenied || status.isRestricted || status.isPermanentlyDenied) {
-                      final PermissionStatus newStatus = await Permission.storage.request();
+                    } else if (status.isDenied ||
+                        status.isRestricted ||
+                        status.isPermanentlyDenied) {
+                      final PermissionStatus newStatus =
+                          await Permission.storage.request();
                       if (newStatus.isGranted) {
-                        PickedFile pickedFile =
-                        await ImagePicker().getImage(source: ImageSource.gallery);
+                        PickedFile pickedFile = await ImagePicker()
+                            .getImage(source: ImageSource.gallery);
                         if (pickedFile != null) {
                           pictureFile = File(pickedFile.path);
                           setState(() {});
@@ -119,22 +122,24 @@ class _AddProductPageState extends State<AddProductPage> {
                         "Izin penyimpanan dibutuhkan untuk mengupload gambar, silakan coba lagi.",
                         backgroundColor: Colors.red,
                         colorText: Colors.white,
-                        icon:
-                        Icon(MdiIcons.closeCircleOutline, color: Colors.white),
+                        icon: Icon(MdiIcons.closeCircleOutline,
+                            color: Colors.white),
                       );
                     }
                   },
                   pictureFile: pictureFile),
               SizedBox(height: 15),
               LabelFormField(
-                  label: "Nama Produk *", example: "Contoh: Roti Bakar"),
+                  label: "Nama Produk",
+                  example: "Contoh: Roti Bakar",
+                  isMandatory: true),
               TextFieldDefault(
-                  icon: MdiIcons.starPlus,
+                  icon: MdiIcons.tagHeart,
                   controller: nameController,
                   hintText: "Nama Produk"),
               TextDanger(error: error, param: "name"),
               SizedBox(height: 15),
-              LabelFormField(label: "Kategori Produk *"),
+              LabelFormField(label: "Kategori Produk", isMandatory: true),
               DropdownDefault(
                 selectedCategory: selectedCategory,
                 categoryItems: categories != null
@@ -153,21 +158,31 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
               TextDanger(error: error, param: "category_id"),
               SizedBox(height: 15),
-              LabelFormField(label: "Harga Produk *", example: "Contoh: 20000"),
+              LabelFormField(
+                  label: "Harga Produk",
+                  example: "Contoh: 20000",
+                  isMandatory: true),
               TextFieldDefault(
-                  icon: Icons.monetization_on,
-                  controller: priceController,
-                  hintText: "Harga Produk"),
+                icon: Icons.attach_money,
+                controller: priceController,
+                hintText: "Harga Produk",
+                isPriceType: true,
+                isNumberType: true,
+              ),
               TextDanger(error: error, param: "price"),
               SizedBox(height: 15),
-              LabelFormField(label: "Stok Produk *", example: "Contoh: 5"),
+              LabelFormField(
+                  label: "Stok Produk",
+                  example: "Contoh: 5",
+                  isMandatory: true),
               TextFieldDefault(
-                  icon: MdiIcons.safe,
+                  icon: MdiIcons.tagPlus,
                   controller: stockController,
+                  isNumberType: true,
                   hintText: "Stok Produk"),
               TextDanger(error: error, param: "stock"),
               SizedBox(height: 15),
-              LabelFormField(label: "Deskripsi Produk *"),
+              LabelFormField(label: "Deskripsi Produk", isMandatory: true),
               TextFieldDefault(
                   isPrefixIcon: false,
                   isMaxLines: true,
@@ -176,8 +191,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   hintText: "Deskripsi Produk"),
               TextDanger(error: error, param: "description"),
               SizedBox(height: 5),
-              Text("* Wajib diisi",
-                  style: orangeFontStyle2.copyWith(fontSize: 12)),
+              Text("Tanda * wajib diisi", style: redFontStyle),
               SizedBox(height: 15),
               ButtonDefault(
                 isLoading: isLoading,
@@ -192,12 +206,19 @@ class _AddProductPageState extends State<AddProductPage> {
                     return;
                   }
 
+                  String newPrice =
+                      reverseThousandsSeparator(priceController.text);
                   if (stockController.text.isNumericOnly == false ||
-                      priceController.text.isNumericOnly == false ||
                       int.parse(stockController.text) < 0 ||
-                      int.parse(priceController.text) < 0) {
+                      int.parse(newPrice) < 0) {
                     snackBar('Gagal menambahkan produk',
                         'Data yang diisi tidak valid', 'error');
+                    return;
+                  }
+
+                  if (pictureFile == null) {
+                    snackBar('Gagal menambahkan produk',
+                        'Gambar produk tidak boleh kosong', 'error');
                     return;
                   }
 
@@ -207,8 +228,7 @@ class _AddProductPageState extends State<AddProductPage> {
                           descriptionController.text,
                       stock: stockController.text.toInt() ??
                           stockController.text.toInt(),
-                      price: priceController.text.toInt() ??
-                          priceController.text.toInt(),
+                      price: newPrice.toInt() ?? priceController.text.toInt(),
                       category: selectedCategory);
 
                   setState(() {

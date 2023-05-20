@@ -165,7 +165,7 @@ class _EditShopPageState extends State<EditShopPage> {
                 hintText: "No HP Pemilik"),
             TextDanger(error: error, param: "phone_number"),
             SizedBox(height: 15),
-            LabelFormField(label: "Jam Buka Toko"),
+            LabelFormField(label: "Waktu Operasional"),
             TextFieldDefault(
                 enableInteractiveSelection: false,
                 icon: MdiIcons.clock,

@@ -30,7 +30,7 @@ class _EditProductPageState extends State<EditProductPage> {
       nameController.text = widget.product.name;
       descriptionController.text = widget.product.description;
       stockController.text = widget.product.stock.toString();
-      priceController.text = widget.product.price.toString();
+      priceController.text = convertThousandFormatter(widget.product.price.toString());
       selectedCategory = widget.product.category;
     }
     super.initState();
@@ -125,16 +125,16 @@ class _EditProductPageState extends State<EditProductPage> {
                 height: 15,
               ),
               LabelFormField(
-                  label: "Nama Produk *", example: "Contoh: Roti Bakar"),
+                  label: "Nama Produk", example: "Contoh: Roti Bakar", isMandatory: true),
               TextFieldDefault(
-                  icon: MdiIcons.starPlus,
+                  icon: MdiIcons.tagHeart,
                   controller: nameController,
                   hintText: "Nama Produk"),
               TextDanger(error: error, param: "name"),
               SizedBox(
                 height: 15,
               ),
-              LabelFormField(label: "Kategori Produk *"),
+              LabelFormField(label: "Kategori Produk", isMandatory: true),
               DropdownDefault(
                 selectedCategory: selectedCategory,
                 categoryItems: categories != null
@@ -160,16 +160,18 @@ class _EditProductPageState extends State<EditProductPage> {
               SizedBox(
                 height: 15,
               ),
-              LabelFormField(label: "Harga Produk *", example: "Contoh: 20000"),
+              LabelFormField(label: "Harga Produk", example: "Contoh: 20000", isMandatory: true),
               TextFieldDefault(
                   icon: Icons.monetization_on,
                   controller: priceController,
+                  isPriceType: true,
+                  isNumberType: true,
                   hintText: "Harga Produk"),
               TextDanger(error: error, param: "price"),
               SizedBox(
                 height: 15,
               ),
-              LabelFormField(label: "Stok Produk *", example: "Contoh: 5"),
+              LabelFormField(label: "Stok Produk", example: "Contoh: 5", isMandatory: true),
               TextFieldDefault(
                   icon: MdiIcons.safe,
                   controller: stockController,
@@ -179,7 +181,7 @@ class _EditProductPageState extends State<EditProductPage> {
                 height: 15,
               ),
               LabelFormField(
-                label: "Deskripsi Produk *",
+                label: "Deskripsi Produk", isMandatory: true,
               ),
               TextFieldDefault(
                   isPrefixIcon: false,
@@ -193,8 +195,8 @@ class _EditProductPageState extends State<EditProductPage> {
                 height: 5,
               ),
               Text(
-                "* Wajib diisi",
-                style: orangeFontStyle2.copyWith(fontSize: 12),
+                "Tanda (*) menandakan wajib diisi",
+                style: greyFontStyle.copyWith(fontSize: 12, color: Colors.red),
               ),
               SizedBox(
                 height: 15,
@@ -213,10 +215,10 @@ class _EditProductPageState extends State<EditProductPage> {
                     return;
                   }
 
+                  String newPrice = reverseThousandsSeparator(priceController.text);
                   if (stockController.text.isNumericOnly == false ||
-                      priceController.text.isNumericOnly == false ||
                       int.parse(stockController.text) < 0 ||
-                      int.parse(priceController.text) < 0) {
+                      int.parse(newPrice) < 0) {
                     snackBar('Gagal edit produk', 'Harap isi data dengan benar',
                         'error');
                     return;
@@ -230,7 +232,7 @@ class _EditProductPageState extends State<EditProductPage> {
                       stock:
                           stockController.text.toInt() ?? widget.product.stock,
                       price:
-                          priceController.text.toInt() ?? widget.product.price,
+                          newPrice.toInt() ?? widget.product.price,
                       category: selectedCategory ?? widget.product.category);
 
                   setState(() {

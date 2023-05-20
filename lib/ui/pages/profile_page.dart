@@ -89,24 +89,24 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: greyFontStyle.copyWith(
                               fontWeight: FontWeight.w300),
                         ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          shop.address,
-                          style: greyFontStyle.copyWith(
-                              fontWeight: FontWeight.w300),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          shop.description,
-                          style: greyFontStyle.copyWith(
-                              fontWeight: FontWeight.w300),
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        // SizedBox(
+                        //   height: 4,
+                        // ),
+                        // Text(
+                        //   shop.address,
+                        //   style: greyFontStyle.copyWith(
+                        //       fontWeight: FontWeight.w300),
+                        // ),
+                        // SizedBox(
+                        //   height: 4,
+                        // ),
+                        // Text(
+                        //   shop.description,
+                        //   style: greyFontStyle.copyWith(
+                        //       fontWeight: FontWeight.w300),
+                        //   maxLines: 4,
+                        //   overflow: TextOverflow.ellipsis,
+                        // ),
                       ],
                     ),
                   )

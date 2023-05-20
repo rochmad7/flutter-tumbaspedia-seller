@@ -75,11 +75,11 @@ class _SignInPageState extends State<SignInPage> {
                 hintText: "Email"),
             TextDanger(error: error, param: "email"),
             SizedBox(
-              height: 8,
+              height: 10,
             ),
             forgotPassword(),
             SizedBox(
-              height: 7,
+              height: 10,
             ),
             TextFieldDefault(
                 suffixIcon: () => _toggle(),

@@ -36,8 +36,7 @@ Widget loadingIndicator = SpinKitWave(
 );
 
 TextStyle redFontStyle = GoogleFonts.roboto().copyWith(color: Colors.red);
-TextStyle orangeFontStyle =
-    GoogleFonts.roboto().copyWith(color: Colors.orange);
+TextStyle orangeFontStyle = GoogleFonts.roboto().copyWith(color: Colors.orange);
 TextStyle greenFontStyle = GoogleFonts.roboto().copyWith(color: Colors.green);
 TextStyle greyFontStyle = GoogleFonts.roboto().copyWith(color: greyColor);
 TextStyle greyFontStyle12 =
@@ -193,6 +192,24 @@ void snackBar(String title, String subtitle, String type) {
 String numberFormatDecimal(int number) {
   var formatter = NumberFormat('###,###');
   return formatter.format(number);
+}
+
+String convertThousandFormatter(String number) {
+  final nonDigitsRegExp = RegExp(r'[^\d]+');
+  String newString = number.replaceAll(nonDigitsRegExp, '');
+  final regEx = RegExp(r'\B(?=(\d{3})+(?!\d))');
+  final matches = regEx.allMatches(newString);
+  int offset = 0;
+  for (Match match in matches) {
+    newString = newString.replaceRange(
+        match.start + offset, match.end + offset, '${match.group(0)}.');
+    offset++;
+  }
+  return newString;
+}
+
+String reverseThousandsSeparator(String number) {
+  return number.replaceAll('.', '');
 }
 
 const double defaultMargin = 24;

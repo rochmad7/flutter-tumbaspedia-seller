@@ -289,13 +289,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               title: "Tambah Foto",
                               press: () => Get.to(() => UploadPage(
                                   product: widget.transaction.product)),
-                              icon: Icons.add_a_photo,
-                              color: Colors.blue,
+                              icon: Icons.add_a_photo_outlined,
+                              color: mainColor,
                             ),
                             SizedBox(width: 5),
                             ButtonFlexible(
                               title: "Hapus Foto",
-                              icon: MdiIcons.fileRemove,
+                              icon: MdiIcons.fileRemoveOutline,
                               color: Colors.grey,
                               press: () {
                                 // showAlertDialog(
@@ -344,8 +344,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               title: "Edit Produk",
                               press: () => Get.to(() => EditProductPage(
                                   product: widget.transaction.product)),
-                              icon: Icons.edit,
-                              color: Colors.orangeAccent,
+                              icon: Icons.edit_outlined,
+                              color: Colors.orange,
                             ),
                             SizedBox(width: 5),
                             ButtonFlexible(

@@ -37,22 +37,23 @@ class CustomBottomNavbar extends StatelessWidget {
               onTap: onTap),
           IconBottomNavbar(
               selectedIndex: selectedIndex,
-              index: 1,
-              icon: MdiIcons.shopping,
-              title: "Produk",
+              index: 2,
+              icon: Icons.add_circle,
+              title: "Tambah",
               marginHorizontal: 10,
               onTap: onTap),
           IconBottomNavbar(
               selectedIndex: selectedIndex,
-              index: 2,
-              icon: Icons.add_circle,
-              title: "Tambah",
+              index: 1,
+              icon: MdiIcons.shopping,
+              title: "Produk",
+              // marginHorizontal: 10,
               onTap: onTap),
           IconBottomNavbar(
               selectedIndex: selectedIndex,
               index: 3,
               icon: MdiIcons.cart,
-              title: "Pesanan",
+              title: "Transaksi",
               marginHorizontal: 10,
               onTap: onTap),
           IconBottomNavbar(
@@ -101,13 +102,13 @@ class IconBottomNavbar extends StatelessWidget {
               children: [
                 Icon(icon,
                     size: 26,
-                    color: (selectedIndex == index) ? Colors.orange : Colors.white70),
+                    color: (selectedIndex == index) ? Colors.orange : Colors.white),
                 Text(
                   title,
                   style: blackFontStyle2.copyWith(
                       fontSize: 13,
                       color:
-                          (selectedIndex == index) ? Colors.orange : Colors.white70),
+                          (selectedIndex == index) ? Colors.orange : Colors.white),
                 ),
               ],
             ),

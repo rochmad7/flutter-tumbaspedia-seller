@@ -58,7 +58,8 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 12,
             ),
             LabelFormField(
-              label: "Nama Lengkap *",
+              label: "Nama Lengkap",
+              isMandatory: true,
             ),
             TextFieldDefault(
                 icon: Icons.person,
@@ -69,7 +70,8 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 15,
             ),
             LabelFormField(
-              label: "Email *",
+              label: "Email",
+              isMandatory: true,
               example: "Contoh: tumbaspedia@gmail.com",
             ),
             TextFieldDefault(
@@ -81,7 +83,8 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 15,
             ),
             LabelFormField(
-              label: "No HP *",
+              label: "No. HP",
+              isMandatory: true,
               example: "Contoh: 0888888888",
             ),
             TextFieldDefault(
@@ -93,7 +96,8 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 15,
             ),
             LabelFormField(
-              label: "Password *",
+              label: "Password",
+              isMandatory: true,
               example: "Minimal 6 karakter",
             ),
             TextFieldDefault(
@@ -107,10 +111,8 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(
               height: 5,
             ),
-            Text(
-              "* Wajib diisi",
-              style: orangeFontStyle2.copyWith(fontSize: 12),
-            ),
+            Text("Tanda * wajib diisi",
+                style: redFontStyle),
             SizedBox(
               height: 15,
             ),

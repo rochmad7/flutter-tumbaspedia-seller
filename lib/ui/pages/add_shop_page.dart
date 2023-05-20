@@ -95,7 +95,7 @@ class _AddShopPageState extends State<AddShopPage> {
               height: 15,
             ),
             LabelFormField(
-                label: "Nama Toko *", example: "Contoh: Toko Makmur"),
+                label: "Nama Toko", example: "Contoh: Toko Makmur", isMandatory: true),
             TextFieldDefault(
                 icon: Icons.shop,
                 controller: shopNameController,
@@ -104,7 +104,7 @@ class _AddShopPageState extends State<AddShopPage> {
             SizedBox(
               height: 15,
             ),
-            LabelFormField(label: "Alamat Toko *"),
+            LabelFormField(label: "Alamat Toko", isMandatory: true),
             TextFieldDefault(
                 isPrefixIcon: false,
                 isMaxLines: true,
@@ -116,7 +116,7 @@ class _AddShopPageState extends State<AddShopPage> {
               height: 15,
             ),
             LabelFormField(
-              label: "Deskripsi Toko *",
+              label: "Deskripsi Toko", isMandatory: true,
             ),
             TextFieldDefault(
                 isPrefixIcon: false,
@@ -129,7 +129,7 @@ class _AddShopPageState extends State<AddShopPage> {
               height: 15,
             ),
             LabelFormField(
-                label: "Nomor NIB Toko *", example: "Contoh: 123456"),
+                label: "Nomor NIB Toko", example: "Contoh: 123456", isMandatory: true),
             TextFieldDefault(
                 icon: Icons.confirmation_number,
                 controller: shopNIBController,
@@ -138,7 +138,7 @@ class _AddShopPageState extends State<AddShopPage> {
               height: 15,
             ),
             LabelFormField(
-                label: "File NIB Toko *", example: ".jpg, .png, max: 2mb"),
+                label: "File NIB Toko", example: ".jpg, .png, max: 2mb", isMandatory: true),
             Text(
               "*NIB adalah Nomor Induk Berusaha yang merupakan syarat mendaftar sebagai penjual di aplikasi Tumbaspedia Seller",
               style: blackFontStyle3.copyWith(fontSize: 12),
@@ -165,10 +165,8 @@ class _AddShopPageState extends State<AddShopPage> {
             SizedBox(
               height: 5,
             ),
-            Text(
-              "* Wajib diisi",
-              style: orangeFontStyle2.copyWith(fontSize: 12),
-            ),
+            Text("Tanda * wajib diisi",
+                style: redFontStyle),
             // ErrorValidation(error: error),
             SizedBox(
               height: 15,
