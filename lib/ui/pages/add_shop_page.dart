@@ -165,7 +165,7 @@ class _AddShopPageState extends State<AddShopPage> {
             SizedBox(
               height: 5,
             ),
-            Text("Tanda * wajib diisi",
+            Text("Tanda (*) wajib diisi",
                 style: redFontStyle),
             // ErrorValidation(error: error),
             SizedBox(

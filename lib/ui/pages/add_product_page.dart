@@ -191,7 +191,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   hintText: "Deskripsi Produk"),
               TextDanger(error: error, param: "description"),
               SizedBox(height: 5),
-              Text("Tanda * wajib diisi", style: redFontStyle),
+              Text("Tanda (*) wajib diisi", style: redFontStyle),
               SizedBox(height: 15),
               ButtonDefault(
                 isLoading: isLoading,

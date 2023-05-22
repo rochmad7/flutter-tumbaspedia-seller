@@ -111,7 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(
               height: 5,
             ),
-            Text("Tanda * wajib diisi",
+            Text("Tanda (*) wajib diisi",
                 style: redFontStyle),
             SizedBox(
               height: 15,

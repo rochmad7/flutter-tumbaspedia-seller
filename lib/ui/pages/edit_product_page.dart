@@ -195,7 +195,7 @@ class _EditProductPageState extends State<EditProductPage> {
                 height: 5,
               ),
               Text(
-                "Tanda (*) menandakan wajib diisi",
+                "Tanda (*) wajib diisi",
                 style: greyFontStyle.copyWith(fontSize: 12, color: Colors.red),
               ),
               SizedBox(
