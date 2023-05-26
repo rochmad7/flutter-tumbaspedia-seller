@@ -47,6 +47,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 child: SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
+                      Container(
+                        // padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                        // color: Colors.white,
+                        height: 70,
+                        width: 270,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/logo/home_logo.png',
+                            ),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
                       ProfileHeader(
                         shopId: state.shop.id,
                         status: state.shop.status,
