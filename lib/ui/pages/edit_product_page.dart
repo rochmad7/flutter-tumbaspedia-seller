@@ -38,7 +38,7 @@ class _EditProductPageState extends State<EditProductPage> {
 
   void fetchData() async {
     try {
-      final response = await http.get(baseURLAPI + '/categories',
+      final response = await http.get(baseURLAPI + '/categories?role=seller',
           headers: {"Accept": "application/json"});
       if (response.statusCode == 200) {
         setState(() {
@@ -175,6 +175,7 @@ class _EditProductPageState extends State<EditProductPage> {
               TextFieldDefault(
                   icon: MdiIcons.safe,
                   controller: stockController,
+                  isNumberType: true,
                   hintText: "Stok Produk"),
               TextDanger(error: error, param: "stock"),
               SizedBox(

@@ -31,7 +31,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
   void fetchData() async {
     try {
-      final response = await http.get(baseURLAPI + '/categories',
+      final response = await http.get(baseURLAPI + '/categories?role=seller',
           headers: {"Accept": "application/json"});
       if (response.statusCode == 200) if (mounted)
         setState(() {
