@@ -11,6 +11,7 @@ class HelpPage extends StatelessWidget {
       },
       child: Column(
         children: [
+          CardAccordion(title: "Promosi Produk", text: promoteProduct),
           CardAccordion(
               title: "Memproses Pesanan Produk UMKM", text: prosesPesanan),
           CardAccordion(title: "Informasi tentang Status Pesanan", text: statusPesanan),

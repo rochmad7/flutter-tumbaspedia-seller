@@ -31,6 +31,9 @@ const String tandaMerah =
 const String help =
     "Jika Anda mengalami masalah saat mengakses aplikasi, mendaftar akun, atau toko, silakan hubungi admin Tumbaspedia melalui akun Facebook atau Instagram Gerai Kopimi Rowosari. Jika terjadi kesalahan sistem, silakan hubungi pengembang aplikasi melalui email rochmad.wa@gmail.com.";
 
+const String promoteProduct =
+    "Promosikan produk Anda dengan menghubungi admin Tumbaspedia melalui akun Facebook atau Instagram Gerai Kopimi Rowosari. Produk yang dipromosikan akan ditampilkan pada kategori \"Unggulan\" di halaman utama aplikasi Tumbaspedia.";
+
 const socketException = 'Silahkan cek koneksi internet Anda';
 const httpException = 'Data tidak ditemukan';
 const formatException = 'Format respon salah';
